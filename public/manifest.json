@@ -1,0 +1,19 @@
+{
+  "name": "Eshwar Gajula Portfolio",
+  "short_name": "Eshwar",
+  "description": "Portfolio of Eshwar Gajula - Frontend Developer",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0c",
+  "theme_color": "#ff2d55",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "categories": ["portfolio", "frontend", "development"]
+}

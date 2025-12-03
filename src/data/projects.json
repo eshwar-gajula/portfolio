@@ -1,0 +1,42 @@
+[
+  {
+    "id": "vuln-scanner",
+    "name": "VulnScanner Pro",
+    "slug": "vuln-scanner",
+    "description": "Automated vulnerability scanning tool for web applications",
+    "category": "Security",
+    "connections": ["security-dashboard", "api-gateway"]
+  },
+  {
+    "id": "security-dashboard",
+    "name": "SecDash",
+    "slug": "security-dashboard",
+    "description": "Real-time security monitoring dashboard",
+    "category": "Security",
+    "connections": ["vuln-scanner", "api-gateway"]
+  },
+  {
+    "id": "api-gateway",
+    "name": "SecureGate",
+    "slug": "api-gateway",
+    "description": "Security-focused API gateway",
+    "category": "Backend",
+    "connections": ["security-dashboard", "network-tools"]
+  },
+  {
+    "id": "network-tools",
+    "name": "NetRecon",
+    "slug": "network-tools",
+    "description": "Network reconnaissance toolkit",
+    "category": "Security",
+    "connections": ["api-gateway"]
+  },
+  {
+    "id": "portfolio",
+    "name": "Blackroom Portfolio",
+    "slug": "portfolio",
+    "description": "This portfolio website",
+    "category": "Frontend",
+    "connections": []
+  }
+]

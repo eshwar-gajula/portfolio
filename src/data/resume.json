@@ -1,0 +1,408 @@
+{
+  "name": "Eshwar Gajula",
+  "title": "Frontend Developer",
+  "greeting": "> handshake initiated — hello, I'm Eshwar.",
+  "summary": "Passionate Frontend Developer with a knack for solving complex problems and building user-friendly web applications. I specialize in HTML, CSS, JavaScript, and React.js, and am well-versed in modern web development frameworks like Next.js.",
+  "email": "eshwar.gajula@email.com",
+  "location": "India",
+  "website": "https://eshwar-gajula-portfolio.vercel.app",
+  "linkedin": "https://linkedin.com/in/eshwargajula",
+  "github": "https://github.com/eshwargajula",
+  "instagram": "https://instagram.com/eshwargajula",
+  "about": {
+    "bio": "Hello, I'm Eshwar Gajula, a passionate Frontend Developer with a knack for solving complex problems and building user-friendly web applications. I specialize in HTML, CSS, JavaScript, and React.js, and am well-versed in modern web development frameworks like Next.js.\n\nI hold a B.Tech in Computer Science, where I developed a strong foundation in programming and problem-solving. My journey as a developer began with creating dynamic, interactive websites, and it has since evolved into building responsive, scalable applications.\n\nI have hands-on experience working as a Frontend Developer at Code Clause and Coding Raja Technologies, where I contributed to developing web applications like event management systems, calculators, and resume generators. In addition, I've explored the world of IoT as an IoT Developer at Bolt IoT, where I designed and implemented smart monitoring systems using sensor integration.\n\nBeyond coding, I enjoy solving real-world challenges, working with cutting-edge technologies, and continuously improving my skills through self-driven learning and hands-on projects.\n\nWhen I'm not coding, you'll find me learning about Machine Learning, building IoT projects, or sharing my knowledge with others through my portfolio and blogs.",
+    "interests": ["Machine Learning", "IoT Projects", "Web Development", "Open Source"],
+    "currentFocus": "Building responsive, scalable web applications with modern frameworks"
+  },
+  "skills": [
+    {
+      "name": "JavaScript",
+      "category": "Programming",
+      "proficiency": 90,
+      "years": 4,
+      "icon": "terminal",
+      "projects": ["eventpro", "calculator", "movie-explorer"]
+    },
+    {
+      "name": "Python",
+      "category": "Programming",
+      "proficiency": 75,
+      "years": 3,
+      "icon": "code",
+      "projects": ["house-price-prediction", "digit-recognition"]
+    },
+    {
+      "name": "C++",
+      "category": "Programming",
+      "proficiency": 60,
+      "years": 2,
+      "icon": "cpu",
+      "projects": []
+    },
+    {
+      "name": "Java",
+      "category": "Programming",
+      "proficiency": 55,
+      "years": 2,
+      "icon": "coffee",
+      "projects": []
+    },
+    {
+      "name": "Bash",
+      "category": "Programming",
+      "proficiency": 70,
+      "years": 2,
+      "icon": "terminal-square",
+      "projects": ["termux-shell"]
+    },
+    {
+      "name": "HTML5",
+      "category": "Frontend",
+      "proficiency": 95,
+      "years": 5,
+      "icon": "file-code",
+      "projects": ["eventpro", "resume-generator", "portfolio"]
+    },
+    {
+      "name": "CSS3",
+      "category": "Frontend",
+      "proficiency": 92,
+      "years": 5,
+      "icon": "palette",
+      "projects": ["eventpro", "resume-generator", "portfolio"]
+    },
+    {
+      "name": "React.js",
+      "category": "Frontend",
+      "proficiency": 88,
+      "years": 3,
+      "icon": "atom",
+      "projects": ["eventpro", "movie-explorer", "portfolio"]
+    },
+    {
+      "name": "Next.js",
+      "category": "Frontend",
+      "proficiency": 75,
+      "years": 2,
+      "icon": "globe",
+      "projects": ["portfolio"]
+    },
+    {
+      "name": "Bootstrap",
+      "category": "Frontend",
+      "proficiency": 80,
+      "years": 3,
+      "icon": "layout",
+      "projects": ["eventpro", "resume-generator"]
+    },
+    {
+      "name": "Tailwind CSS",
+      "category": "Frontend",
+      "proficiency": 65,
+      "years": 1,
+      "icon": "wind",
+      "projects": ["portfolio"]
+    },
+    {
+      "name": "TypeScript",
+      "category": "Frontend",
+      "proficiency": 70,
+      "years": 2,
+      "icon": "file-type",
+      "projects": ["portfolio"]
+    },
+    {
+      "name": "Linux",
+      "category": "Tools",
+      "proficiency": 85,
+      "years": 4,
+      "icon": "terminal",
+      "projects": ["termux-shell"]
+    },
+    {
+      "name": "Git",
+      "category": "Tools",
+      "proficiency": 88,
+      "years": 4,
+      "icon": "git-branch",
+      "projects": ["eventpro", "portfolio", "movie-explorer"]
+    },
+    {
+      "name": "Matplotlib",
+      "category": "Data",
+      "proficiency": 60,
+      "years": 2,
+      "icon": "bar-chart",
+      "projects": ["house-price-prediction", "digit-recognition"]
+    },
+    {
+      "name": "TensorFlow",
+      "category": "ML",
+      "proficiency": 55,
+      "years": 1,
+      "icon": "brain",
+      "projects": ["digit-recognition"]
+    },
+    {
+      "name": "Keras",
+      "category": "ML",
+      "proficiency": 55,
+      "years": 1,
+      "icon": "layers",
+      "projects": ["digit-recognition"]
+    },
+    {
+      "name": "Pandas",
+      "category": "Data",
+      "proficiency": 65,
+      "years": 2,
+      "icon": "database",
+      "projects": ["house-price-prediction"]
+    },
+    {
+      "name": "Flask",
+      "category": "Backend",
+      "proficiency": 60,
+      "years": 2,
+      "icon": "server",
+      "projects": ["house-price-prediction"]
+    }
+  ],
+  "experience": [
+    {
+      "id": "exp-1",
+      "company": "Code Clause",
+      "role": "Frontend Developer Intern",
+      "startDate": "2023-06",
+      "endDate": "2023-08",
+      "description": "Developed responsive web applications using React.js and modern frontend technologies. Contributed to building event management systems and interactive UI components.",
+      "highlights": [
+        "Built event management system with React.js",
+        "Implemented responsive designs using Bootstrap",
+        "Collaborated with team on code reviews and improvements"
+      ]
+    },
+    {
+      "id": "exp-2",
+      "company": "Coding Raja Technologies",
+      "role": "Frontend Developer Intern",
+      "startDate": "2023-03",
+      "endDate": "2023-05",
+      "description": "Created web applications including calculators and resume generators. Focused on creating intuitive user interfaces and responsive layouts.",
+      "highlights": [
+        "Developed calculator and resume generator applications",
+        "Improved UI/UX for better user engagement",
+        "Applied modern CSS techniques for responsive design"
+      ]
+    },
+    {
+      "id": "exp-3",
+      "company": "Bolt IoT",
+      "role": "IoT Developer Intern",
+      "startDate": "2022-10",
+      "endDate": "2023-02",
+      "description": "Designed and implemented smart monitoring systems using Bolt IoT platform. Worked with temperature and light sensors for environmental monitoring.",
+      "highlights": [
+        "Built combined sensors monitoring system",
+        "Integrated temperature and light sensors",
+        "Developed web dashboard for real-time data visualization"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "University",
+      "degree": "Bachelor of Technology",
+      "field": "Computer Science",
+      "startDate": "2020",
+      "endDate": "2024",
+      "highlights": ["Computer Science specialization", "Strong foundation in programming"]
+    }
+  ],
+  "certifications": [
+    {
+      "name": "React Developer",
+      "issuer": "Meta",
+      "date": "2023"
+    },
+    {
+      "name": "JavaScript Algorithms",
+      "issuer": "freeCodeCamp",
+      "date": "2023"
+    },
+    {
+      "name": "Responsive Web Design",
+      "issuer": "freeCodeCamp",
+      "date": "2022"
+    },
+    {
+      "name": "Python for Data Science",
+      "issuer": "IBM",
+      "date": "2022"
+    },
+    {
+      "name": "IoT Foundations",
+      "issuer": "Bolt IoT",
+      "date": "2022"
+    },
+    {
+      "name": "Git & GitHub",
+      "issuer": "Coursera",
+      "date": "2022"
+    }
+  ],
+  "projects": [
+    {
+      "id": "eventpro",
+      "name": "EventPro",
+      "slug": "eventpro",
+      "description": "Comprehensive Event Management System for In-Person, Virtual & Hybrid Events. Enhance Experiences for Organizers, Speakers, Exhibitors, Sponsors & Attendees.",
+      "longDescription": "A full-featured event management platform built with React.js that handles all aspects of event organization. The system supports multiple event types and provides tools for managing registrations, schedules, and attendee engagement.",
+      "techStack": ["React.js", "Bootstrap", "JavaScript", "CSS3", "HTML5"],
+      "category": "Web Development",
+      "featured": true,
+      "demoUrl": "https://eventpro-demo.vercel.app",
+      "githubUrl": "https://github.com/eshwargajula/eventpro",
+      "image": "/assets/projects/eventpro.webp",
+      "highlights": [
+        "Multi-event type support (In-Person, Virtual, Hybrid)",
+        "Registration and ticketing system",
+        "Interactive scheduling interface",
+        "Attendee engagement tools"
+      ]
+    },
+    {
+      "id": "movie-explorer",
+      "name": "Movie Explorer",
+      "slug": "movie-explorer",
+      "description": "A modern movie exploration platform with advanced search and filtering capabilities.",
+      "longDescription": "An interactive movie discovery application that allows users to search, filter, and explore movies with detailed information including ratings, cast, and reviews.",
+      "techStack": ["React.js", "JavaScript", "CSS3", "REST API"],
+      "category": "Web Development",
+      "featured": true,
+      "demoUrl": "https://movie-explorer-demo.vercel.app",
+      "githubUrl": "https://github.com/eshwargajula/movie-explorer",
+      "image": "/assets/projects/movie-explorer.webp",
+      "highlights": [
+        "Advanced search functionality",
+        "Movie filtering by genre, year, rating",
+        "Detailed movie information",
+        "Responsive design"
+      ]
+    },
+    {
+      "id": "resume-generator",
+      "name": "Resume Generator",
+      "slug": "resume-generator",
+      "description": "A web application that generates professional resumes based on user input.",
+      "longDescription": "An intuitive resume builder that allows users to input their information and generate professional, well-formatted resumes. Supports multiple templates and export options.",
+      "techStack": ["JavaScript", "HTML5", "CSS3", "Bootstrap"],
+      "category": "Web Development",
+      "featured": true,
+      "demoUrl": "https://resume-generator-demo.vercel.app",
+      "githubUrl": "https://github.com/eshwargajula/resume-generator",
+      "image": "/assets/projects/resume-generator.webp",
+      "highlights": [
+        "Multiple resume templates",
+        "Real-time preview",
+        "PDF export functionality",
+        "Easy-to-use interface"
+      ]
+    },
+    {
+      "id": "calculator",
+      "name": "Simple Calculator",
+      "slug": "calculator",
+      "description": "A straightforward calculator application that allows users to perform basic arithmetic calculations.",
+      "longDescription": "A clean, user-friendly calculator built with vanilla JavaScript featuring basic arithmetic operations with a modern UI design.",
+      "techStack": ["JavaScript", "HTML5", "CSS3"],
+      "category": "Web Development",
+      "featured": false,
+      "demoUrl": null,
+      "githubUrl": "https://github.com/eshwargajula/calculator",
+      "image": "/assets/projects/calculator.webp",
+      "highlights": ["Basic arithmetic operations", "Clean, modern UI", "Keyboard support", "History tracking"]
+    },
+    {
+      "id": "house-price-prediction",
+      "name": "House Price Prediction",
+      "slug": "house-price-prediction",
+      "description": "This project aims to predict house prices using a linear regression model. Built using Python for the backend and Flask for the web interface.",
+      "longDescription": "A machine learning project that uses linear regression to predict house prices based on various features. The application includes a Flask web interface for easy interaction.",
+      "techStack": ["Python", "Flask", "Pandas", "Matplotlib", "Scikit-learn"],
+      "category": "Machine Learning",
+      "featured": false,
+      "demoUrl": null,
+      "githubUrl": "https://github.com/eshwargajula/house-price-prediction",
+      "image": "/assets/projects/house-price-prediction.webp",
+      "highlights": [
+        "Linear regression model",
+        "Data visualization with Matplotlib",
+        "Flask web interface",
+        "Feature engineering"
+      ]
+    },
+    {
+      "id": "digit-recognition",
+      "name": "Handwritten Digit Recognition",
+      "slug": "digit-recognition",
+      "description": "Handwritten Digit Recognition using Transfer Learning and MNIST Dataset.",
+      "longDescription": "A deep learning project that recognizes handwritten digits using transfer learning techniques and the MNIST dataset. Built with TensorFlow and Keras.",
+      "techStack": ["Python", "TensorFlow", "Keras", "MNIST"],
+      "category": "Machine Learning",
+      "featured": false,
+      "demoUrl": null,
+      "githubUrl": "https://github.com/eshwargajula/digit-recognition",
+      "image": "/assets/projects/digit-recognition.webp",
+      "highlights": [
+        "Transfer learning implementation",
+        "MNIST dataset training",
+        "High accuracy classification",
+        "Real-time prediction"
+      ]
+    },
+    {
+      "id": "combined-sensors",
+      "name": "Combined Sensors",
+      "slug": "combined-sensors",
+      "description": "A versatile system that utilizes Bolt IoT devices along with temperature and light sensors to monitor environmental conditions.",
+      "longDescription": "An IoT project built with Bolt IoT platform that combines multiple sensors for comprehensive environmental monitoring. Features real-time data collection and web-based visualization.",
+      "techStack": ["Bolt IoT", "Python", "JavaScript", "HTML5", "CSS3"],
+      "category": "IoT",
+      "featured": false,
+      "demoUrl": null,
+      "githubUrl": "https://github.com/eshwargajula/combined-sensors",
+      "image": "/assets/projects/combined-sensors.webp",
+      "highlights": ["Multi-sensor integration", "Real-time monitoring", "Web dashboard", "Alert system"]
+    },
+    {
+      "id": "termux-shell",
+      "name": "Termux Shell",
+      "slug": "termux-shell",
+      "description": "Beautify your shell with this Repo.",
+      "longDescription": "A collection of shell customizations and scripts for Termux, making the terminal experience more visually appealing and functional.",
+      "techStack": ["Bash", "Shell", "Linux"],
+      "category": "Other",
+      "featured": false,
+      "demoUrl": null,
+      "githubUrl": "https://github.com/eshwargajula/termux-shell",
+      "image": "/assets/projects/termux-shell.webp",
+      "highlights": ["Custom shell themes", "Useful aliases", "Productivity scripts", "Easy installation"]
+    },
+    {
+      "id": "portfolio",
+      "name": "Blackroom Portfolio",
+      "slug": "portfolio",
+      "description": "This portfolio website - a hacker-themed, accessible, and performant personal portfolio.",
+      "longDescription": "A unique portfolio website with a forensic console aesthetic. Built with Next.js, featuring interactive elements, multiple themes, audio feedback, and full accessibility support.",
+      "techStack": ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
+      "category": "Web Development",
+      "featured": false,
+      "demoUrl": "https://eshwar-gajula-portfolio.vercel.app",
+      "githubUrl": "https://github.com/eshwargajula/portfolio",
+      "image": "/assets/projects/portfolio.webp",
+      "highlights": ["Hacker-themed design", "Multiple theme support", "Audio feedback system", "WCAG accessible"]
+    }
+  ],
+  "labsPassphrase": "blackroom2024"
+}
