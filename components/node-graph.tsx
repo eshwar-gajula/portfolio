@@ -35,6 +35,7 @@ export function NodeGraph({ projects, onSelectProject, selectedProject }: NodeGr
   const [focusedIndex, setFocusedIndex] = useState(0)
   const animationRef = useRef<number | null>(null)
   const isDraggingRef = useRef<string | null>(null)
+  const touchStartRef = useRef<{ x: number; y: number } | null>(null)
 
   // Initialize nodes
   useEffect(() => {
@@ -43,10 +44,14 @@ export function NodeGraph({ projects, onSelectProject, selectedProject }: NodeGr
     const rect = containerRef.current.getBoundingClientRect()
     setDimensions({ width: rect.width, height: rect.height })
 
+    const isMobile = rect.width < 640
+    const spreadX = isMobile ? 150 : 300
+    const spreadY = isMobile ? 100 : 200
+
     const initialNodes: Node[] = projects.map((p) => ({
       id: p.id,
-      x: rect.width / 2 + (Math.random() - 0.5) * 300,
-      y: rect.height / 2 + (Math.random() - 0.5) * 200,
+      x: rect.width / 2 + (Math.random() - 0.5) * spreadX,
+      y: rect.height / 2 + (Math.random() - 0.5) * spreadY,
       vx: 0,
       vy: 0,
       name: p.name,
@@ -93,8 +98,8 @@ export function NodeGraph({ projects, onSelectProject, selectedProject }: NodeGr
           }
 
           // Keep in bounds
-          node.x = Math.max(50, Math.min(dimensions.width - 50, node.x))
-          node.y = Math.max(50, Math.min(dimensions.height - 50, node.y))
+          node.x = Math.max(60, Math.min(dimensions.width - 60, node.x))
+          node.y = Math.max(60, Math.min(dimensions.height - 60, node.y))
         })
 
         return newNodes
@@ -112,6 +117,7 @@ export function NodeGraph({ projects, onSelectProject, selectedProject }: NodeGr
     }
   }, [nodes.length, dimensions])
 
+  // Mouse handlers
   const handleMouseDown = useCallback((id: string) => {
     isDraggingRef.current = id
   }, [])
@@ -128,6 +134,30 @@ export function NodeGraph({ projects, onSelectProject, selectedProject }: NodeGr
 
   const handleMouseUp = useCallback(() => {
     isDraggingRef.current = null
+  }, [])
+
+  const handleTouchStart = useCallback((e: React.TouchEvent, id: string) => {
+    e.preventDefault()
+    isDraggingRef.current = id
+    const touch = e.touches[0]
+    touchStartRef.current = { x: touch.clientX, y: touch.clientY }
+  }, [])
+
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
+    if (!isDraggingRef.current || !containerRef.current) return
+    e.preventDefault()
+
+    const touch = e.touches[0]
+    const rect = containerRef.current.getBoundingClientRect()
+    const x = touch.clientX - rect.left
+    const y = touch.clientY - rect.top
+
+    setNodes((prev) => prev.map((node) => (node.id === isDraggingRef.current ? { ...node, x, y, vx: 0, vy: 0 } : node)))
+  }, [])
+
+  const handleTouchEnd = useCallback(() => {
+    isDraggingRef.current = null
+    touchStartRef.current = null
   }, [])
 
   // Keyboard navigation
@@ -165,14 +195,17 @@ export function NodeGraph({ projects, onSelectProject, selectedProject }: NodeGr
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-full"
+      className="relative w-full h-full touch-none"
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
       onMouseLeave={handleMouseUp}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+      onTouchCancel={handleTouchEnd}
       onKeyDown={handleKeyDown}
       tabIndex={0}
       role="application"
-      aria-label="Project node graph. Use arrow keys to navigate, Enter to select."
+      aria-label="Project node graph. Use arrow keys to navigate, Enter to select. On mobile, drag nodes to reposition."
     >
       {/* Grid background */}
       <svg className="absolute inset-0 w-full h-full opacity-10">
@@ -210,18 +243,19 @@ export function NodeGraph({ projects, onSelectProject, selectedProject }: NodeGr
       {nodes.map((node, i) => (
         <motion.div
           key={node.id}
-          className="absolute cursor-pointer"
+          className="absolute cursor-grab active:cursor-grabbing"
           style={{
             left: node.x,
             top: node.y,
             transform: "translate(-50%, -50%)",
           }}
           onMouseDown={() => handleMouseDown(node.id)}
+          onTouchStart={(e) => handleTouchStart(e, node.id)}
           onClick={() => onSelectProject(node.id)}
         >
           <div
             className={`
-              relative p-4 rounded-lg border-2 transition-all
+              relative p-3 sm:p-4 rounded-lg border-2 transition-all select-none
               ${
                 selectedProject === node.id
                   ? "border-neon-primary bg-surface shadow-lg"
@@ -239,25 +273,28 @@ export function NodeGraph({ projects, onSelectProject, selectedProject }: NodeGr
               style={{ backgroundColor: getCategoryColor(node.category) }}
             />
 
-            <div className="text-sm font-semibold whitespace-nowrap">{node.name}</div>
-            <div className="text-xs text-muted-foreground">{node.category}</div>
+            <div className="text-xs sm:text-sm font-semibold whitespace-nowrap max-w-[120px] sm:max-w-none truncate">
+              {node.name}
+            </div>
+            <div className="text-[10px] sm:text-xs text-muted-foreground">{node.category}</div>
           </div>
         </motion.div>
       ))}
 
       {/* Legend */}
-      <div className="absolute bottom-4 left-4 flex flex-wrap gap-4 text-xs bg-surface/80 backdrop-blur p-3 rounded-lg border border-border">
+      <div className="absolute bottom-2 sm:bottom-4 left-2 sm:left-4 flex flex-wrap gap-2 sm:gap-4 text-[10px] sm:text-xs bg-surface/80 backdrop-blur p-2 sm:p-3 rounded-lg border border-border">
         {["Security", "Backend", "Frontend"].map((cat) => (
-          <div key={cat} className="flex items-center gap-2">
-            <div className="w-3 h-3 rounded-full" style={{ backgroundColor: getCategoryColor(cat) }} />
+          <div key={cat} className="flex items-center gap-1 sm:gap-2">
+            <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full" style={{ backgroundColor: getCategoryColor(cat) }} />
             <span className="text-muted-foreground">{cat}</span>
           </div>
         ))}
       </div>
 
-      {/* Instructions */}
-      <div className="absolute top-4 right-4 text-xs text-muted-foreground bg-surface/80 backdrop-blur p-2 rounded border border-border">
-        Drag nodes or use arrow keys + Enter
+      {/* Instructions - Updated for mobile */}
+      <div className="absolute top-2 sm:top-4 right-2 sm:right-4 text-[10px] sm:text-xs text-muted-foreground bg-surface/80 backdrop-blur p-2 rounded border border-border max-w-[150px] sm:max-w-none">
+        <span className="hidden sm:inline">Drag nodes or use arrow keys + Enter</span>
+        <span className="sm:hidden">Drag nodes to move</span>
       </div>
     </div>
   )

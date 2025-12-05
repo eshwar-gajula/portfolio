@@ -8,8 +8,9 @@ import { ArrowLeft, ExternalLink, Github, Tag } from "lucide-react"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { CommandBar } from "@/components/command-bar"
+import { MultiLanguageMatrix } from "@/components/backgrounds"
 import { useAudio } from "@/components/audio-provider"
-import { resumeData } from "@/data"
+import { resumeData } from "@/src/data"
 
 export default function ProjectDetailPage() {
   const params = useParams()
@@ -26,13 +27,15 @@ export default function ProjectDetailPage() {
   return (
     <>
       <Header />
-      <main id="main-content" className="min-h-screen pt-24 pb-16 bg-background">
-        <div className="container mx-auto px-4">
+      <main id="main-content" className="min-h-screen pt-20 sm:pt-24 pb-16 bg-background relative overflow-hidden">
+        <MultiLanguageMatrix opacity={0.35} />
+
+        <div className="container mx-auto px-4 relative z-10">
           {/* Back link */}
           <Link
             href="/projects"
             onClick={() => playSound("click")}
-            className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground mb-8 transition-colors"
+            className="inline-flex items-center gap-2 text-sm sm:text-base text-muted-foreground hover:text-foreground mb-6 sm:mb-8 transition-colors"
           >
             <ArrowLeft size={16} />
             Back to Projects
@@ -40,26 +43,28 @@ export default function ProjectDetailPage() {
 
           <div className="max-w-4xl">
             {/* Header */}
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
-              <div className="flex flex-wrap items-center gap-3 mb-4">
-                <span className="px-3 py-1 text-sm font-mono bg-neon-primary/10 text-neon-primary rounded">
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-6 sm:mb-8">
+              <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+                <span className="px-2 sm:px-3 py-1 text-xs sm:text-sm font-mono bg-neon-primary/10 text-neon-primary rounded">
                   {project.category}
                 </span>
                 {project.featured && (
-                  <span className="px-3 py-1 text-sm bg-accent/10 text-accent rounded">Featured</span>
+                  <span className="px-2 sm:px-3 py-1 text-xs sm:text-sm bg-accent/10 text-accent rounded">
+                    Featured
+                  </span>
                 )}
               </div>
 
-              <h1 className="text-4xl md:text-5xl font-bold mb-4">{project.name}</h1>
-              <p className="text-xl text-muted-foreground">{project.description}</p>
+              <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4">{project.name}</h1>
+              <p className="text-base sm:text-xl text-muted-foreground">{project.description}</p>
             </motion.div>
 
-            {/* Actions */}
+            {/* Actions - Stack on mobile */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="flex flex-wrap gap-4 mb-12"
+              className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-8 sm:mb-12"
             >
               {project.demoUrl && (
                 <a
@@ -67,7 +72,7 @@ export default function ProjectDetailPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => playSound("click")}
-                  className="flex items-center gap-2 px-6 py-3 bg-neon-primary text-primary-foreground font-semibold rounded-lg hover:opacity-90 transition-opacity"
+                  className="flex items-center justify-center gap-2 px-4 sm:px-6 py-3 bg-neon-primary text-primary-foreground font-semibold rounded-lg hover:opacity-90 transition-opacity"
                 >
                   <ExternalLink size={18} />
                   View Live Demo
@@ -79,7 +84,7 @@ export default function ProjectDetailPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => playSound("click")}
-                  className="flex items-center gap-2 px-6 py-3 border border-border font-semibold rounded-lg hover:bg-surface transition-colors"
+                  className="flex items-center justify-center gap-2 px-4 sm:px-6 py-3 border border-border font-semibold rounded-lg hover:bg-surface transition-colors"
                 >
                   <Github size={18} />
                   View Source Code
@@ -87,21 +92,24 @@ export default function ProjectDetailPage() {
               )}
             </motion.div>
 
-            {/* Content grid */}
-            <div className="grid lg:grid-cols-3 gap-8">
+            {/* Content grid - Stack on mobile */}
+            <div className="flex flex-col lg:grid lg:grid-cols-3 gap-6 sm:gap-8">
               {/* Main content */}
-              <div className="lg:col-span-2 space-y-8">
+              <div className="lg:col-span-2 space-y-6 sm:space-y-8 order-2 lg:order-1">
                 {/* Description */}
                 <motion.section
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2 }}
+                  className="p-4 sm:p-6 bg-surface/80 backdrop-blur border border-border rounded-lg"
                 >
-                  <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+                  <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 flex items-center gap-2">
                     <span className="text-neon-primary">&gt;</span> Overview
                   </h2>
                   <div className="prose prose-invert max-w-none">
-                    <p className="text-muted-foreground leading-relaxed">{project.longDescription}</p>
+                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
+                      {project.longDescription}
+                    </p>
                   </div>
                 </motion.section>
 
@@ -111,17 +119,18 @@ export default function ProjectDetailPage() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.3 }}
+                    className="p-4 sm:p-6 bg-surface/80 backdrop-blur border border-border rounded-lg"
                   >
-                    <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+                    <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 flex items-center gap-2">
                       <span className="text-neon-primary">&gt;</span> Key Features
                     </h2>
-                    <ul className="space-y-3">
+                    <ul className="space-y-2 sm:space-y-3">
                       {project.highlights.map((highlight, i) => (
-                        <li key={i} className="flex items-start gap-3">
-                          <span className="w-6 h-6 bg-neon-primary/10 rounded flex items-center justify-center text-neon-primary text-sm shrink-0">
+                        <li key={i} className="flex items-start gap-2 sm:gap-3">
+                          <span className="w-5 h-5 sm:w-6 sm:h-6 bg-neon-primary/10 rounded flex items-center justify-center text-neon-primary text-xs sm:text-sm shrink-0">
                             {i + 1}
                           </span>
-                          <span className="text-muted-foreground">{highlight}</span>
+                          <span className="text-sm sm:text-base text-muted-foreground">{highlight}</span>
                         </li>
                       ))}
                     </ul>
@@ -133,39 +142,35 @@ export default function ProjectDetailPage() {
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4 }}
+                  className="p-4 sm:p-6 bg-surface/80 backdrop-blur border border-border rounded-lg"
                 >
-                  <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+                  <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 flex items-center gap-2">
                     <span className="text-neon-primary">&gt;</span> Code Sample
                   </h2>
-                  <div className="bg-surface border border-border rounded-lg overflow-hidden">
-                    <div className="flex items-center gap-2 px-4 py-2 bg-surface-elevated border-b border-border">
+                  <div className="bg-background border border-border rounded-lg overflow-hidden">
+                    <div className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-surface-elevated border-b border-border">
                       <div className="w-2 h-2 rounded-full bg-destructive" />
                       <div className="w-2 h-2 rounded-full bg-warning" />
                       <div className="w-2 h-2 rounded-full bg-success" />
                       <span className="ml-2 text-xs text-muted-foreground font-mono">example.ts</span>
                     </div>
-                    <pre className="p-4 font-mono text-sm overflow-x-auto">
+                    <pre className="p-3 sm:p-4 font-mono text-xs sm:text-sm overflow-x-auto">
                       <code className="text-muted-foreground">
-                        {`// ${project.name} - Sanitized Code Example
-// Educational demonstration only
+                        {`// ${project.name} - Code Example
+// Educational demonstration
 
 interface Config {
-  mode: 'development' | 'production';
+  mode: 'dev' | 'prod';
   security: {
     level: 'standard' | 'enhanced';
     audit: boolean;
   };
 }
 
-export function initialize(config: Config) {
-  // Validate configuration
+export function init(config: Config) {
   validateConfig(config);
-  
-  // Setup secure defaults
-  const secureConfig = applySecurityDefaults(config);
-  
-  // Initialize with proper error handling
-  return new ${project.name.replace(/\s/g, "")}(secureConfig);
+  const secure = applyDefaults(config);
+  return new ${project.name.replace(/\s/g, "")}(secure);
 }`}
                       </code>
                     </pre>
@@ -173,22 +178,25 @@ export function initialize(config: Config) {
                 </motion.section>
               </div>
 
-              {/* Sidebar */}
+              {/* Sidebar - Show first on mobile */}
               <motion.aside
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.3 }}
-                className="space-y-6"
+                className="space-y-4 sm:space-y-6 order-1 lg:order-2"
               >
                 {/* Tech stack */}
-                <div className="p-6 bg-surface border border-border rounded-lg">
-                  <h3 className="font-semibold mb-4 flex items-center gap-2">
+                <div className="p-4 sm:p-6 bg-surface/80 backdrop-blur border border-border rounded-lg">
+                  <h3 className="font-semibold mb-3 sm:mb-4 flex items-center gap-2 text-sm sm:text-base">
                     <Tag size={16} className="text-neon-primary" />
                     Tech Stack
                   </h3>
-                  <div className="flex flex-wrap gap-2">
+                  <div className="flex flex-wrap gap-1.5 sm:gap-2">
                     {project.techStack.map((tech) => (
-                      <span key={tech} className="px-3 py-1.5 text-sm bg-surface-elevated border border-border rounded">
+                      <span
+                        key={tech}
+                        className="px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm bg-surface-elevated border border-border rounded"
+                      >
                         {tech}
                       </span>
                     ))}
@@ -196,9 +204,9 @@ export function initialize(config: Config) {
                 </div>
 
                 {/* Project info */}
-                <div className="p-6 bg-surface border border-border rounded-lg">
-                  <h3 className="font-semibold mb-4">Project Info</h3>
-                  <dl className="space-y-3 text-sm">
+                <div className="p-4 sm:p-6 bg-surface/80 backdrop-blur border border-border rounded-lg">
+                  <h3 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Project Info</h3>
+                  <dl className="space-y-2 sm:space-y-3 text-xs sm:text-sm">
                     <div className="flex justify-between">
                       <dt className="text-muted-foreground">Category</dt>
                       <dd>{project.category}</dd>
@@ -211,9 +219,9 @@ export function initialize(config: Config) {
                 </div>
 
                 {/* Related projects */}
-                <div className="p-6 bg-surface border border-border rounded-lg">
-                  <h3 className="font-semibold mb-4">Related Projects</h3>
-                  <div className="space-y-3">
+                <div className="p-4 sm:p-6 bg-surface/80 backdrop-blur border border-border rounded-lg">
+                  <h3 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Related Projects</h3>
+                  <div className="space-y-2 sm:space-y-3">
                     {resumeData.projects
                       .filter((p) => p.id !== project.id && p.category === project.category)
                       .slice(0, 3)
@@ -222,9 +230,9 @@ export function initialize(config: Config) {
                           key={p.id}
                           href={`/projects/${p.slug}`}
                           onClick={() => playSound("click")}
-                          className="block p-3 bg-surface-elevated rounded hover:bg-border transition-colors"
+                          className="block p-2 sm:p-3 bg-surface-elevated rounded hover:bg-border transition-colors"
                         >
-                          <p className="font-medium text-sm">{p.name}</p>
+                          <p className="font-medium text-xs sm:text-sm">{p.name}</p>
                           <p className="text-xs text-muted-foreground line-clamp-1">{p.description}</p>
                         </Link>
                       ))}

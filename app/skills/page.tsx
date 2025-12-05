@@ -3,7 +3,7 @@
 import type React from "react"
 
 import { useState, useMemo } from "react"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import {
   Terminal,
   Code,
@@ -36,6 +36,14 @@ import {
   Eye,
   Crosshair,
   Radio,
+  X,
+  Cloud,
+  TestTube,
+  RefreshCw,
+  Hash,
+  CheckCircle,
+  Triangle,
+  Flame,
 } from "lucide-react"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
@@ -43,7 +51,9 @@ import { CommandBar } from "@/components/command-bar"
 import { MultiLanguageMatrix } from "@/components/backgrounds"
 import { useAudio } from "@/components/audio-provider"
 import { cn } from "@/lib/utils"
-import { resumeData } from "@/data"
+import { resumeData } from "@/src/data"
+
+type SoundId = "click" | "beep" | "boot" | "nodeSelect" | "success" | "error" | "typing"
 
 const skillIcons: Record<string, React.ElementType> = {
   terminal: Terminal,
@@ -74,6 +84,13 @@ const skillIcons: Record<string, React.ElementType> = {
   eye: Eye,
   crosshair: Crosshair,
   radio: Radio,
+  cloud: Cloud,
+  "test-tube": TestTube,
+  "refresh-cw": RefreshCw,
+  hash: Hash,
+  "check-circle": CheckCircle,
+  triangle: Triangle,
+  flame: Flame,
 }
 
 const categoryIcons: Record<string, React.ElementType> = {
@@ -81,19 +98,112 @@ const categoryIcons: Record<string, React.ElementType> = {
   Frontend: Globe,
   Backend: Server,
   Tools: Wrench,
-  Data: Database,
-  ML: Brain,
+  Database: Database,
+  "AI/ML": Brain,
+  Cloud: Cloud,
+  Testing: CheckCircle,
+  DevOps: RefreshCw,
   Security: Shield,
 }
 
 const categoryColors: Record<string, string> = {
-  Programming: "#ff2d55",
-  Frontend: "#bf5af2",
-  Backend: "#ff9500",
-  Tools: "#30d158",
-  Data: "#5ac8fa",
-  ML: "#ff375f",
-  Security: "#ff453a",
+  Programming: "#ff2d55", // Crimson red - primary
+  Frontend: "#bf5af2", // Purple - secondary
+  Backend: "#ff9f0a", // Orange
+  Tools: "#30d158", // Green
+  Database: "#5ac8fa", // Cyan
+  "AI/ML": "#ff375f", // Pink/Red
+  Cloud: "#64d2ff", // Light blue
+  Testing: "#ffd60a", // Yellow
+  DevOps: "#ff6b35", // Orange-red
+  Security: "#ff453a", // Bright red
+}
+
+function SkillDetailCard({
+  skill,
+  relatedProjects,
+  onClose,
+  playSound,
+}: {
+  skill: any
+  relatedProjects: any[]
+  onClose: () => void
+  playSound: (sound: SoundId) => void
+}) {
+  const getSkillIcon = (s: any) => {
+    const iconName = s.icon || "code"
+    return skillIcons[iconName] || Code
+  }
+
+  const Icon = getSkillIcon(skill)
+  const color = categoryColors[skill.category] || "#ff2d55"
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, height: 0 }}
+      animate={{ opacity: 1, height: "auto" }}
+      exit={{ opacity: 0, height: 0 }}
+      className="overflow-hidden"
+    >
+      <div className="p-4 bg-surface border border-neon-primary/50 rounded-lg mt-2 mb-4">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-3">
+            <div
+              className="w-10 h-10 rounded-lg flex items-center justify-center border border-border"
+              style={{ backgroundColor: `${color}15` }}
+            >
+              <Icon size={20} style={{ color }} />
+            </div>
+            <div>
+              <h3 className="font-bold text-base">{skill.name}</h3>
+              <p className="text-xs text-muted-foreground">{skill.category}</p>
+            </div>
+          </div>
+          <button
+            onClick={onClose}
+            className="p-1 hover:bg-surface-elevated rounded transition-colors"
+            aria-label="Close details"
+          >
+            <X size={18} className="text-muted-foreground" />
+          </button>
+        </div>
+
+        <div className="grid grid-cols-2 gap-3 p-3 bg-surface-elevated rounded-lg mb-4">
+          <div>
+            <span className="text-xs text-muted-foreground block">Experience</span>
+            <span className="font-mono text-lg font-bold">{skill.years}y</span>
+          </div>
+          <div>
+            <span className="text-xs text-muted-foreground block">Proficiency</span>
+            <span className="font-mono text-lg font-bold" style={{ color }}>
+              {skill.proficiency}%
+            </span>
+          </div>
+        </div>
+
+        {relatedProjects.length > 0 && (
+          <div>
+            <h4 className="text-xs font-semibold mb-2 flex items-center gap-2">
+              <span className="text-neon-primary">&gt;</span> Used in Projects
+            </h4>
+            <div className="space-y-2">
+              {relatedProjects.map((project) => (
+                <a
+                  key={project.id}
+                  href={`/projects/${project.slug}`}
+                  onClick={() => playSound("click")}
+                  className="block p-2 bg-surface-elevated rounded hover:bg-border transition-colors"
+                >
+                  <span className="font-medium text-xs">{project.name}</span>
+                  <p className="text-[10px] text-muted-foreground line-clamp-1">{project.description}</p>
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </motion.div>
+  )
 }
 
 export default function SkillsPage() {
@@ -115,11 +225,15 @@ export default function SkillsPage() {
     return resumeData.skills.find((s) => s.name === selectedSkill)
   }, [selectedSkill])
 
+  const getRelatedProjects = (skill: any) => {
+    return resumeData.projects.filter((p) =>
+      (skill as any).projects?.some((sp: string) => p.id === sp || p.slug === sp),
+    )
+  }
+
   const relatedProjects = useMemo(() => {
     if (!selectedSkillData) return []
-    return resumeData.projects.filter((p) =>
-      (selectedSkillData as any).projects?.some((sp: string) => p.id === sp || p.slug === sp),
-    )
+    return getRelatedProjects(selectedSkillData)
   }, [selectedSkillData])
 
   const getSkillIcon = (skill: any) => {
@@ -129,7 +243,6 @@ export default function SkillsPage() {
 
   const handleSkillClick = (skillName: string, isSelected: boolean) => {
     setSelectedSkill(isSelected ? null : skillName)
-    // Play multiple sounds for louder, more noticeable feedback
     playSound("nodeSelect")
     setTimeout(() => playSound("beep"), 30)
     setTimeout(() => playSound("click"), 60)
@@ -183,7 +296,7 @@ export default function SkillsPage() {
           </div>
 
           <div className="grid lg:grid-cols-3 gap-6 sm:gap-8">
-            {/* Skills grid */}
+            {/* Skills grid - Now shows inline details on mobile */}
             <div className="lg:col-span-2">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 {filteredSkills.map((skill, i) => {
@@ -192,87 +305,95 @@ export default function SkillsPage() {
                   const SkillIcon = getSkillIcon(skill)
 
                   return (
-                    <motion.button
-                      key={skill.name}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: i * 0.03 }}
-                      onClick={() => handleSkillClick(skill.name, isSelected)}
-                      className={cn(
-                        "relative p-3 sm:p-4 text-left bg-surface border rounded-lg transition-all group focus:outline-none focus:ring-2 focus:ring-ring",
-                        isSelected ? "border-neon-primary shadow-lg" : "border-border hover:border-neon-primary/50",
-                      )}
-                      style={{
-                        boxShadow: isSelected ? `0 0 20px ${color}30` : undefined,
-                      }}
-                    >
-                      <div className="flex items-start gap-3 mb-3">
-                        <div
-                          className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg flex items-center justify-center border border-border group-hover:border-neon-primary/50 transition-colors"
-                          style={{ backgroundColor: `${color}15` }}
-                        >
-                          <SkillIcon size={20} style={{ color }} className="sm:w-6 sm:h-6" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <h3 className="font-semibold text-sm sm:text-base group-hover:text-neon-primary transition-colors truncate">
-                            {skill.name}
-                          </h3>
-                          <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                            <span className="px-1.5 py-0.5 rounded bg-surface-elevated">{skill.category}</span>
-                            <span>{skill.years}y</span>
+                    <div key={skill.name}>
+                      <motion.button
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: i * 0.03 }}
+                        onClick={() => handleSkillClick(skill.name, isSelected)}
+                        className={cn(
+                          "relative w-full p-3 sm:p-4 text-left bg-surface border rounded-lg transition-all group focus:outline-none focus:ring-2 focus:ring-ring",
+                          isSelected ? "border-neon-primary shadow-lg" : "border-border hover:border-neon-primary/50",
+                        )}
+                        style={{
+                          boxShadow: isSelected ? `0 0 20px ${color}30` : undefined,
+                        }}
+                      >
+                        <div className="flex items-start gap-3 mb-3">
+                          <div
+                            className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg flex items-center justify-center border border-border group-hover:border-neon-primary/50 transition-colors"
+                            style={{ backgroundColor: `${color}15` }}
+                          >
+                            <SkillIcon size={20} style={{ color }} className="sm:w-6 sm:h-6" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <h3 className="font-semibold text-sm sm:text-base group-hover:text-neon-primary transition-colors truncate">
+                              {skill.name}
+                            </h3>
+                            <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                              <span className="px-1.5 py-0.5 rounded bg-surface-elevated">{skill.category}</span>
+                              <span>{skill.years}y</span>
+                            </div>
                           </div>
                         </div>
-                      </div>
 
-                      {/* Proficiency meter */}
-                      <div className="h-1.5 sm:h-2 bg-surface-elevated rounded-full overflow-hidden">
-                        <motion.div
-                          initial={{ width: 0 }}
-                          animate={{ width: `${skill.proficiency}%` }}
-                          transition={{ delay: i * 0.03 + 0.2, duration: 0.5 }}
-                          className="h-full rounded-full"
-                          style={{ backgroundColor: color }}
-                        />
+                        {/* Proficiency meter */}
+                        <div className="h-1.5 sm:h-2 bg-surface-elevated rounded-full overflow-hidden">
+                          <motion.div
+                            initial={{ width: 0 }}
+                            animate={{ width: `${skill.proficiency}%` }}
+                            transition={{ delay: i * 0.03 + 0.2, duration: 0.5 }}
+                            className="h-full rounded-full"
+                            style={{ backgroundColor: color }}
+                          />
+                        </div>
+                        <div className="flex justify-between mt-1 text-[10px] sm:text-xs text-muted-foreground">
+                          <span>Proficiency</span>
+                          <span className="font-mono">{skill.proficiency}%</span>
+                        </div>
+                      </motion.button>
+
+                      <div className="lg:hidden">
+                        <AnimatePresence>
+                          {isSelected && (
+                            <SkillDetailCard
+                              skill={skill}
+                              relatedProjects={getRelatedProjects(skill)}
+                              onClose={() => setSelectedSkill(null)}
+                              playSound={playSound}
+                            />
+                          )}
+                        </AnimatePresence>
                       </div>
-                      <div className="flex justify-between mt-1 text-[10px] sm:text-xs text-muted-foreground">
-                        <span>Proficiency</span>
-                        <span className="font-mono">{skill.proficiency}%</span>
-                      </div>
-                    </motion.button>
+                    </div>
                   )
                 })}
               </div>
             </div>
 
-            {/* Skill detail panel */}
-            <div className="lg:col-span-1">
-              <div className="sticky top-20 sm:top-24">
+            {/* Skill detail panel - Hidden on mobile, shown on desktop */}
+            <div className="hidden lg:block lg:col-span-1">
+              <div className="sticky top-24">
                 {selectedSkillData ? (
                   <motion.div
                     key={selectedSkill}
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
-                    className="p-4 sm:p-6 bg-surface border border-border rounded-lg"
+                    className="p-6 bg-surface border border-border rounded-lg"
                   >
                     <div className="flex items-center gap-3 mb-4">
                       <div
-                        className="w-12 h-12 sm:w-14 sm:h-14 rounded-lg flex items-center justify-center border border-border"
+                        className="w-14 h-14 rounded-lg flex items-center justify-center border border-border"
                         style={{ backgroundColor: `${categoryColors[selectedSkillData.category]}15` }}
                       >
                         {(() => {
                           const Icon = getSkillIcon(selectedSkillData)
-                          return (
-                            <Icon
-                              size={24}
-                              style={{ color: categoryColors[selectedSkillData.category] }}
-                              className="sm:w-7 sm:h-7"
-                            />
-                          )
+                          return <Icon size={28} style={{ color: categoryColors[selectedSkillData.category] }} />
                         })()}
                       </div>
                       <div>
-                        <h3 className="font-bold text-lg sm:text-xl">{selectedSkillData.name}</h3>
-                        <p className="text-xs sm:text-sm text-muted-foreground">{selectedSkillData.category}</p>
+                        <h3 className="font-bold text-xl">{selectedSkillData.name}</h3>
+                        <p className="text-sm text-muted-foreground">{selectedSkillData.category}</p>
                       </div>
                     </div>
 
@@ -295,7 +416,7 @@ export default function SkillsPage() {
 
                       {relatedProjects.length > 0 && (
                         <div>
-                          <h4 className="text-xs sm:text-sm font-semibold mb-2 flex items-center gap-2">
+                          <h4 className="text-sm font-semibold mb-2 flex items-center gap-2">
                             <span className="text-neon-primary">&gt;</span> Used in Projects
                           </h4>
                           <div className="space-y-2">
@@ -304,12 +425,10 @@ export default function SkillsPage() {
                                 key={project.id}
                                 href={`/projects/${project.slug}`}
                                 onClick={() => playSound("click")}
-                                className="block p-2 sm:p-3 bg-surface-elevated rounded hover:bg-border transition-colors"
+                                className="block p-3 bg-surface-elevated rounded hover:bg-border transition-colors"
                               >
-                                <span className="font-medium text-xs sm:text-sm">{project.name}</span>
-                                <p className="text-[10px] sm:text-xs text-muted-foreground line-clamp-1">
-                                  {project.description}
-                                </p>
+                                <span className="font-medium text-sm">{project.name}</span>
+                                <p className="text-xs text-muted-foreground line-clamp-1">{project.description}</p>
                               </a>
                             ))}
                           </div>
@@ -318,11 +437,9 @@ export default function SkillsPage() {
                     </div>
                   </motion.div>
                 ) : (
-                  <div className="p-4 sm:p-6 bg-surface border border-border rounded-lg text-center">
-                    <Info size={28} className="mx-auto mb-3 text-muted-foreground sm:w-8 sm:h-8" />
-                    <p className="text-muted-foreground text-xs sm:text-sm">
-                      Select a skill to view details and related projects
-                    </p>
+                  <div className="p-6 bg-surface border border-border rounded-lg text-center">
+                    <Info size={32} className="mx-auto mb-3 text-muted-foreground" />
+                    <p className="text-muted-foreground text-sm">Select a skill to view details and related projects</p>
                   </div>
                 )}
               </div>

@@ -4,7 +4,7 @@ import type React from "react"
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
-import { ArrowRight, Github, Linkedin, Mail, ChevronDown } from "lucide-react"
+import { ArrowRight, Github, Linkedin, Mail, ChevronDown, Shield, Terminal, Cpu } from "lucide-react"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { StartupOverlay } from "@/components/startup-overlay"
@@ -14,16 +14,16 @@ import { MultiLanguageMatrix } from "@/components/backgrounds"
 import { useAudio } from "@/components/audio-provider"
 import { useApp } from "@/components/app-provider"
 import { useTheme } from "@/components/theme-provider"
-import { resumeData } from "@/data"
+import { resumeData } from "@/src/data"
 
 const taglines = [
-  "Frontend Developer",
-  "React.js Specialist",
-  "UI/UX Enthusiast",
-  "Next.js Developer",
-  "Web Application Builder",
-  "JavaScript Expert",
-  "Problem Solver",
+  "Security Researcher",
+  "Red Team Operator",
+  "Firmware Analyst",
+  "Penetration Tester",
+  "Exploit Developer",
+  "Reverse Engineer",
+  "Digital Forensics",
 ]
 
 export default function HomePage() {
@@ -32,7 +32,7 @@ export default function HomePage() {
   const { theme } = useTheme()
   const isLight = theme === "light"
   const [typedText, setTypedText] = useState("")
-  const fullText = resumeData.greeting
+  const fullText = "> initializing secure handshake..."
 
   const [currentTaglineIndex, setCurrentTaglineIndex] = useState(0)
   const [currentTaglineText, setCurrentTaglineText] = useState("")
@@ -92,7 +92,9 @@ export default function HomePage() {
           </div>
           <div className="container mx-auto px-4 py-8 sm:py-12 relative z-10">
             <div className="max-w-3xl mx-auto">
-              <h1 className="text-3xl sm:text-4xl font-bold mb-4">{resumeData.name}</h1>
+              <h1 className="text-3xl sm:text-4xl font-bold mb-4" style={{ fontFamily: "var(--font-display)" }}>
+                {resumeData.name}
+              </h1>
               <p className="text-lg sm:text-xl text-neon-primary mb-6 font-mono">
                 {currentTaglineText}
                 <span className="inline-block w-0.5 h-5 ml-1 bg-neon-primary animate-pulse" />
@@ -164,38 +166,81 @@ export default function HomePage() {
           <MultiLanguageMatrix opacity={0.35} />
         </div>
 
-        <section className="relative min-h-screen flex items-center justify-center px-4">
-          <div className="relative z-10 container mx-auto text-center">
+        <section className="relative min-h-screen flex items-center justify-center px-4 pt-20 sm:pt-0">
+          <div className="relative z-10 container mx-auto max-w-5xl">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: isOverlayVisible ? 0 : 1, y: isOverlayVisible ? 20 : 0 }}
               transition={{ delay: 0.3, duration: 0.6 }}
             >
-              <div className="inline-block mb-6 sm:mb-8">
-                <div className="bg-surface/95 backdrop-blur-md border border-border rounded-lg p-3 sm:p-4 text-left font-mono shadow-lg">
+              <div className="mb-6 sm:mb-8 mt-4 sm:mt-0">
+                <div className="bg-surface/95 backdrop-blur-md border border-border rounded-lg p-3 sm:p-4 text-left font-mono shadow-lg inline-block">
                   <div className="flex items-center gap-2 mb-2">
                     <div className="w-2 h-2 rounded-full bg-destructive" />
                     <div className="w-2 h-2 rounded-full bg-warning" />
                     <div className="w-2 h-2 rounded-full bg-success" />
+                    <span className="text-xs text-muted-foreground ml-2">root@eshwar:~#</span>
                   </div>
-                  <p className="text-neon-primary text-sm sm:text-lg md:text-xl break-words">
+                  <p className="text-neon-primary text-sm sm:text-lg">
                     {typedText}
                     <span className="inline-block w-2 h-4 sm:h-5 ml-1 bg-neon-primary terminal-cursor" />
                   </p>
                 </div>
               </div>
 
-              <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-bold mb-3 sm:mb-4 text-balance">
-                <span className="text-foreground drop-shadow-lg">{resumeData.name.split(" ")[0]}</span>
-                <span className="text-neon-primary drop-shadow-lg"> {resumeData.name.split(" ")[1]}</span>
-              </h1>
+              <div className="grid md:grid-cols-2 gap-4 sm:gap-6 mb-8">
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.5 }}
+                  className="bg-surface/90 backdrop-blur-md border border-border rounded-lg p-4 sm:p-6 hover:border-neon-primary/50 transition-colors"
+                >
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="p-2 bg-neon-primary/10 rounded-lg">
+                      <Shield className="w-5 h-5 sm:w-6 sm:h-6 text-neon-primary" />
+                    </div>
+                    <h2 className="text-lg sm:text-xl font-bold font-mono text-neon-primary">{">"} OFFENSIVE_OPS</h2>
+                  </div>
+                  <p className="text-foreground/90 text-sm sm:text-base leading-relaxed">
+                    I architect my own security ecosystems — transforming everyday devices into controlled environments
+                    for analysis and system re-engineering. My work spans from{" "}
+                    <span className="text-neon-primary font-semibold">rooting and firmware alteration</span> to{" "}
+                    <span className="text-neon-primary font-semibold">adversarial simulation</span> and defensive
+                    observation, bridging both offensive and blue-team mindsets.
+                  </p>
+                </motion.div>
 
-              <div className="text-base sm:text-xl md:text-2xl text-muted-foreground mb-6 sm:mb-8 max-w-2xl mx-auto h-8 sm:h-10">
-                <span className="text-neon-primary font-mono">{currentTaglineText}</span>
-                <span className="inline-block w-0.5 h-5 sm:h-7 ml-1 bg-neon-primary animate-pulse align-middle" />
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.7 }}
+                  className="bg-surface/90 backdrop-blur-md border border-border rounded-lg p-4 sm:p-6 hover:border-neon-primary/50 transition-colors"
+                >
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="p-2 bg-neon-primary/10 rounded-lg">
+                      <Terminal className="w-5 h-5 sm:w-6 sm:h-6 text-neon-primary" />
+                    </div>
+                    <h2 className="text-lg sm:text-xl font-bold font-mono text-neon-primary">{">"} METHODOLOGY</h2>
+                  </div>
+                  <p className="text-foreground/90 text-sm sm:text-base leading-relaxed">
+                    I approach cybersecurity as an applied science: exploring system behavior through{" "}
+                    <span className="text-neon-primary font-semibold">
+                      modification, exploitation, and reinforcement
+                    </span>
+                    . My objective is to cultivate a deep, operational understanding of how digital infrastructures{" "}
+                    <span className="text-neon-primary font-semibold">resist, adapt, and recover</span> under pressure.
+                  </p>
+                </motion.div>
               </div>
 
-              {/* ... existing code for buttons and social links ... */}
+              <div className="text-center mb-6 sm:mb-8">
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-surface/80 backdrop-blur rounded-full border border-border">
+                  <Cpu className="w-4 h-4 text-neon-primary" />
+                  <span className="text-neon-primary font-mono text-sm sm:text-base">{currentTaglineText}</span>
+                  <span className="inline-block w-0.5 h-4 sm:h-5 bg-neon-primary animate-pulse" />
+                </div>
+              </div>
+
               <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-8 sm:mb-12">
                 <Link
                   href="/projects"
@@ -263,7 +308,6 @@ export default function HomePage() {
           </motion.div>
         </section>
 
-        {/* ... existing code for featured projects and skills sections ... */}
         <section className="py-12 sm:py-20 bg-surface/95 backdrop-blur-md relative z-10">
           <div className="container mx-auto px-4">
             <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8 sm:mb-12">

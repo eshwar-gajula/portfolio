@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { useAudio } from "./audio-provider"
 import { useApp } from "./app-provider"
 import { useTheme } from "./theme-provider"
-import { resumeData } from "@/data"
+import { resumeData } from "@/src/data"
 
 export function StartupOverlay() {
   const { playBootSound, playTypingSound, stopTypingSound } = useAudio()

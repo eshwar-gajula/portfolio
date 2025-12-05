@@ -144,6 +144,8 @@
 @theme inline {
   --font-sans: var(--font-sans), "Inter", system-ui, sans-serif;
   --font-mono: var(--font-mono), "JetBrains Mono", "Fira Code", monospace;
+  /* Added display font for stylish headings */
+  --font-display: var(--font-display), "Orbitron", "Inter", sans-serif;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-surface: var(--surface);

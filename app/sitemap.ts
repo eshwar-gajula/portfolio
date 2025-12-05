@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next"
-import { resumeData } from "@/data"
+import { resumeData } from "@/src/data"
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://eshwar-gajula-portfolio.vercel.app"

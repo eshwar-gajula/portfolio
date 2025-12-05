@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { X, Terminal } from "lucide-react"
 import { useApp } from "./app-provider"
 import { useAudio } from "./audio-provider"
-import { resumeData } from "@/data"
+import { resumeData } from "@/src/data"
 
 interface CommandResult {
   type: "success" | "error" | "info"

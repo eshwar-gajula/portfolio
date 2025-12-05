@@ -59,11 +59,12 @@ export interface ResumeData {
   greeting: string
   summary: string
   email: string
+  phone?: string
   location: string
   website: string
   linkedin: string
   github: string
-  instagram: string
+  instagram?: string
   about: About
   skills: Skill[]
   experience: Experience[]

@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { Github, Linkedin, Mail, Shield } from "lucide-react"
-import { resumeData } from "@/data"
+import { resumeData } from "@/src/data"
 
 export function Footer() {
   const currentYear = new Date().getFullYear()

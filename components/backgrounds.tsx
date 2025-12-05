@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react"
 import { useTheme } from "@/components/theme-provider"
 
-export function MultiLanguageMatrix({ opacity = 0.35 }: { opacity?: number }) {
+export function MultiLanguageMatrix({ opacity = 0.10 }: { opacity?: number }) {
   const { isLowPower, theme } = useTheme()
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const isLight = theme === "light"

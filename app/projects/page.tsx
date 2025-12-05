@@ -1,9 +1,11 @@
 "use client"
 
+import type React from "react"
+
 import { useState, useCallback, useMemo } from "react"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
-import { Grid3X3, Network, ExternalLink, Github, Target } from "lucide-react"
+import { Grid3X3, Network, ExternalLink, Github, Target, Brain, Globe, Code, Wrench } from "lucide-react"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { CommandBar } from "@/components/command-bar"
@@ -13,9 +15,27 @@ import { MultiLanguageMatrix } from "@/components/backgrounds"
 import { useAudio } from "@/components/audio-provider"
 import { useTheme } from "@/components/theme-provider"
 import { cn } from "@/lib/utils"
-import { resumeData } from "@/data"
+import { resumeData } from "@/src/data"
 
 type ViewMode = "grid" | "graph"
+
+const categoryColors: Record<string, string> = {
+  "AI/ML": "#ff375f", // Pink/Red for AI
+  "Web Development": "#bf5af2", // Purple for Web
+  Security: "#ff453a", // Bright red
+  Tools: "#30d158", // Green
+  Backend: "#ff9f0a", // Orange
+  Mobile: "#5ac8fa", // Cyan
+}
+
+const categoryIcons: Record<string, React.ElementType> = {
+  "AI/ML": Brain,
+  "Web Development": Globe,
+  Security: Wrench,
+  Tools: Code,
+  Backend: Code,
+  Mobile: Code,
+}
 
 export default function ProjectsPage() {
   const [viewMode, setViewMode] = useState<ViewMode>("grid")
@@ -50,7 +70,7 @@ export default function ProjectsPage() {
     <>
       <Header />
       <main id="main-content" className="min-h-screen pt-20 sm:pt-24 pb-16 bg-background relative overflow-hidden">
-        <MultiLanguageMatrix opacity={0.5} />
+        <MultiLanguageMatrix opacity={0.35} />
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="flex flex-col gap-4 mb-6 sm:mb-8">
@@ -104,23 +124,32 @@ export default function ProjectsPage() {
           </div>
 
           <div className="flex gap-2 mb-6 sm:mb-8 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                onClick={() => {
-                  setFilter(cat)
-                  playSound("click")
-                }}
-                className={cn(
-                  "px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium rounded-full transition-colors whitespace-nowrap flex-shrink-0",
-                  filter === cat
-                    ? "bg-neon-primary text-primary-foreground"
-                    : "bg-surface border border-border text-muted-foreground hover:text-foreground hover:border-neon-primary/50",
-                )}
-              >
-                {cat.charAt(0).toUpperCase() + cat.slice(1)}
-              </button>
-            ))}
+            {categories.map((cat) => {
+              const Icon = cat !== "all" ? categoryIcons[cat] || Code : Target
+              const color = cat !== "all" ? categoryColors[cat] : "#ff2d55"
+              return (
+                <button
+                  key={cat}
+                  onClick={() => {
+                    setFilter(cat)
+                    playSound("click")
+                  }}
+                  className={cn(
+                    "flex items-center gap-2 px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium rounded-full transition-all whitespace-nowrap flex-shrink-0",
+                    filter === cat
+                      ? "text-white"
+                      : "bg-surface border border-border text-muted-foreground hover:text-foreground hover:border-neon-primary/50",
+                  )}
+                  style={{
+                    backgroundColor: filter === cat ? color : undefined,
+                    borderColor: filter === cat ? color : undefined,
+                  }}
+                >
+                  <Icon size={14} className="sm:w-4 sm:h-4" />
+                  {cat.charAt(0).toUpperCase() + cat.slice(1)}
+                </button>
+              )
+            })}
           </div>
 
           <AnimatePresence mode="wait">
@@ -132,80 +161,103 @@ export default function ProjectsPage() {
                 exit={{ opacity: 0 }}
                 className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
               >
-                {filteredProjects.map((project, i) => (
-                  <motion.div
-                    key={project.id}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: i * 0.05 }}
-                  >
-                    <div
-                      className="group h-full flex flex-col p-6 bg-surface border border-border rounded-lg hover:border-neon-primary/50 transition-all cursor-pointer"
-                      onClick={() => handleProjectSelect(project.id)}
-                      onKeyDown={(e) => e.key === "Enter" && handleProjectSelect(project.id)}
-                      tabIndex={0}
-                      role="button"
-                      aria-label={`View ${project.name} details`}
+                {filteredProjects.map((project, i) => {
+                  const color = categoryColors[project.category] || "#ff2d55"
+                  const Icon = categoryIcons[project.category] || Code
+
+                  return (
+                    <motion.div
+                      key={project.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: i * 0.05 }}
                     >
-                      <div className="flex items-start justify-between mb-4">
-                        <span className="px-2 py-1 text-xs font-mono bg-neon-primary/10 text-neon-primary rounded">
-                          {project.category}
-                        </span>
-                        {project.featured && (
-                          <span className="px-2 py-1 text-xs bg-accent/10 text-accent rounded">Featured</span>
-                        )}
-                      </div>
-
-                      <h3 className="text-xl font-semibold mb-2 group-hover:text-neon-primary transition-colors">
-                        {project.name}
-                      </h3>
-
-                      <p className="text-muted-foreground text-sm mb-4 flex-1">{project.description}</p>
-
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        {project.techStack.slice(0, 4).map((tech) => (
-                          <span key={tech} className="px-2 py-1 text-xs bg-surface-elevated rounded">
-                            {tech}
+                      <div
+                        className="group h-full flex flex-col p-6 bg-surface border border-border rounded-lg hover:border-neon-primary/50 transition-all cursor-pointer"
+                        onClick={() => handleProjectSelect(project.id)}
+                        onKeyDown={(e) => e.key === "Enter" && handleProjectSelect(project.id)}
+                        tabIndex={0}
+                        role="button"
+                        aria-label={`View ${project.name} details`}
+                        style={{
+                          borderColor: undefined,
+                        }}
+                      >
+                        <div className="flex items-start justify-between mb-4">
+                          <span
+                            className="flex items-center gap-1.5 px-2 py-1 text-xs font-mono rounded"
+                            style={{
+                              backgroundColor: `${color}20`,
+                              color: color,
+                            }}
+                          >
+                            <Icon size={12} />
+                            {project.category}
                           </span>
-                        ))}
-                      </div>
+                          {project.featured && (
+                            <span className="px-2 py-1 text-xs bg-accent/10 text-accent rounded">Featured</span>
+                          )}
+                        </div>
 
-                      <div className="flex items-center gap-4 pt-4 border-t border-border">
-                        {project.demoUrl && (
-                          <a
-                            href={project.demoUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
+                        <h3 className="text-xl font-semibold mb-2 group-hover:text-neon-primary transition-colors">
+                          {project.name}
+                        </h3>
+
+                        <p className="text-muted-foreground text-sm mb-4 flex-1">{project.description}</p>
+
+                        <div className="flex flex-wrap gap-2 mb-4">
+                          {project.techStack.slice(0, 4).map((tech) => (
+                            <span
+                              key={tech}
+                              className="px-2 py-1 text-xs rounded"
+                              style={{
+                                backgroundColor: `${color}10`,
+                                border: `1px solid ${color}30`,
+                              }}
+                            >
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
+
+                        <div className="flex items-center gap-4 pt-4 border-t border-border">
+                          {project.demoUrl && (
+                            <a
+                              href={project.demoUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              onClick={(e) => e.stopPropagation()}
+                              className="flex items-center gap-1 text-sm text-muted-foreground hover:text-neon-primary transition-colors"
+                            >
+                              <ExternalLink size={14} />
+                              Demo
+                            </a>
+                          )}
+                          {project.githubUrl && (
+                            <a
+                              href={project.githubUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              onClick={(e) => e.stopPropagation()}
+                              className="flex items-center gap-1 text-sm text-muted-foreground hover:text-neon-primary transition-colors"
+                            >
+                              <Github size={14} />
+                              Code
+                            </a>
+                          )}
+                          <Link
+                            href={`/projects/${project.slug}`}
                             onClick={(e) => e.stopPropagation()}
-                            className="flex items-center gap-1 text-sm text-muted-foreground hover:text-neon-primary transition-colors"
+                            className="ml-auto text-sm hover:underline"
+                            style={{ color }}
                           >
-                            <ExternalLink size={14} />
-                            Demo
-                          </a>
-                        )}
-                        {project.githubUrl && (
-                          <a
-                            href={project.githubUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            onClick={(e) => e.stopPropagation()}
-                            className="flex items-center gap-1 text-sm text-muted-foreground hover:text-neon-primary transition-colors"
-                          >
-                            <Github size={14} />
-                            Code
-                          </a>
-                        )}
-                        <Link
-                          href={`/projects/${project.slug}`}
-                          onClick={(e) => e.stopPropagation()}
-                          className="ml-auto text-sm text-neon-primary hover:underline"
-                        >
-                          Details →
-                        </Link>
+                            Details →
+                          </Link>
+                        </div>
                       </div>
-                    </div>
-                  </motion.div>
-                ))}
+                    </motion.div>
+                  )
+                })}
               </motion.div>
             ) : (
               <motion.div

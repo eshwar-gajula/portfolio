@@ -11,7 +11,8 @@ import { CommandBar } from "@/components/command-bar"
 import { MultiLanguageMatrix } from "@/components/backgrounds"
 import { useAudio } from "@/components/audio-provider"
 import { useApp } from "@/components/app-provider"
-import { resumeData } from "@/data"
+
+const LABS_PASSPHRASE = "eshwar2024"
 
 export default function LabsPage() {
   const { playSound } = useAudio()
@@ -21,8 +22,8 @@ export default function LabsPage() {
 
   const handleUnlock = (e: React.FormEvent) => {
     e.preventDefault()
-    if (passphrase.toLowerCase() === resumeData.labsPassphrase?.toLowerCase()) {
-      unlockLabs()
+    if (passphrase.toLowerCase() === LABS_PASSPHRASE) {
+      unlockLabs(passphrase)
       playSound("success")
       setError("")
     } else {
@@ -35,7 +36,7 @@ export default function LabsPage() {
     <>
       <Header />
       <main id="main-content" className="min-h-screen pt-24 pb-16 bg-background relative overflow-hidden">
-        <MultiLanguageMatrix opacity={0.06} />
+        <MultiLanguageMatrix opacity={0.35} />
 
         <div className="container mx-auto px-4 relative z-10">
           <AnimatePresence mode="wait">
@@ -45,27 +46,27 @@ export default function LabsPage() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="max-w-md mx-auto text-center py-20"
+                className="max-w-md mx-auto text-center py-12 sm:py-20"
               >
-                <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-surface/80 backdrop-blur border border-border flex items-center justify-center">
-                  <Lock size={32} className="text-muted-foreground" />
+                <div className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-6 rounded-full bg-surface/80 backdrop-blur border border-border flex items-center justify-center">
+                  <Lock size={28} className="text-muted-foreground sm:w-8 sm:h-8" />
                 </div>
-                <h1 className="text-3xl font-bold mb-4">Labs Locked</h1>
-                <p className="text-muted-foreground mb-8">
+                <h1 className="text-2xl sm:text-3xl font-bold mb-4">Labs Locked</h1>
+                <p className="text-sm sm:text-base text-muted-foreground mb-8 px-4">
                   This section contains educational security research content. Enter the passphrase to unlock.
                 </p>
 
-                <form onSubmit={handleUnlock} className="space-y-4">
+                <form onSubmit={handleUnlock} className="space-y-4 px-4">
                   <div className="relative">
                     <input
                       type="password"
                       value={passphrase}
                       onChange={(e) => setPassphrase(e.target.value)}
                       placeholder="Enter passphrase..."
-                      className="w-full px-4 py-3 bg-surface/80 backdrop-blur border border-border rounded-lg font-mono text-center focus:outline-none focus:ring-2 focus:ring-ring focus:border-neon-primary"
+                      className="w-full px-4 py-3 bg-surface/80 backdrop-blur border border-border rounded-lg font-mono text-center text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-ring focus:border-neon-primary"
                     />
                   </div>
-                  {error && <p className="text-destructive text-sm">{error}</p>}
+                  {error && <p className="text-destructive text-xs sm:text-sm">{error}</p>}
                   <button
                     type="submit"
                     className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-neon-primary text-primary-foreground font-semibold rounded-lg hover:opacity-90 transition-opacity"
@@ -75,7 +76,7 @@ export default function LabsPage() {
                   </button>
                 </form>
 
-                <p className="text-xs text-muted-foreground mt-6">
+                <p className="text-xs text-muted-foreground mt-6 px-4">
                   Hint: Use the command bar (<kbd className="px-1 py-0.5 bg-surface rounded">⌘K</kbd>) and type{" "}
                   <code className="text-neon-primary">labs_unlock</code>
                 </p>
@@ -83,34 +84,33 @@ export default function LabsPage() {
             ) : (
               <motion.div key="unlocked" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
                 {/* Header */}
-                <div className="mb-8">
+                <div className="mb-6 sm:mb-8">
                   <div className="flex items-center gap-3 mb-4">
-                    <Terminal className="text-neon-primary" size={24} />
-                    <h1 className="text-4xl font-bold">
+                    <Terminal className="text-neon-primary" size={20} />
+                    <h1 className="text-2xl sm:text-4xl font-bold">
                       <span className="text-neon-primary">&gt;</span> Labs
                     </h1>
                   </div>
-                  <p className="text-muted-foreground max-w-2xl">
+                  <p className="text-sm sm:text-base text-muted-foreground max-w-2xl">
                     Educational security research, writeups, and learning resources. All content is for educational
                     purposes only.
                   </p>
                 </div>
 
                 {/* Disclaimer */}
-                <div className="p-4 bg-warning/10 border border-warning/30 rounded-lg mb-8 flex items-start gap-3">
-                  <AlertTriangle className="text-warning shrink-0 mt-0.5" size={20} />
+                <div className="p-3 sm:p-4 bg-warning/10 border border-warning/30 rounded-lg mb-6 sm:mb-8 flex items-start gap-3">
+                  <AlertTriangle className="text-warning shrink-0 mt-0.5" size={18} />
                   <div>
-                    <p className="font-medium text-warning">Educational Content Disclaimer</p>
-                    <p className="text-sm text-muted-foreground mt-1">
+                    <p className="font-medium text-warning text-sm sm:text-base">Educational Content Disclaimer</p>
+                    <p className="text-xs sm:text-sm text-muted-foreground mt-1">
                       All security research presented here is strictly for educational purposes. No tools, scripts, or
-                      instructions that could enable malicious activity are provided. Always obtain proper authorization
-                      before testing systems.
+                      instructions that could enable malicious activity are provided.
                     </p>
                   </div>
                 </div>
 
                 {/* Labs content */}
-                <div className="grid md:grid-cols-2 gap-6">
+                <div className="grid sm:grid-cols-2 gap-4 sm:gap-6">
                   {[
                     {
                       title: "Web Security Fundamentals",
@@ -139,18 +139,18 @@ export default function LabsPage() {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: i * 0.1 }}
-                      className="p-6 bg-surface/80 backdrop-blur border border-border rounded-lg hover:border-neon-primary/30 transition-colors"
+                      className="p-4 sm:p-6 bg-surface/80 backdrop-blur border border-border rounded-lg hover:border-neon-primary/30 transition-colors"
                     >
                       <div className="flex items-start gap-3 mb-4">
-                        <div className="w-10 h-10 bg-neon-primary/10 rounded-lg flex items-center justify-center shrink-0">
-                          <BookOpen className="text-neon-primary" size={20} />
+                        <div className="w-8 h-8 sm:w-10 sm:h-10 bg-neon-primary/10 rounded-lg flex items-center justify-center shrink-0">
+                          <BookOpen className="text-neon-primary" size={16} />
                         </div>
                         <div>
-                          <h3 className="font-semibold text-lg">{lab.title}</h3>
-                          <p className="text-sm text-muted-foreground mt-1">{lab.description}</p>
+                          <h3 className="font-semibold text-base sm:text-lg">{lab.title}</h3>
+                          <p className="text-xs sm:text-sm text-muted-foreground mt-1">{lab.description}</p>
                         </div>
                       </div>
-                      <div className="flex flex-wrap gap-2">
+                      <div className="flex flex-wrap gap-1.5 sm:gap-2">
                         {lab.topics.map((topic) => (
                           <span key={topic} className="px-2 py-1 text-xs bg-surface-elevated rounded">
                             {topic}
@@ -162,8 +162,8 @@ export default function LabsPage() {
                 </div>
 
                 {/* Coming soon */}
-                <div className="mt-12 text-center">
-                  <p className="text-muted-foreground">More educational content coming soon...</p>
+                <div className="mt-8 sm:mt-12 text-center">
+                  <p className="text-sm text-muted-foreground">More educational content coming soon...</p>
                 </div>
               </motion.div>
             )}

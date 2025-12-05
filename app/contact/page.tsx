@@ -4,13 +4,13 @@ import type React from "react"
 
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { Mail, Github, Linkedin, MapPin, Send, CheckCircle, Radio } from "lucide-react"
+import { Mail, Github, Linkedin, MapPin, Send, CheckCircle, Radio, PhoneCallIcon } from "lucide-react"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { CommandBar } from "@/components/command-bar"
 import { MultiLanguageMatrix } from "@/components/backgrounds"
 import { useAudio } from "@/components/audio-provider"
-import { resumeData } from "@/data"
+import { resumeData } from "@/src/data"
 
 export default function ContactPage() {
   const { playSound } = useAudio()
@@ -116,6 +116,16 @@ export default function ContactPage() {
                       <p className="text-sm text-muted-foreground">{resumeData.location}</p>
                     </div>
                   </div>
+                  
+                  <div className="flex items-center gap-4 p-4 bg-surface border border-border rounded-lg">
+                    <div className="w-12 h-12 bg-muted/20 rounded-lg flex items-center justify-center">
+                      <PhoneCallIcon className="text-muted-foreground" size={20} />
+                    </div>
+                    <div>
+                      <p className="font-medium">Call</p>
+                      <p className="text-sm text-muted-foreground">{resumeData.phone}</p>
+                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -133,7 +143,7 @@ export default function ContactPage() {
             </div>
 
             {/* Contact form */}
-            <div>
+            <div className="pt-20 ">
               <div className="p-6 bg-surface border border-border rounded-lg">
                 <h2 className="text-xl font-semibold mb-6">Send a Message</h2>
 

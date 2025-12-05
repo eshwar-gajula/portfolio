@@ -7,7 +7,7 @@ import { Footer } from "@/components/footer"
 import { CommandBar } from "@/components/command-bar"
 import { MultiLanguageMatrix } from "@/components/backgrounds"
 import { useAudio } from "@/components/audio-provider"
-import { resumeData } from "@/data"
+import { resumeData } from "@/src/data"
 
 interface TimelineItem {
   id: string
