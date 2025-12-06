@@ -5,6 +5,8 @@ import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { AudioProvider } from "@/components/audio-provider"
 import { AppProvider } from "@/components/app-provider"
+import { CommandButton } from "@/components/command-button"
+import { CommandBar } from "@/components/command-bar"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -84,6 +86,8 @@ export default function RootLayout({
                 Skip to main content
               </a>
               {children}
+              <CommandButton />
+              <CommandBar />
             </AppProvider>
           </AudioProvider>
         </ThemeProvider>
