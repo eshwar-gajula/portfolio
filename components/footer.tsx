@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { Github, Linkedin, Mail, Shield } from "lucide-react"
+import { Github, Linkedin, Mail, Shield, Terminal } from "lucide-react"
 import { resumeData } from "@/src/data"
 
 export function Footer() {
@@ -10,16 +10,16 @@ export function Footer() {
   return (
     <footer className="relative z-20 border-t border-border bg-surface mt-auto">
       <div className="container mx-auto px-4 py-8">
-        <div className="grid gap-8 md:grid-cols-3">
+        <div className="grid gap-8 md:grid-cols-4">
           {/* Brand */}
           <div>
             <h3 className="font-mono font-bold text-lg text-foreground mb-2">{resumeData.name}</h3>
-            <p className="text-sm text-muted-foreground">{resumeData.title}</p>
+            <p className="text-sm text-muted-foreground">Red-Team Oriented Front-End Engineer</p>
           </div>
 
-          {/* Quick links */}
+          {/* Main Navigation */}
           <div>
-            <h4 className="font-semibold text-sm text-foreground mb-3">Quick Links</h4>
+            <h4 className="font-semibold text-sm text-foreground mb-3">Navigation</h4>
             <nav className="flex flex-col gap-2">
               <Link href="/about" className="text-sm text-muted-foreground hover:text-neon-primary transition-colors">
                 About
@@ -30,8 +30,14 @@ export function Footer() {
               >
                 Projects
               </Link>
-              <Link href="/resume" className="text-sm text-muted-foreground hover:text-neon-primary transition-colors">
-                Resume
+              <Link href="/skills" className="text-sm text-muted-foreground hover:text-neon-primary transition-colors">
+                Skills
+              </Link>
+              <Link
+                href="/timeline"
+                className="text-sm text-muted-foreground hover:text-neon-primary transition-colors"
+              >
+                Timeline
               </Link>
               <Link href="/contact" className="text-sm text-muted-foreground hover:text-neon-primary transition-colors">
                 Contact
@@ -39,10 +45,40 @@ export function Footer() {
             </nav>
           </div>
 
+          <div>
+            <h4 className="font-semibold text-sm text-foreground mb-3 flex items-center gap-2">
+              <Terminal size={14} className="text-neon-primary" />
+              More
+            </h4>
+            <nav className="flex flex-col gap-2">
+              <Link
+                href="/case-studies"
+                className="text-sm text-muted-foreground hover:text-neon-primary transition-colors"
+              >
+                Case Studies
+              </Link>
+              <Link
+                href="/security-notes"
+                className="text-sm text-muted-foreground hover:text-neon-primary transition-colors"
+              >
+                Security Notes
+              </Link>
+              <Link
+                href="/changelog"
+                className="text-sm text-muted-foreground hover:text-neon-primary transition-colors"
+              >
+                Changelog
+              </Link>
+              <Link href="/resume" className="text-sm text-muted-foreground hover:text-neon-primary transition-colors">
+                Resume
+              </Link>
+            </nav>
+          </div>
+
           {/* Social links */}
           <div>
             <h4 className="font-semibold text-sm text-foreground mb-3">Connect</h4>
-            <div className="flex gap-4">
+            <div className="flex gap-4 mb-4">
               <a
                 href={resumeData.github}
                 target="_blank"
@@ -69,6 +105,26 @@ export function Footer() {
                 <Mail size={20} />
               </a>
             </div>
+            <div className="flex flex-col gap-2">
+              <a
+                href="https://tryhackme.com/p/eshwar"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs text-muted-foreground hover:text-success transition-colors flex items-center gap-1"
+              >
+                <Shield size={12} />
+                TryHackMe
+              </a>
+              <a
+                href="https://app.hackthebox.com/profile/eshwar"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-xs text-muted-foreground hover:text-success transition-colors flex items-center gap-1"
+              >
+                <Terminal size={12} />
+                HackTheBox
+              </a>
+            </div>
           </div>
         </div>
 
@@ -83,7 +139,8 @@ export function Footer() {
             </p>
           </div>
           <p className="text-xs text-muted-foreground text-center">
-            &copy; {currentYear} {resumeData.name}. Built with Next.js & deployed on Vercel.
+            blackroom-portfolio v3.1 — Last updated Jan 2026 | &copy; {currentYear} {resumeData.name}. Built with
+            Next.js & deployed on Vercel.
           </p>
         </div>
       </div>

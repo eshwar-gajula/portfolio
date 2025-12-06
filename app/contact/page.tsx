@@ -4,7 +4,7 @@ import type React from "react"
 
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { Mail, Github, Linkedin, MapPin, Send, CheckCircle, Radio, PhoneCallIcon } from "lucide-react"
+import { Mail, Github, Linkedin, MapPin, Send, CheckCircle, Radio, Shield, Terminal } from "lucide-react"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { CommandBar } from "@/components/command-bar"
@@ -27,7 +27,6 @@ export default function ContactPage() {
     setIsSubmitting(true)
     playSound("beep")
 
-    // Simulate form submission
     await new Promise((resolve) => setTimeout(resolve, 1500))
 
     setIsSubmitting(false)
@@ -48,10 +47,11 @@ export default function ContactPage() {
               <span className="text-neon-primary font-mono text-xs">CHANNEL_OPEN</span>
             </div>
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4">
-              <span className="text-neon-primary">&gt;</span> Contact
+              <span className="text-neon-primary">&gt;</span> Let's Collaborate
             </h1>
             <p className="text-muted-foreground max-w-2xl text-sm sm:text-base">
-              Have a project in mind or want to discuss opportunities? Let's connect.
+              I'm open to front-end roles, security-focused work, red-team aligned projects, and collaborations where UI
+              engineering and adversarial thinking meet.
             </p>
           </div>
 
@@ -76,6 +76,22 @@ export default function ContactPage() {
                   </a>
 
                   <a
+                    href={resumeData.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => playSound("click")}
+                    className="flex items-center gap-4 p-4 bg-surface border border-border rounded-lg hover:border-neon-primary/50 transition-colors group"
+                  >
+                    <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center group-hover:bg-accent/20 transition-colors">
+                      <Github className="text-accent" size={20} />
+                    </div>
+                    <div>
+                      <p className="font-medium">GitHub</p>
+                      <p className="text-sm text-muted-foreground">View my code</p>
+                    </div>
+                  </a>
+
+                  <a
                     href={resumeData.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -92,18 +108,34 @@ export default function ContactPage() {
                   </a>
 
                   <a
-                    href={resumeData.github}
+                    href="https://tryhackme.com/p/eshwar"
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => playSound("click")}
                     className="flex items-center gap-4 p-4 bg-surface border border-border rounded-lg hover:border-neon-primary/50 transition-colors group"
                   >
-                    <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center group-hover:bg-accent/20 transition-colors">
-                      <Github className="text-accent" size={20} />
+                    <div className="w-12 h-12 bg-success/10 rounded-lg flex items-center justify-center group-hover:bg-success/20 transition-colors">
+                      <Shield className="text-success" size={20} />
                     </div>
                     <div>
-                      <p className="font-medium">GitHub</p>
-                      <p className="text-sm text-muted-foreground">View my code</p>
+                      <p className="font-medium">TryHackMe</p>
+                      <p className="text-sm text-muted-foreground">Security learning</p>
+                    </div>
+                  </a>
+
+                  <a
+                    href="https://app.hackthebox.com/profile/eshwar"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => playSound("click")}
+                    className="flex items-center gap-4 p-4 bg-surface border border-border rounded-lg hover:border-neon-primary/50 transition-colors group"
+                  >
+                    <div className="w-12 h-12 bg-warning/10 rounded-lg flex items-center justify-center group-hover:bg-warning/20 transition-colors">
+                      <Terminal className="text-warning" size={20} />
+                    </div>
+                    <div>
+                      <p className="font-medium">HackTheBox</p>
+                      <p className="text-sm text-muted-foreground">Offensive practice</p>
                     </div>
                   </a>
 
@@ -116,16 +148,6 @@ export default function ContactPage() {
                       <p className="text-sm text-muted-foreground">{resumeData.location}</p>
                     </div>
                   </div>
-                  
-                  <div className="flex items-center gap-4 p-4 bg-surface border border-border rounded-lg">
-                    <div className="w-12 h-12 bg-muted/20 rounded-lg flex items-center justify-center">
-                      <PhoneCallIcon className="text-muted-foreground" size={20} />
-                    </div>
-                    <div>
-                      <p className="font-medium">Call</p>
-                      <p className="text-sm text-muted-foreground">{resumeData.phone}</p>
-                    </div>
-                  </div>
                 </div>
               </div>
 
@@ -136,14 +158,14 @@ export default function ContactPage() {
                   <span>status</span>
                 </div>
                 <p className="text-foreground">
-                  Currently <span className="text-neon-primary">available</span> for frontend development and freelance
-                  projects.
+                  Currently <span className="text-neon-primary">available</span> for frontend development,
+                  security-focused projects, and red-team collaborations.
                 </p>
               </div>
             </div>
 
             {/* Contact form */}
-            <div className="pt-20 ">
+            <div>
               <div className="p-6 bg-surface border border-border rounded-lg">
                 <h2 className="text-xl font-semibold mb-6">Send a Message</h2>
 

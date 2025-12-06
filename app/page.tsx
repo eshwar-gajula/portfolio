@@ -4,7 +4,7 @@ import type React from "react"
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import { motion } from "framer-motion"
-import { ArrowRight, Github, Linkedin, Mail, ChevronDown, Shield, Terminal, Cpu } from "lucide-react"
+import { ArrowRight, Github, Linkedin, Mail, ChevronDown, Shield, Terminal, FileText } from "lucide-react"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { StartupOverlay } from "@/components/startup-overlay"
@@ -17,13 +17,19 @@ import { useTheme } from "@/components/theme-provider"
 import { resumeData } from "@/src/data"
 
 const taglines = [
-  "Security Researcher",
-  "Red Team Operator",
-  "Firmware Analyst",
-  "Penetration Tester",
-  "Exploit Developer",
-  "Reverse Engineer",
-  "Digital Forensics",
+  "Red-Team Front-End Engineer",
+  "Security-Focused Developer",
+  "Offensive Security Enthusiast",
+  "Full-Stack Builder",
+  "Automation Specialist",
+]
+
+const terminalCommands = [
+  "blackroom@portfolio:~$ whoami",
+  "blackroom@portfolio:~$ cat /etc/motd",
+  "blackroom@portfolio:~$ ./handshake --init",
+  "blackroom@portfolio:~$ nmap -sV localhost",
+  "blackroom@portfolio:~$ echo 'Welcome, Operator.'",
 ]
 
 export default function HomePage() {
@@ -32,7 +38,8 @@ export default function HomePage() {
   const { theme } = useTheme()
   const isLight = theme === "light"
   const [typedText, setTypedText] = useState("")
-  const fullText = "> initializing secure handshake... hello I'm Eshwar."
+  const [currentCommand] = useState(() => terminalCommands[Math.floor(Math.random() * terminalCommands.length)])
+  const fullText = currentCommand
 
   const [currentTaglineIndex, setCurrentTaglineIndex] = useState(0)
   const [currentTaglineText, setCurrentTaglineText] = useState("")
@@ -179,7 +186,7 @@ export default function HomePage() {
                     <div className="w-2 h-2 rounded-full bg-destructive" />
                     <div className="w-2 h-2 rounded-full bg-warning" />
                     <div className="w-2 h-2 rounded-full bg-success" />
-                    <span className="text-xs text-muted-foreground ml-2">root@eshwar:~#</span>
+                    <span className="text-xs text-muted-foreground ml-2">blackroom@portfolio</span>
                   </div>
                   <p className="text-neon-primary text-sm sm:text-lg">
                     {typedText}
@@ -188,54 +195,24 @@ export default function HomePage() {
                 </div>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-4 sm:gap-6 mb-8">
-                <motion.div
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.5 }}
-                  className="bg-surface/90 backdrop-blur-md border border-border rounded-lg p-4 sm:p-6 hover:border-neon-primary/50 transition-colors"
+              <div className="text-center mb-8">
+                <h1
+                  className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4"
+                  style={{ fontFamily: "var(--font-display)" }}
                 >
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="p-2 bg-neon-primary/10 rounded-lg">
-                      <Shield className="w-5 h-5 sm:w-6 sm:h-6 text-neon-primary" />
-                    </div>
-                    <h2 className="text-lg sm:text-xl font-bold font-mono text-neon-primary">{">"} OFFENSIVE_OPS</h2>
-                  </div>
-                  <p className="text-foreground/90 text-sm sm:text-base leading-relaxed">
-                    I architect my own security ecosystems — transforming everyday devices into controlled environments
-                    for analysis and system re-engineering. My work spans from{" "}
-                    <span className="text-neon-primary font-semibold">rooting and firmware alteration</span> to{" "}
-                    <span className="text-neon-primary font-semibold">adversarial simulation</span> and defensive
-                    observation, bridging both offensive and blue-team mindsets.
-                  </p>
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.7 }}
-                  className="bg-surface/90 backdrop-blur-md border border-border rounded-lg p-4 sm:p-6 hover:border-neon-primary/50 transition-colors"
-                >
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="p-2 bg-neon-primary/10 rounded-lg">
-                      <Terminal className="w-5 h-5 sm:w-6 sm:h-6 text-neon-primary" />
-                    </div>
-                    <h2 className="text-lg sm:text-xl font-bold font-mono text-neon-primary">{">"} METHODOLOGY</h2>
-                  </div>
-                  <p className="text-foreground/90 text-sm sm:text-base leading-relaxed">
-                    I approach cybersecurity as an applied science: exploring system behavior through{" "}
-                    <span className="text-neon-primary font-semibold">
-                      modification, exploitation, and reinforcement
-                    </span>
-                    . My objective is to cultivate a deep, operational understanding of how digital infrastructures{" "}
-                    <span className="text-neon-primary font-semibold">resist, adapt, and recover</span> under pressure.
-                  </p>
-                </motion.div>
+                  <span className="text-neon-primary">Red-Team</span> Oriented{" "}
+                  <span className="text-foreground">Front-End Engineer</span>
+                </h1>
+                <p className="text-muted-foreground text-base sm:text-lg max-w-2xl mx-auto leading-relaxed">
+                  I design and build fast, secure web experiences — blending{" "}
+                  <span className="text-neon-primary font-semibold">offensive security thinking</span> with{" "}
+                  <span className="text-neon-primary font-semibold">modern front-end engineering</span>.
+                </p>
               </div>
 
               <div className="text-center mb-6 sm:mb-8">
                 <div className="inline-flex items-center gap-2 px-4 py-2 bg-surface/80 backdrop-blur rounded-full border border-border">
-                  <Cpu className="w-4 h-4 text-neon-primary" />
+                  <Terminal className="w-4 h-4 text-neon-primary" />
                   <span className="text-neon-primary font-mono text-sm sm:text-base">{currentTaglineText}</span>
                   <span className="inline-block w-0.5 h-4 sm:h-5 bg-neon-primary animate-pulse" />
                 </div>
@@ -251,11 +228,12 @@ export default function HomePage() {
                   <ArrowRight size={18} />
                 </Link>
                 <Link
-                  href="/contact"
+                  href="/case-studies"
                   onClick={() => playSound("click")}
                   className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 sm:px-8 py-3 sm:py-4 border border-border bg-surface/90 backdrop-blur text-foreground font-semibold rounded-lg hover:border-neon-primary/50 hover:bg-surface transition-all focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background shadow-lg"
                 >
-                  Get in Touch
+                  <FileText size={18} />
+                  Read Case Studies
                 </Link>
               </div>
 
@@ -310,6 +288,63 @@ export default function HomePage() {
 
         <section className="py-12 sm:py-20 bg-surface/95 backdrop-blur-md relative z-10">
           <div className="container mx-auto px-4">
+            <h2 className="text-2xl sm:text-3xl font-bold text-center mb-4">
+              Case <span className="text-neon-primary">Studies</span>
+            </h2>
+            <p className="text-muted-foreground text-center mb-8 sm:mb-12 max-w-xl mx-auto">
+              In-depth breakdowns of my approach to solving complex problems.
+            </p>
+
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+              {resumeData.projects
+                .filter((p) => p.featured)
+                .slice(0, 3)
+                .map((project, i) => (
+                  <motion.div
+                    key={project.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.1 }}
+                  >
+                    <Link
+                      href={`/case-studies/${project.slug}`}
+                      onClick={() => playSound("click")}
+                      className="block group h-full p-4 sm:p-6 bg-background/95 backdrop-blur border border-border rounded-lg hover:border-neon-primary/50 transition-all hover:shadow-lg"
+                    >
+                      <div className="flex items-center gap-2 mb-3">
+                        <Shield className="w-4 h-4 text-neon-primary" />
+                        <span className="text-xs font-mono text-neon-primary">CASE_STUDY</span>
+                      </div>
+                      <h3 className="text-lg sm:text-xl font-semibold mb-2 group-hover:text-neon-primary transition-colors">
+                        {project.name}
+                      </h3>
+                      <p className="text-muted-foreground text-xs sm:text-sm mb-3 line-clamp-2">
+                        {project.description}
+                      </p>
+                      <span className="text-neon-primary text-sm inline-flex items-center gap-1 group-hover:gap-2 transition-all">
+                        Read More <ArrowRight size={14} />
+                      </span>
+                    </Link>
+                  </motion.div>
+                ))}
+            </div>
+
+            <div className="text-center mt-8 sm:mt-12">
+              <Link
+                href="/case-studies"
+                onClick={() => playSound("click")}
+                className="inline-flex items-center gap-2 text-neon-primary hover:underline text-sm sm:text-base"
+              >
+                View all case studies
+                <ArrowRight size={16} />
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        <section className="py-12 sm:py-20 relative z-10 bg-background/95 backdrop-blur-md">
+          <div className="container mx-auto px-4">
             <h2 className="text-2xl sm:text-3xl font-bold text-center mb-8 sm:mb-12">
               Featured <span className="text-neon-primary">Projects</span>
             </h2>
@@ -328,7 +363,7 @@ export default function HomePage() {
                     <Link
                       href={`/projects/${project.slug}`}
                       onClick={() => playSound("click")}
-                      className="block group h-full p-4 sm:p-6 bg-background/95 backdrop-blur border border-border rounded-lg hover:border-neon-primary/50 transition-all hover:shadow-lg"
+                      className="block group h-full p-4 sm:p-6 bg-surface/95 backdrop-blur border border-border rounded-lg hover:border-neon-primary/50 transition-all hover:shadow-lg"
                       style={{ "--hover-shadow": "var(--glow-primary)" } as React.CSSProperties}
                     >
                       <div className="flex items-start justify-between mb-3 sm:mb-4">
@@ -359,7 +394,7 @@ export default function HomePage() {
                 ))}
             </div>
 
-            <div className="text-center mt-8 sm:mt-12">
+            <div className="text-center mt-6 sm:mt-8">
               <Link
                 href="/projects"
                 onClick={() => playSound("click")}
@@ -386,7 +421,7 @@ export default function HomePage() {
                   whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.05 }}
-                  className="px-3 sm:px-4 py-1.5 sm:py-2 bg-surface/95 backdrop-blur border border-border rounded-full hover:border-neon-primary/50 transition-colors"
+                  className="px-3 sm:px-4 py-1.5 sm:py-2 bg-background/95 backdrop-blur border border-border rounded-full hover:border-neon-primary/50 transition-colors"
                 >
                   <span className="font-mono text-xs sm:text-sm">{skill.name}</span>
                 </motion.div>

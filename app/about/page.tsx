@@ -1,7 +1,24 @@
 "use client"
 
+import type React from "react"
+
 import { motion } from "framer-motion"
-import { MapPin, Award, Heart, Terminal, Shield, Skull, Bug, Code, Crosshair, Zap, Eye } from "lucide-react"
+import {
+  MapPin,
+  Award,
+  Heart,
+  Terminal,
+  Shield,
+  Skull,
+  Bug,
+  Code,
+  Crosshair,
+  Zap,
+  Eye,
+  Github,
+  ExternalLink,
+  Trophy,
+} from "lucide-react"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { CommandBar } from "@/components/command-bar"
@@ -14,6 +31,38 @@ export default function AboutPage() {
     { label: "Technologies", value: "20+", icon: Terminal },
     { label: "Coffee Consumed", value: "∞", icon: Zap },
     { label: "Bugs Fixed", value: "999+", icon: Bug },
+  ]
+
+  const journeySteps = [
+    "Started in front-end development",
+    "Developed interest in hacking, CTFs, and red-team methodology",
+    "Now merging UI engineering with offensive security insights",
+  ]
+
+  const whatIDo = [
+    "Build responsive, modern front-end systems",
+    "Practice attack simulations and security labs",
+    "Experiment with tools that combine UX and security",
+  ]
+
+  const philosophy = [
+    "Secure-by-design beats patching later.",
+    "Interfaces should remain stable even under adversarial pressure.",
+  ]
+
+  const futureDirection = [
+    "Red-team engineer with strong product/UI awareness",
+    "Building tools that detect and prevent attacks",
+    "Publishing security notes and research",
+  ]
+
+  const tryhackmeBadges = [
+    { name: "Advent of Cyber", icon: "🎄", color: "#88cc14" },
+    { name: "OWASP Top 10", icon: "🔐", color: "#ff6b6b" },
+    { name: "Web Fundamentals", icon: "🌐", color: "#4ecdc4" },
+    { name: "Linux Fundamentals", icon: "🐧", color: "#ffa500" },
+    { name: "Network Security", icon: "🌍", color: "#9b59b6" },
+    { name: "Burp Suite", icon: "🔍", color: "#e74c3c" },
   ]
 
   return (
@@ -47,11 +96,12 @@ export default function AboutPage() {
                 <span className="text-neon-primary hidden sm:inline">|</span>
                 <div className="flex items-center gap-1 sm:gap-2">
                   <Shield size={14} className="text-neon-secondary sm:w-4 sm:h-4" />
-                  <span>Frontend Developer</span>
+                  <span>Red-Team Front-End Engineer</span>
                 </div>
               </div>
             </div>
 
+            {/* Stats Grid */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -81,22 +131,23 @@ export default function AboutPage() {
               transition={{ delay: 0.2 }}
               className="bg-surface/80 backdrop-blur border border-border rounded-lg overflow-hidden mb-8"
             >
-              {/* Terminal header */}
               <div className="flex items-center gap-2 px-4 py-3 bg-surface-elevated border-b border-border">
                 <div className="flex gap-1.5">
                   <div className="w-3 h-3 rounded-full bg-destructive" />
                   <div className="w-3 h-3 rounded-full bg-warning" />
                   <div className="w-3 h-3 rounded-full bg-success" />
                 </div>
-                <span className="text-sm font-mono text-muted-foreground ml-2">~/about/bio.sh</span>
+                <span className="text-sm font-mono text-muted-foreground ml-2">~/about/intro.sh</span>
               </div>
 
               <div className="p-6 font-mono">
                 <div className="text-neon-primary mb-2">
-                  <span className="text-muted-foreground">$</span> cat bio.txt
+                  <span className="text-muted-foreground">$</span> cat intro.txt
                 </div>
-                <p className="text-foreground leading-relaxed mb-6 pl-4 border-l-2 border-neon-primary/30">
-                  {resumeData.about.bio}
+                <p className="text-foreground leading-relaxed mb-6 pl-4 border-l-2 border-neon-primary/30 text-lg">
+                  I'm <span className="text-neon-primary font-bold">Eshwar</span>, a front-end engineer with an
+                  expanding focus on <span className="text-neon-primary">red-teaming</span> and{" "}
+                  <span className="text-neon-primary">adversarial security</span>.
                 </p>
 
                 <div className="text-neon-primary mb-2">
@@ -108,8 +159,8 @@ export default function AboutPage() {
               </div>
             </motion.div>
 
-            <div className="grid md:grid-cols-2 gap-8 mb-8">
-              {/* Current Focus */}
+            {/* Journey & What I Do Grid */}
+            <div className="grid md:grid-cols-2 gap-6 mb-8">
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -117,18 +168,21 @@ export default function AboutPage() {
                 className="bg-surface/80 backdrop-blur border border-border rounded-lg overflow-hidden"
               >
                 <div className="flex items-center gap-3 px-6 py-4 bg-surface-elevated border-b border-border">
-                  <Crosshair className="text-neon-primary" size={20} />
-                  <h2 className="text-lg font-bold font-mono">CURRENT_TARGET</h2>
+                  <Terminal className="text-neon-primary" size={20} />
+                  <h2 className="text-lg font-bold font-mono">MY_JOURNEY</h2>
                 </div>
                 <div className="p-6">
-                  <div className="flex items-start gap-3">
-                    <Eye className="text-neon-secondary mt-1 flex-shrink-0" size={18} />
-                    <p className="text-muted-foreground leading-relaxed">{resumeData.about.currentFocus}</p>
-                  </div>
+                  <ul className="space-y-3">
+                    {journeySteps.map((step, i) => (
+                      <li key={i} className="flex items-start gap-3">
+                        <span className="text-neon-primary font-mono text-sm mt-0.5">{`0${i + 1}`}</span>
+                        <span className="text-muted-foreground">{step}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </motion.div>
 
-              {/* Interests */}
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
@@ -136,23 +190,62 @@ export default function AboutPage() {
                 className="bg-surface/80 backdrop-blur border border-border rounded-lg overflow-hidden"
               >
                 <div className="flex items-center gap-3 px-6 py-4 bg-surface-elevated border-b border-border">
-                  <Heart className="text-neon-primary" size={20} />
-                  <h2 className="text-lg font-bold font-mono">INTERESTS[]</h2>
+                  <Code className="text-neon-primary" size={20} />
+                  <h2 className="text-lg font-bold font-mono">WHAT_I_DO</h2>
                 </div>
                 <div className="p-6">
-                  <div className="flex flex-wrap gap-2">
-                    {resumeData.about.interests.map((interest, i) => (
-                      <motion.span
-                        key={interest}
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ delay: 0.5 + i * 0.05 }}
-                        className="px-3 py-1.5 bg-neon-primary/10 text-neon-primary rounded border border-neon-primary/30 font-mono text-sm hover:bg-neon-primary/20 transition-colors cursor-default"
-                      >
-                        #{interest.toLowerCase().replace(/\s/g, "_")}
-                      </motion.span>
+                  <ul className="space-y-3">
+                    {whatIDo.map((item, i) => (
+                      <li key={i} className="flex items-start gap-3">
+                        <Shield className="text-neon-primary flex-shrink-0 mt-0.5" size={16} />
+                        <span className="text-muted-foreground">{item}</span>
+                      </li>
                     ))}
-                  </div>
+                  </ul>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Philosophy & Future Direction Grid */}
+            <div className="grid md:grid-cols-2 gap-6 mb-8">
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.5 }}
+                className="bg-surface/80 backdrop-blur border border-border rounded-lg overflow-hidden"
+              >
+                <div className="flex items-center gap-3 px-6 py-4 bg-surface-elevated border-b border-border">
+                  <Eye className="text-neon-primary" size={20} />
+                  <h2 className="text-lg font-bold font-mono">ENGINEERING_PHILOSOPHY</h2>
+                </div>
+                <div className="p-6 space-y-4">
+                  {philosophy.map((quote, i) => (
+                    <blockquote key={i} className="pl-4 border-l-2 border-neon-primary/50 italic text-foreground">
+                      "{quote}"
+                    </blockquote>
+                  ))}
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.6 }}
+                className="bg-surface/80 backdrop-blur border border-border rounded-lg overflow-hidden"
+              >
+                <div className="flex items-center gap-3 px-6 py-4 bg-surface-elevated border-b border-border">
+                  <Crosshair className="text-neon-primary" size={20} />
+                  <h2 className="text-lg font-bold font-mono">FUTURE_DIRECTION</h2>
+                </div>
+                <div className="p-6">
+                  <ul className="space-y-3">
+                    {futureDirection.map((item, i) => (
+                      <li key={i} className="flex items-start gap-3">
+                        <span className="text-neon-primary">→</span>
+                        <span className="text-muted-foreground">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               </motion.div>
             </div>
@@ -160,54 +253,173 @@ export default function AboutPage() {
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-              className="bg-surface/80 backdrop-blur border border-border rounded-lg overflow-hidden"
+              transition={{ delay: 0.7 }}
+              className="bg-surface/80 backdrop-blur border border-border rounded-lg overflow-hidden mb-8"
             >
               <div className="flex items-center gap-3 px-6 py-4 bg-surface-elevated border-b border-border">
-                <Award className="text-neon-primary" size={20} />
-                <h2 className="text-lg font-bold font-mono">ACHIEVEMENTS_UNLOCKED</h2>
-                <span className="ml-auto px-2 py-1 bg-neon-primary/20 text-neon-primary text-xs font-mono rounded">
-                  {resumeData.certifications.length} CERTS
+                <Trophy className="text-neon-primary" size={20} />
+                <h2 className="text-lg font-bold font-mono">TRYHACKME_BADGES</h2>
+                <span className="ml-auto px-2 py-1 bg-success/20 text-success text-xs font-mono rounded">
+                  {tryhackmeBadges.length} EARNED
                 </span>
               </div>
               <div className="p-6">
-                <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {resumeData.certifications.map((cert, i) => (
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+                  {tryhackmeBadges.map((badge, i) => (
                     <motion.div
-                      key={cert.name}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: 0.6 + i * 0.1 }}
-                      className="group p-4 bg-background/50 border border-border rounded-lg hover:border-neon-primary/50 transition-all hover:box-glow"
+                      key={badge.name}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.8 + i * 0.1 }}
+                      className="group flex flex-col items-center p-3 bg-background/50 border border-border rounded-lg hover:border-neon-primary/50 transition-all cursor-default"
+                      style={{ "--badge-color": badge.color } as React.CSSProperties}
                     >
-                      <div className="flex items-start gap-3">
-                        <div className="p-2 bg-neon-primary/10 rounded group-hover:bg-neon-primary/20 transition-colors">
-                          <Shield className="w-5 h-5 text-neon-primary" />
-                        </div>
-                        <div className="flex-1 min-w-0">
-                          <div className="font-bold text-neon-primary font-mono text-sm">{cert.name}</div>
-                          <div className="text-xs text-muted-foreground mt-1 font-mono">
-                            {cert.issuer} :: {cert.date}
-                          </div>
-                        </div>
-                      </div>
+                      <span className="text-2xl mb-2">{badge.icon}</span>
+                      <span className="text-xs text-center text-muted-foreground group-hover:text-foreground transition-colors font-mono">
+                        {badge.name}
+                      </span>
                     </motion.div>
                   ))}
+                </div>
+                <div className="mt-4 text-center">
+                  <a
+                    href="https://tryhackme.com/p/eshwar"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 text-neon-primary hover:underline text-sm"
+                  >
+                    View all badges on TryHackMe
+                    <ExternalLink size={14} />
+                  </a>
                 </div>
               </div>
             </motion.div>
 
             <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.75 }}
+              className="bg-surface/80 backdrop-blur border border-border rounded-lg overflow-hidden mb-8"
+            >
+              <div className="flex items-center gap-3 px-6 py-4 bg-surface-elevated border-b border-border">
+                <ExternalLink className="text-neon-primary" size={20} />
+                <h2 className="text-lg font-bold font-mono">ACTIVITY_&_LEARNING</h2>
+              </div>
+              <div className="p-6">
+                <div className="flex flex-wrap gap-4">
+                  <a
+                    href={resumeData.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-neon-primary/10 border border-neon-primary/30 rounded-lg hover:bg-neon-primary/20 transition-colors"
+                  >
+                    <Github size={18} className="text-neon-primary" />
+                    <span className="text-neon-primary font-mono text-sm">View GitHub</span>
+                  </a>
+                  <a
+                    href="https://tryhackme.com/p/eshwar"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-neon-secondary/10 border border-neon-secondary/30 rounded-lg hover:bg-neon-secondary/20 transition-colors"
+                  >
+                    <Shield size={18} className="text-neon-secondary" />
+                    <span className="text-neon-secondary font-mono text-sm">TryHackMe Profile</span>
+                  </a>
+                  <a
+                    href="https://app.hackthebox.com/profile/eshwar"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-success/10 border border-success/30 rounded-lg hover:bg-success/20 transition-colors"
+                  >
+                    <Terminal size={18} className="text-success" />
+                    <span className="text-success font-mono text-sm">HackTheBox Profile</span>
+                  </a>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Interests */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8 }}
+              className="bg-surface/80 backdrop-blur border border-border rounded-lg overflow-hidden mb-8"
+            >
+              <div className="flex items-center gap-3 px-6 py-4 bg-surface-elevated border-b border-border">
+                <Heart className="text-neon-primary" size={20} />
+                <h2 className="text-lg font-bold font-mono">INTERESTS[]</h2>
+              </div>
+              <div className="p-6">
+                <div className="flex flex-wrap gap-2">
+                  {resumeData.about.interests.map((interest, i) => (
+                    <motion.span
+                      key={interest}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.9 + i * 0.05 }}
+                      className="px-3 py-1.5 bg-neon-primary/10 text-neon-primary rounded border border-neon-primary/30 font-mono text-sm hover:bg-neon-primary/20 transition-colors cursor-default"
+                    >
+                      #{interest.toLowerCase().replace(/\s/g, "_")}
+                    </motion.span>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Certifications */}
+            {resumeData.certifications.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.9 }}
+                className="bg-surface/80 backdrop-blur border border-border rounded-lg overflow-hidden"
+              >
+                <div className="flex items-center gap-3 px-6 py-4 bg-surface-elevated border-b border-border">
+                  <Award className="text-neon-primary" size={20} />
+                  <h2 className="text-lg font-bold font-mono">ACHIEVEMENTS_UNLOCKED</h2>
+                  <span className="ml-auto px-2 py-1 bg-neon-primary/20 text-neon-primary text-xs font-mono rounded">
+                    {resumeData.certifications.length} CERTS
+                  </span>
+                </div>
+                <div className="p-6">
+                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {resumeData.certifications.map((cert, i) => (
+                      <motion.div
+                        key={cert.name}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 1 + i * 0.1 }}
+                        className="group p-4 bg-background/50 border border-border rounded-lg hover:border-neon-primary/50 transition-all"
+                      >
+                        <div className="flex items-start gap-3">
+                          <div className="p-2 bg-neon-primary/10 rounded group-hover:bg-neon-primary/20 transition-colors">
+                            <Shield className="w-5 h-5 text-neon-primary" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="font-bold text-neon-primary font-mono text-sm">{cert.name}</div>
+                            <div className="text-xs text-muted-foreground mt-1 font-mono">
+                              {cert.issuer} :: {cert.date}
+                            </div>
+                          </div>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </div>
+              </motion.div>
+            )}
+
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.8 }}
+              transition={{ delay: 1.1 }}
               className="mt-12 text-center"
             >
               <pre className="text-neon-primary/30 font-mono text-xs inline-block">
                 {`
   ╔══════════════════════════════════════╗
-  ║  "Code is like humor. When you      ║
-  ║   have to explain it, it's bad."    ║
+  ║  "Secure-by-design beats patching   ║
+  ║   later."                           ║
   ╚══════════════════════════════════════╝
 `}
               </pre>
