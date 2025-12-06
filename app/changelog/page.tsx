@@ -9,44 +9,8 @@ import { MultiLanguageMatrix } from "@/components/backgrounds"
 
 const changelog = [
   {
-    version: "v3.1",
-    date: "Jan 2026",
-    changes: [
-      "Added TryHackMe & HackTheBox profile links",
-      "Added Activity & Learning panel on About page",
-      "Content improvements across hero, about",
-      "New Case Studies system with detail pages",
-      "New Security Notes page with educational content",
-      "New Changelog page",
-      "Unified styling with existing design",
-    ],
-  },
-  {
-    version: "v3.0",
-    date: "Dec 2025",
-    changes: [
-      "Complete portfolio rebuild with Next.js App Router",
-      "Red-team hacker console aesthetic",
-      "Matrix rain background animations",
-      "Audio feedback system",
-      "Command palette (Cmd+K)",
-      "Multi-theme support",
-      "Responsive design overhaul",
-    ],
-  },
-  {
-    version: "v2.0",
-    date: "Jun 2025",
-    changes: [
-      "Added project node graph visualization",
-      "Improved mobile responsiveness",
-      "Skills page with filtering",
-      "Timeline page for experience",
-    ],
-  },
-  {
     version: "v1.0",
-    date: "Jan 2025",
+    date: "Dec 2025",
     changes: ["Initial portfolio launch", "Basic project showcase", "Contact form", "Resume download"],
   },
 ]

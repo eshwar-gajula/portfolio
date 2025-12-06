@@ -64,7 +64,8 @@ export interface ResumeData {
   website: string
   linkedin: string
   github: string
-  instagram?: string
+  instagram: string
+  thm: string
   about: About
   skills: Skill[]
   experience: Experience[]

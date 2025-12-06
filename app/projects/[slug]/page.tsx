@@ -1,28 +1,121 @@
 "use client"
-
-import { useMemo } from "react"
-import { useParams, notFound } from "next/navigation"
-import Link from "next/link"
+import Image from "next/image"
 import { motion } from "framer-motion"
-import { ArrowLeft, ExternalLink, Github, Tag } from "lucide-react"
+import {
+  MapPin,
+  Award,
+  Heart,
+  Terminal,
+  Shield,
+  Skull,
+  Bug,
+  Code,
+  Crosshair,
+  Zap,
+  Eye,
+  Github,
+  ExternalLink,
+  Trophy,
+} from "lucide-react"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { CommandBar } from "@/components/command-bar"
 import { MultiLanguageMatrix } from "@/components/backgrounds"
-import { useAudio } from "@/components/audio-provider"
 import { resumeData } from "@/src/data"
 
-export default function ProjectDetailPage() {
-  const params = useParams()
-  const { playSound } = useAudio()
+export default function AboutPage() {
+  const hackerStats = [
+    { label: "Projects Completed", value: "15+", icon: Code },
+    { label: "Technologies", value: "20+", icon: Terminal },
+    { label: "Coffee Consumed", value: "∞", icon: Zap },
+    { label: "Bugs Fixed", value: "999+", icon: Bug },
+  ]
 
-  const project = useMemo(() => {
-    return resumeData.projects.find((p) => p.slug === params.slug)
-  }, [params.slug])
+  const journeySteps = [
+    "Started in front-end development",
+    "Developed interest in hacking, CTFs, and red-team methodology",
+    "Now merging UI engineering with offensive security insights",
+  ]
 
-  if (!project) {
-    notFound()
-  }
+  const whatIDo = [
+    "Build responsive, modern front-end systems",
+    "Practice attack simulations and security labs",
+    "Experiment with tools that combine UX and security",
+  ]
+
+  const philosophy = [
+    "Secure-by-design beats patching later.",
+    "Interfaces should remain stable even under adversarial pressure.",
+  ]
+
+  const futureDirection = [
+    "Red-team engineer with strong product/UI awareness",
+    "Building tools that detect and prevent attacks",
+    "Publishing security notes and research",
+  ]
+
+  const tryhackmeBadges = [
+    {
+      name: "Networking Nerd",
+      description: "Completing the 'Network Fundamentals' module",
+      rarity: "Common: 20%",
+      image: "/assets/badges/networking-nerd.jpg",
+    },
+    {
+      name: "3 Day Streak",
+      description: "Achieving a 3 day hacking streak",
+      rarity: "Common: 35.9%",
+      image: "/assets/badges/3-day-streak.jpg",
+    },
+    {
+      name: "Webbed",
+      description: "Understands how the world wide web works",
+      rarity: "Common: 27.6%",
+      image: "/assets/badges/webbed.jpg",
+    },
+    {
+      name: "World Wide Web",
+      description: "Completing the 'How The Web Works' module",
+      rarity: "Common: 24.1%",
+      image: "/assets/badges/world-wide-web.jpg",
+    },
+    {
+      name: "cat linux.txt",
+      description: "Being competent in Linux",
+      rarity: "Common: 37.7%",
+      image: "/assets/badges/cat-linux.jpg",
+    },
+    {
+      name: "Metasploitable",
+      description: "Contains the knowledge to use Metasploit",
+      rarity: "Common: 11.5%",
+      image: "/assets/badges/metasploitable.jpg",
+    },
+    {
+      name: "Blue",
+      description: "Hacking into Windows via EternalBlue",
+      rarity: "Common: 13.5%",
+      image: "/assets/badges/blue.jpg",
+    },
+    {
+      name: "30 Day Streak",
+      description: "Hacking for 30 days solid",
+      rarity: "Common: 11.2%",
+      image: "/assets/badges/30-day-streak.jpg",
+    },
+    {
+      name: "Sword Apprentice",
+      description: "Completing the SQLMap room",
+      rarity: "Rare: 7.1%",
+      image: "/assets/badges/sword-apprentice.jpg",
+    },
+    {
+      name: "Cyber Ready",
+      description: "Understanding impact of training on teams",
+      rarity: "Rare: 8.4%",
+      image: "/assets/badges/cyber-ready.jpg",
+    },
+  ]
 
   return (
     <>
@@ -31,216 +124,381 @@ export default function ProjectDetailPage() {
         <MultiLanguageMatrix opacity={0.35} />
 
         <div className="container mx-auto px-4 relative z-10">
-          {/* Back link */}
-          <Link
-            href="/projects"
-            onClick={() => playSound("click")}
-            className="inline-flex items-center gap-2 text-sm sm:text-base text-muted-foreground hover:text-foreground mb-6 sm:mb-8 transition-colors"
-          >
-            <ArrowLeft size={16} />
-            Back to Projects
-          </Link>
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-5xl mx-auto">
+            <div className="text-center mb-10 sm:mb-16">
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-neon-primary/10 border border-neon-primary/30 rounded-full mb-4 sm:mb-6"
+              >
+                <Skull className="w-3 h-3 sm:w-4 sm:h-4 text-neon-primary" />
+                <span className="text-neon-primary font-mono text-xs sm:text-sm">PROFILE_ACCESSED</span>
+              </motion.div>
 
-          <div className="max-w-4xl">
-            {/* Header */}
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-6 sm:mb-8">
-              <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-                <span className="px-2 sm:px-3 py-1 text-xs sm:text-sm font-mono bg-neon-primary/10 text-neon-primary rounded">
-                  {project.category}
-                </span>
-                {project.featured && (
-                  <span className="px-2 sm:px-3 py-1 text-xs sm:text-sm bg-accent/10 text-accent rounded">
-                    Featured
-                  </span>
-                )}
+              <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-3 sm:mb-4 font-mono">
+                <span className="text-muted-foreground">&gt;</span> <span className="text-foreground">whoami</span>{" "}
+                <span className="neon-glow text-neon-primary">Eshwar</span>
+              </h1>
+
+              <div className="flex items-center justify-center gap-2 sm:gap-4 text-muted-foreground font-mono flex-wrap text-xs sm:text-sm">
+                <div className="flex items-center gap-1 sm:gap-2">
+                  <MapPin size={14} className="text-neon-primary sm:w-4 sm:h-4" />
+                  <span>{resumeData.location}</span>
+                </div>
+                <span className="text-neon-primary hidden sm:inline">|</span>
+                <div className="flex items-center gap-1 sm:gap-2">
+                  <Shield size={14} className="text-neon-secondary sm:w-4 sm:h-4" />
+                  <span>Red-Team Front-End Engineer</span>
+                </div>
               </div>
+            </div>
 
-              <h1 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4">{project.name}</h1>
-              <p className="text-base sm:text-xl text-muted-foreground">{project.description}</p>
-            </motion.div>
-
-            {/* Actions - Stack on mobile */}
+            {/* Stats Grid */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-8 sm:mb-12"
+              className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-8 sm:mb-12"
             >
-              {project.demoUrl && (
-                <a
-                  href={project.demoUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => playSound("click")}
-                  className="flex items-center justify-center gap-2 px-4 sm:px-6 py-3 bg-neon-primary text-primary-foreground font-semibold rounded-lg hover:opacity-90 transition-opacity"
+              {hackerStats.map((stat, i) => (
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.2 + i * 0.1 }}
+                  className="bg-surface/90 backdrop-blur border border-border rounded-lg p-3 sm:p-4 text-center group hover:border-neon-primary/50 transition-all"
                 >
-                  <ExternalLink size={18} />
-                  View Live Demo
-                </a>
-              )}
-              {project.githubUrl && (
-                <a
-                  href={project.githubUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => playSound("click")}
-                  className="flex items-center justify-center gap-2 px-4 sm:px-6 py-3 border border-border font-semibold rounded-lg hover:bg-surface transition-colors"
-                >
-                  <Github size={18} />
-                  View Source Code
-                </a>
-              )}
+                  <stat.icon className="w-5 h-5 sm:w-6 sm:h-6 text-neon-primary mx-auto mb-1.5 sm:mb-2 group-hover:scale-110 transition-transform" />
+                  <div className="text-xl sm:text-2xl font-bold text-neon-primary font-mono">{stat.value}</div>
+                  <div className="text-[10px] sm:text-xs text-muted-foreground uppercase tracking-wider">
+                    {stat.label}
+                  </div>
+                </motion.div>
+              ))}
             </motion.div>
 
-            {/* Content grid - Stack on mobile */}
-            <div className="flex flex-col lg:grid lg:grid-cols-3 gap-6 sm:gap-8">
-              {/* Main content */}
-              <div className="lg:col-span-2 space-y-6 sm:space-y-8 order-2 lg:order-1">
-                {/* Description */}
-                <motion.section
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 }}
-                  className="p-4 sm:p-6 bg-surface/80 backdrop-blur border border-border rounded-lg"
-                >
-                  <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 flex items-center gap-2">
-                    <span className="text-neon-primary">&gt;</span> Overview
-                  </h2>
-                  <div className="prose prose-invert max-w-none">
-                    <p className="text-sm sm:text-base text-muted-foreground leading-relaxed">
-                      {project.longDescription}
-                    </p>
-                  </div>
-                </motion.section>
-
-                {/* Highlights */}
-                {project.highlights && project.highlights.length > 0 && (
-                  <motion.section
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.3 }}
-                    className="p-4 sm:p-6 bg-surface/80 backdrop-blur border border-border rounded-lg"
-                  >
-                    <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 flex items-center gap-2">
-                      <span className="text-neon-primary">&gt;</span> Key Features
-                    </h2>
-                    <ul className="space-y-2 sm:space-y-3">
-                      {project.highlights.map((highlight, i) => (
-                        <li key={i} className="flex items-start gap-2 sm:gap-3">
-                          <span className="w-5 h-5 sm:w-6 sm:h-6 bg-neon-primary/10 rounded flex items-center justify-center text-neon-primary text-xs sm:text-sm shrink-0">
-                            {i + 1}
-                          </span>
-                          <span className="text-sm sm:text-base text-muted-foreground">{highlight}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </motion.section>
-                )}
-
-                {/* Code preview */}
-                <motion.section
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4 }}
-                  className="p-4 sm:p-6 bg-surface/80 backdrop-blur border border-border rounded-lg"
-                >
-                  <h2 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 flex items-center gap-2">
-                    <span className="text-neon-primary">&gt;</span> Code Sample
-                  </h2>
-                  <div className="bg-background border border-border rounded-lg overflow-hidden">
-                    <div className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-surface-elevated border-b border-border">
-                      <div className="w-2 h-2 rounded-full bg-destructive" />
-                      <div className="w-2 h-2 rounded-full bg-warning" />
-                      <div className="w-2 h-2 rounded-full bg-success" />
-                      <span className="ml-2 text-xs text-muted-foreground font-mono">example.ts</span>
-                    </div>
-                    <pre className="p-3 sm:p-4 font-mono text-xs sm:text-sm overflow-x-auto">
-                      <code className="text-muted-foreground">
-                        {`// ${project.name} - Code Example
-// Educational demonstration
-
-interface Config {
-  mode: 'dev' | 'prod';
-  security: {
-    level: 'standard' | 'enhanced';
-    audit: boolean;
-  };
-}
-
-export function init(config: Config) {
-  validateConfig(config);
-  const secure = applyDefaults(config);
-  return new ${project.name.replace(/\s/g, "")}(secure);
-}`}
-                      </code>
-                    </pre>
-                  </div>
-                </motion.section>
+            {/* Intro Terminal */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="bg-surface/80 backdrop-blur border border-border rounded-lg overflow-hidden mb-8"
+            >
+              <div className="flex items-center gap-2 px-4 py-3 bg-surface-elevated border-b border-border">
+                <div className="flex gap-1.5">
+                  <div className="w-3 h-3 rounded-full bg-destructive" />
+                  <div className="w-3 h-3 rounded-full bg-warning" />
+                  <div className="w-3 h-3 rounded-full bg-success" />
+                </div>
+                <span className="text-sm font-mono text-muted-foreground ml-2">~/about/intro.sh</span>
               </div>
 
-              {/* Sidebar - Show first on mobile */}
-              <motion.aside
-                initial={{ opacity: 0, x: 20 }}
+              <div className="p-6 font-mono">
+                <div className="text-neon-primary mb-2">
+                  <span className="text-muted-foreground">$</span> cat intro.txt
+                </div>
+                <p className="text-foreground leading-relaxed mb-6 pl-4 border-l-2 border-neon-primary/30 text-lg">
+                  I'm <span className="text-neon-primary font-bold">Eshwar</span>, a front-end engineer with an
+                  expanding focus on <span className="text-neon-primary">red-teaming</span> and{" "}
+                  <span className="text-neon-primary">adversarial security</span>.
+                </p>
+
+                <div className="text-neon-primary mb-2">
+                  <span className="text-muted-foreground">$</span> echo $SUMMARY
+                </div>
+                <p className="text-muted-foreground leading-relaxed pl-4 border-l-2 border-neon-secondary/30">
+                  {resumeData.summary}
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Journey & What I Do Grid */}
+            <div className="grid md:grid-cols-2 gap-6 mb-8">
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.3 }}
-                className="space-y-4 sm:space-y-6 order-1 lg:order-2"
+                className="bg-surface/80 backdrop-blur border border-border rounded-lg overflow-hidden"
               >
-                {/* Tech stack */}
-                <div className="p-4 sm:p-6 bg-surface/80 backdrop-blur border border-border rounded-lg">
-                  <h3 className="font-semibold mb-3 sm:mb-4 flex items-center gap-2 text-sm sm:text-base">
-                    <Tag size={16} className="text-neon-primary" />
-                    Tech Stack
-                  </h3>
-                  <div className="flex flex-wrap gap-1.5 sm:gap-2">
-                    {project.techStack.map((tech) => (
-                      <span
-                        key={tech}
-                        className="px-2 sm:px-3 py-1 sm:py-1.5 text-xs sm:text-sm bg-surface-elevated border border-border rounded"
-                      >
-                        {tech}
+                <div className="flex items-center gap-3 px-6 py-4 bg-surface-elevated border-b border-border">
+                  <Terminal className="text-neon-primary" size={20} />
+                  <h2 className="text-lg font-bold font-mono">MY_JOURNEY</h2>
+                </div>
+                <div className="p-6">
+                  <ul className="space-y-3">
+                    {journeySteps.map((step, i) => (
+                      <li key={i} className="flex items-start gap-3">
+                        <span className="text-neon-primary font-mono text-sm mt-0.5">{`0${i + 1}`}</span>
+                        <span className="text-muted-foreground">{step}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.4 }}
+                className="bg-surface/80 backdrop-blur border border-border rounded-lg overflow-hidden"
+              >
+                <div className="flex items-center gap-3 px-6 py-4 bg-surface-elevated border-b border-border">
+                  <Code className="text-neon-primary" size={20} />
+                  <h2 className="text-lg font-bold font-mono">WHAT_I_DO</h2>
+                </div>
+                <div className="p-6">
+                  <ul className="space-y-3">
+                    {whatIDo.map((item, i) => (
+                      <li key={i} className="flex items-start gap-3">
+                        <Shield className="text-neon-primary flex-shrink-0 mt-0.5" size={16} />
+                        <span className="text-muted-foreground">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Philosophy & Future Direction Grid */}
+            <div className="grid md:grid-cols-2 gap-6 mb-8">
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.5 }}
+                className="bg-surface/80 backdrop-blur border border-border rounded-lg overflow-hidden"
+              >
+                <div className="flex items-center gap-3 px-6 py-4 bg-surface-elevated border-b border-border">
+                  <Eye className="text-neon-primary" size={20} />
+                  <h2 className="text-lg font-bold font-mono">ENGINEERING_PHILOSOPHY</h2>
+                </div>
+                <div className="p-6 space-y-4">
+                  {philosophy.map((quote, i) => (
+                    <blockquote key={i} className="pl-4 border-l-2 border-neon-primary/50 italic text-foreground">
+                      "{quote}"
+                    </blockquote>
+                  ))}
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.6 }}
+                className="bg-surface/80 backdrop-blur border border-border rounded-lg overflow-hidden"
+              >
+                <div className="flex items-center gap-3 px-6 py-4 bg-surface-elevated border-b border-border">
+                  <Crosshair className="text-neon-primary" size={20} />
+                  <h2 className="text-lg font-bold font-mono">FUTURE_DIRECTION</h2>
+                </div>
+                <div className="p-6">
+                  <ul className="space-y-3">
+                    {futureDirection.map((item, i) => (
+                      <li key={i} className="flex items-start gap-3">
+                        <span className="text-neon-primary">→</span>
+                        <span className="text-muted-foreground">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* TryHackMe Badges */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7 }}
+              className="bg-surface/80 backdrop-blur border border-border rounded-lg overflow-hidden mb-8"
+            >
+              <div className="flex items-center gap-3 px-6 py-4 bg-surface-elevated border-b border-border">
+                <Trophy className="text-neon-primary" size={20} />
+                <h2 className="text-lg font-bold font-mono">TRYHACKME_BADGES</h2>
+                <span className="ml-auto px-2 py-1 bg-success/20 text-success text-xs font-mono rounded">
+                  {tryhackmeBadges.length} EARNED
+                </span>
+              </div>
+              <div className="p-6">
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+                  {tryhackmeBadges.map((badge, i) => (
+                    <motion.div
+                      key={badge.name}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.8 + i * 0.05 }}
+                      className="group flex flex-col items-center p-4 bg-background/50 border border-border rounded-lg hover:border-neon-primary/50 hover:bg-surface/50 transition-all cursor-default"
+                    >
+                      <div className="relative w-16 h-16 sm:w-20 sm:h-20 mb-3">
+                        <Image
+                          src={badge.image || "/placeholder.svg"}
+                          alt={badge.name}
+                          fill
+                          className="object-contain group-hover:scale-110 transition-transform"
+                        />
+                        <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-success rounded-full flex items-center justify-center">
+                          <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path
+                              fillRule="evenodd"
+                              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                        </div>
+                      </div>
+                      <span className="text-xs sm:text-sm text-center font-semibold text-foreground group-hover:text-neon-primary transition-colors font-mono mb-1">
+                        {badge.name}
                       </span>
+                      <span className="text-[10px] sm:text-xs text-center text-muted-foreground line-clamp-2">
+                        {badge.description}
+                      </span>
+                      <span
+                        className={`mt-2 text-[10px] px-2 py-0.5 rounded ${badge.rarity.startsWith("Rare") ? "bg-neon-primary/20 text-neon-primary" : "bg-muted/50 text-muted-foreground"}`}
+                      >
+                        {badge.rarity}
+                      </span>
+                    </motion.div>
+                  ))}
+                </div>
+                <div className="mt-6 text-center">
+                  <a
+                    href="https://tryhackme.com/p/eshwar"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-neon-primary/10 border border-neon-primary/30 rounded-lg text-neon-primary hover:bg-neon-primary/20 transition-colors text-sm font-mono"
+                  >
+                    View all badges on TryHackMe
+                    <ExternalLink size={14} />
+                  </a>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Activity & Learning */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.75 }}
+              className="bg-surface/80 backdrop-blur border border-border rounded-lg overflow-hidden mb-8"
+            >
+              <div className="flex items-center gap-3 px-6 py-4 bg-surface-elevated border-b border-border">
+                <ExternalLink className="text-neon-primary" size={20} />
+                <h2 className="text-lg font-bold font-mono">ACTIVITY_&_LEARNING</h2>
+              </div>
+              <div className="p-6">
+                <div className="flex flex-wrap gap-4">
+                  <a
+                    href={resumeData.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-neon-primary/10 border border-neon-primary/30 rounded-lg hover:bg-neon-primary/20 transition-colors"
+                  >
+                    <Github size={18} className="text-neon-primary" />
+                    <span className="text-neon-primary font-mono text-sm">View GitHub</span>
+                  </a>
+                  <a
+                    href="https://tryhackme.com/p/eshwar"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-neon-secondary/10 border border-neon-secondary/30 rounded-lg hover:bg-neon-secondary/20 transition-colors"
+                  >
+                    <Shield size={18} className="text-neon-secondary" />
+                    <span className="text-neon-secondary font-mono text-sm">TryHackMe Profile</span>
+                  </a>
+                  <a
+                    href="https://app.hackthebox.com/profile/eshwar"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-success/10 border border-success/30 rounded-lg hover:bg-success/20 transition-colors"
+                  >
+                    <Terminal size={18} className="text-success" />
+                    <span className="text-success font-mono text-sm">HackTheBox Profile</span>
+                  </a>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Interests */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.8 }}
+              className="bg-surface/80 backdrop-blur border border-border rounded-lg overflow-hidden mb-8"
+            >
+              <div className="flex items-center gap-3 px-6 py-4 bg-surface-elevated border-b border-border">
+                <Heart className="text-neon-primary" size={20} />
+                <h2 className="text-lg font-bold font-mono">INTERESTS[]</h2>
+              </div>
+              <div className="p-6">
+                <div className="flex flex-wrap gap-2">
+                  {resumeData.about.interests.map((interest, i) => (
+                    <motion.span
+                      key={interest}
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      transition={{ delay: 0.9 + i * 0.05 }}
+                      className="px-3 py-1.5 bg-neon-primary/10 text-neon-primary rounded border border-neon-primary/30 font-mono text-sm hover:bg-neon-primary/20 transition-colors cursor-default"
+                    >
+                      #{interest.toLowerCase().replace(/\s/g, "_")}
+                    </motion.span>
+                  ))}
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Certifications */}
+            {resumeData.certifications.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.9 }}
+                className="bg-surface/80 backdrop-blur border border-border rounded-lg overflow-hidden"
+              >
+                <div className="flex items-center gap-3 px-6 py-4 bg-surface-elevated border-b border-border">
+                  <Award className="text-neon-primary" size={20} />
+                  <h2 className="text-lg font-bold font-mono">ACHIEVEMENTS_UNLOCKED</h2>
+                  <span className="ml-auto px-2 py-1 bg-neon-primary/20 text-neon-primary text-xs font-mono rounded">
+                    {resumeData.certifications.length} CERTS
+                  </span>
+                </div>
+                <div className="p-6">
+                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {resumeData.certifications.map((cert, i) => (
+                      <motion.div
+                        key={cert.name}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 1 + i * 0.1 }}
+                        className="group p-4 bg-background/50 border border-border rounded-lg hover:border-neon-primary/50 transition-all"
+                      >
+                        <div className="flex items-start gap-3">
+                          <div className="p-2 bg-neon-primary/10 rounded group-hover:bg-neon-primary/20 transition-colors">
+                            <Shield className="w-5 h-5 text-neon-primary" />
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="font-bold text-neon-primary font-mono text-sm">{cert.name}</div>
+                            <div className="text-xs text-muted-foreground mt-1 font-mono">
+                              {cert.issuer} :: {cert.date}
+                            </div>
+                          </div>
+                        </div>
+                      </motion.div>
                     ))}
                   </div>
                 </div>
+              </motion.div>
+            )}
 
-                {/* Project info */}
-                <div className="p-4 sm:p-6 bg-surface/80 backdrop-blur border border-border rounded-lg">
-                  <h3 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Project Info</h3>
-                  <dl className="space-y-2 sm:space-y-3 text-xs sm:text-sm">
-                    <div className="flex justify-between">
-                      <dt className="text-muted-foreground">Category</dt>
-                      <dd>{project.category}</dd>
-                    </div>
-                    <div className="flex justify-between">
-                      <dt className="text-muted-foreground">Status</dt>
-                      <dd className="text-neon-primary">Active</dd>
-                    </div>
-                  </dl>
-                </div>
-
-                {/* Related projects */}
-                <div className="p-4 sm:p-6 bg-surface/80 backdrop-blur border border-border rounded-lg">
-                  <h3 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Related Projects</h3>
-                  <div className="space-y-2 sm:space-y-3">
-                    {resumeData.projects
-                      .filter((p) => p.id !== project.id && p.category === project.category)
-                      .slice(0, 3)
-                      .map((p) => (
-                        <Link
-                          key={p.id}
-                          href={`/projects/${p.slug}`}
-                          onClick={() => playSound("click")}
-                          className="block p-2 sm:p-3 bg-surface-elevated rounded hover:bg-border transition-colors"
-                        >
-                          <p className="font-medium text-xs sm:text-sm">{p.name}</p>
-                          <p className="text-xs text-muted-foreground line-clamp-1">{p.description}</p>
-                        </Link>
-                      ))}
-                  </div>
-                </div>
-              </motion.aside>
-            </div>
-          </div>
+            {/* Footer Message */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.1 }}
+              className="mt-12 text-center"
+            >
+              <p className="text-muted-foreground font-mono text-sm">
+                <span className="text-neon-primary">&gt;</span> EOF reached. Connection maintained.
+              </p>
+            </motion.div>
+          </motion.div>
         </div>
       </main>
 

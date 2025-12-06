@@ -1,7 +1,5 @@
 "use client"
-
-import type React from "react"
-
+import Image from "next/image"
 import { motion } from "framer-motion"
 import {
   MapPin,
@@ -57,19 +55,73 @@ export default function AboutPage() {
   ]
 
   const tryhackmeBadges = [
-    { name: "Advent of Cyber", icon: "🎄", color: "#88cc14" },
-    { name: "OWASP Top 10", icon: "🔐", color: "#ff6b6b" },
-    { name: "Web Fundamentals", icon: "🌐", color: "#4ecdc4" },
-    { name: "Linux Fundamentals", icon: "🐧", color: "#ffa500" },
-    { name: "Network Security", icon: "🌍", color: "#9b59b6" },
-    { name: "Burp Suite", icon: "🔍", color: "#e74c3c" },
+    {
+      name: "Networking Nerd",
+      description: "Completing the 'Network Fundamentals' module",
+      rarity: "Common: 20%",
+      image: "/assets/badges/networking-nerd.jpg",
+    },
+    {
+      name: "3 Day Streak",
+      description: "Achieving a 3 day hacking streak",
+      rarity: "Common: 35.9%",
+      image: "/assets/badges/3-day-streak.jpg",
+    },
+    {
+      name: "Webbed",
+      description: "Understands how the world wide web works",
+      rarity: "Common: 27.6%",
+      image: "/assets/badges/webbed.jpg",
+    },
+    {
+      name: "World Wide Web",
+      description: "Completing the 'How The Web Works' module",
+      rarity: "Common: 24.1%",
+      image: "/assets/badges/world-wide-web.jpg",
+    },
+    {
+      name: "cat linux.txt",
+      description: "Being competent in Linux",
+      rarity: "Common: 37.7%",
+      image: "/assets/badges/cat-linux.jpg",
+    },
+    {
+      name: "Metasploitable",
+      description: "Contains the knowledge to use Metasploit",
+      rarity: "Common: 11.5%",
+      image: "/assets/badges/metasploitable.jpg",
+    },
+    {
+      name: "Blue",
+      description: "Hacking into Windows via EternalBlue",
+      rarity: "Common: 13.5%",
+      image: "/assets/badges/blue.jpg",
+    },
+    {
+      name: "30 Day Streak",
+      description: "Hacking for 30 days solid",
+      rarity: "Common: 11.2%",
+      image: "/assets/badges/30-day-streak.jpg",
+    },
+    {
+      name: "Sword Apprentice",
+      description: "Completing the SQLMap room",
+      rarity: "Rare: 7.1%",
+      image: "/assets/badges/sword-apprentice.jpg",
+    },
+    {
+      name: "Cyber Ready",
+      description: "Understanding impact of training on teams",
+      rarity: "Rare: 8.4%",
+      image: "/assets/badges/cyber-ready.jpg",
+    },
   ]
 
   return (
     <>
       <Header />
       <main id="main-content" className="min-h-screen pt-20 sm:pt-24 pb-16 bg-background relative overflow-hidden">
-        <MultiLanguageMatrix opacity={0.5} />
+        <MultiLanguageMatrix opacity={0.35} />
 
         <div className="container mx-auto px-4 relative z-10">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-5xl mx-auto">
@@ -125,6 +177,7 @@ export default function AboutPage() {
               ))}
             </motion.div>
 
+            {/* Intro Terminal */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -250,6 +303,7 @@ export default function AboutPage() {
               </motion.div>
             </div>
 
+            {/* TryHackMe Badges */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -264,29 +318,52 @@ export default function AboutPage() {
                 </span>
               </div>
               <div className="p-6">
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
                   {tryhackmeBadges.map((badge, i) => (
                     <motion.div
                       key={badge.name}
                       initial={{ opacity: 0, scale: 0.8 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 0.8 + i * 0.1 }}
-                      className="group flex flex-col items-center p-3 bg-background/50 border border-border rounded-lg hover:border-neon-primary/50 transition-all cursor-default"
-                      style={{ "--badge-color": badge.color } as React.CSSProperties}
+                      transition={{ delay: 0.8 + i * 0.05 }}
+                      className="group flex flex-col items-center p-4 bg-background/50 border border-border rounded-lg hover:border-neon-primary/50 hover:bg-surface/50 transition-all cursor-default"
                     >
-                      <span className="text-2xl mb-2">{badge.icon}</span>
-                      <span className="text-xs text-center text-muted-foreground group-hover:text-foreground transition-colors font-mono">
+                      <div className="relative w-16 h-16 sm:w-20 sm:h-20 mb-3">
+                        <Image
+                          src={badge.image || "/placeholder.svg"}
+                          alt={badge.name}
+                          fill
+                          className="object-contain group-hover:scale-110 transition-transform"
+                        />
+                        <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-success rounded-full flex items-center justify-center">
+                          <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                            <path
+                              fillRule="evenodd"
+                              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                        </div>
+                      </div>
+                      <span className="text-xs sm:text-sm text-center font-semibold text-foreground group-hover:text-neon-primary transition-colors font-mono mb-1">
                         {badge.name}
+                      </span>
+                      <span className="text-[10px] sm:text-xs text-center text-muted-foreground line-clamp-2">
+                        {badge.description}
+                      </span>
+                      <span
+                        className={`mt-2 text-[10px] px-2 py-0.5 rounded ${badge.rarity.startsWith("Rare") ? "bg-neon-primary/20 text-neon-primary" : "bg-muted/50 text-muted-foreground"}`}
+                      >
+                        {badge.rarity}
                       </span>
                     </motion.div>
                   ))}
                 </div>
-                <div className="mt-4 text-center">
+                <div className="mt-6 text-center">
                   <a
                     href="https://tryhackme.com/p/eshwar"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-neon-primary hover:underline text-sm"
+                    className="inline-flex items-center gap-2 px-4 py-2 bg-neon-primary/10 border border-neon-primary/30 rounded-lg text-neon-primary hover:bg-neon-primary/20 transition-colors text-sm font-mono"
                   >
                     View all badges on TryHackMe
                     <ExternalLink size={14} />
@@ -295,6 +372,7 @@ export default function AboutPage() {
               </div>
             </motion.div>
 
+            {/* Activity & Learning */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -409,24 +487,21 @@ export default function AboutPage() {
               </motion.div>
             )}
 
+            {/* Footer Message */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.1 }}
               className="mt-12 text-center"
             >
-              <pre className="text-neon-primary/30 font-mono text-xs inline-block">
-                {`
-  ╔══════════════════════════════════════╗
-  ║  "Secure-by-design beats patching   ║
-  ║   later."                           ║
-  ╚══════════════════════════════════════╝
-`}
-              </pre>
+              <p className="text-muted-foreground font-mono text-sm">
+                <span className="text-neon-primary">&gt;</span> EOF reached. Connection maintained.
+              </p>
             </motion.div>
           </motion.div>
         </div>
       </main>
+
       <Footer />
       <CommandBar />
     </>

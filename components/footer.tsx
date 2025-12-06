@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { Github, Linkedin, Mail, Shield, Terminal } from "lucide-react"
+import { Github, Linkedin, Mail, Shield, Terminal, InstagramIcon } from "lucide-react"
 import { resumeData } from "@/src/data"
 
 export function Footer() {
@@ -98,6 +98,15 @@ export function Footer() {
                 <Linkedin size={20} />
               </a>
               <a
+                href={resumeData.instagram}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-neon-primary transition-colors"
+                aria-label="Instagram"
+              >
+                <InstagramIcon size={20} />
+              </a>
+              <a
                 href={`mailto:${resumeData.email}`}
                 className="text-muted-foreground hover:text-neon-primary transition-colors"
                 aria-label="Email"
@@ -107,22 +116,13 @@ export function Footer() {
             </div>
             <div className="flex flex-col gap-2">
               <a
-                href="https://tryhackme.com/p/eshwar"
+                href={resumeData.thm}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-xs text-muted-foreground hover:text-success transition-colors flex items-center gap-1"
               >
                 <Shield size={12} />
                 TryHackMe
-              </a>
-              <a
-                href="https://app.hackthebox.com/profile/eshwar"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-xs text-muted-foreground hover:text-success transition-colors flex items-center gap-1"
-              >
-                <Terminal size={12} />
-                HackTheBox
               </a>
             </div>
           </div>
