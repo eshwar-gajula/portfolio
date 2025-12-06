@@ -32,7 +32,7 @@ export default function HomePage() {
   const { theme } = useTheme()
   const isLight = theme === "light"
   const [typedText, setTypedText] = useState("")
-  const fullText = "> initializing secure handshake..."
+  const fullText = "> initializing secure handshake... hello I'm Eshwar."
 
   const [currentTaglineIndex, setCurrentTaglineIndex] = useState(0)
   const [currentTaglineText, setCurrentTaglineText] = useState("")
