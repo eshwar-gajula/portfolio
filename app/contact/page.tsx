@@ -4,41 +4,66 @@ import type React from "react"
 
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { Mail, Github, Linkedin, MapPin, Send, CheckCircle, Radio, Shield, Terminal } from "lucide-react"
+import { Mail, Github, Linkedin, MapPin, Send, CheckCircle, Radio, Shield } from "lucide-react"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
-import { CommandBar } from "@/components/command-bar"
 import { MultiLanguageMatrix } from "@/components/backgrounds"
 import { useAudio } from "@/components/audio-provider"
 import { resumeData } from "@/src/data"
 
+type ContactFormState = {
+  name: string
+  email: string
+  message: string
+  website: string
+}
+
 export default function ContactPage() {
   const { playSound } = useAudio()
-  const [formState, setFormState] = useState({
+  const [formState, setFormState] = useState<ContactFormState>({
     name: "",
     email: "",
     message: "",
+    website: "",
   })
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [error, setError] = useState("")
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
+    setError("")
     playSound("beep")
 
-    await new Promise((resolve) => setTimeout(resolve, 1500))
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formState),
+      })
+      const result = await response.json().catch(() => ({}))
 
-    setIsSubmitting(false)
-    setIsSubmitted(true)
-    playSound("success")
+      if (!response.ok) {
+        throw new Error(result.error || "The message could not be sent.")
+      }
+
+      setIsSubmitted(true)
+      setFormState({ name: "", email: "", message: "", website: "" })
+      playSound("success")
+    } catch (submissionError) {
+      setError(submissionError instanceof Error ? submissionError.message : "The message could not be sent. Please email me directly.")
+      playSound("beep")
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
     <>
       <Header />
-      <main id="main-content" className="min-h-screen pt-20 sm:pt-24 pb-16 bg-background relative overflow-hidden">
-        <MultiLanguageMatrix opacity={0.5} />
+      <main id="main-content" className="min-h-screen pt-8 sm:pt-12 pb-8 sm:pb-12 bg-background relative overflow-hidden">
+        <MultiLanguageMatrix opacity={0.08} />
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="mb-8 sm:mb-12">
@@ -47,15 +72,14 @@ export default function ContactPage() {
               <span className="text-neon-primary font-mono text-xs">CHANNEL_OPEN</span>
             </div>
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4">
-              <span className="text-neon-primary">&gt;</span> Let's Collaborate
+              <span className="text-neon-primary">&gt;</span> Let&apos;s Collaborate
             </h1>
             <p className="text-muted-foreground max-w-2xl text-sm sm:text-base">
-              I'm open to front-end roles, security-focused work, red-team aligned projects, and collaborations where UI
-              engineering and adversarial thinking meet.
+              I&apos;m interested in AI engineering, Python/software development, local-LLM applications, and security-minded engineering. I welcome thoughtful collaborations that value reliable implementation, clear interfaces, and responsible security research.
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-12 max-w-5xl mx-auto">
+          <div className="grid lg:grid-cols-2 gap-6 sm:gap-8 max-w-5xl mx-auto">
             {/* Contact info */}
             <div className="space-y-8">
               <div>
@@ -108,7 +132,7 @@ export default function ContactPage() {
                   </a>
 
                   <a
-                    href="https://tryhackme.com/p/eshwar"
+                    href={resumeData.thm}
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={() => playSound("click")}
@@ -123,21 +147,7 @@ export default function ContactPage() {
                     </div>
                   </a>
 
-                  <a
-                    href="https://app.hackthebox.com/profile/eshwar"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => playSound("click")}
-                    className="flex items-center gap-4 p-4 bg-surface border border-border rounded-lg hover:border-neon-primary/50 transition-colors group"
-                  >
-                    <div className="w-12 h-12 bg-warning/10 rounded-lg flex items-center justify-center group-hover:bg-warning/20 transition-colors">
-                      <Terminal className="text-warning" size={20} />
-                    </div>
-                    <div>
-                      <p className="font-medium">HackTheBox</p>
-                      <p className="text-sm text-muted-foreground">Offensive practice</p>
-                    </div>
-                  </a>
+
 
                   <div className="flex items-center gap-4 p-4 bg-surface border border-border rounded-lg">
                     <div className="w-12 h-12 bg-muted/20 rounded-lg flex items-center justify-center">
@@ -158,29 +168,32 @@ export default function ContactPage() {
                   <span>status</span>
                 </div>
                 <p className="text-foreground">
-                  Currently <span className="text-neon-primary">available</span> for frontend development,
-                  security-focused projects, and red-team collaborations.
+                  Currently exploring opportunities in <span className="text-neon-primary">AI engineering and Python development</span>, alongside software engineering and responsible cybersecurity projects.
                 </p>
               </div>
             </div>
 
             {/* Contact form */}
             <div>
-              <div className="p-6 bg-surface border border-border rounded-lg">
+              <div className="rounded-2xl border border-border bg-surface p-4 shadow-lg shadow-black/5 sm:p-6">
                 <h2 className="text-xl font-semibold mb-6">Send a Message</h2>
 
                 {isSubmitted ? (
                   <motion.div
                     initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    className="text-center py-12"
+                    className="text-center py-7 sm:py-10"
                   >
                     <CheckCircle size={48} className="mx-auto mb-4 text-neon-primary" />
                     <h3 className="text-xl font-semibold mb-2">Message Sent!</h3>
-                    <p className="text-muted-foreground">Thanks for reaching out. I'll get back to you soon.</p>
+                    <p className="text-muted-foreground">Thanks for reaching out. I&apos;ll get back to you soon.</p>
                   </motion.div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-6">
+                    <div className="absolute -left-[9999px] h-px w-px overflow-hidden" aria-hidden="true">
+                      <label htmlFor="website">Website</label>
+                      <input id="website" name="website" type="text" tabIndex={-1} autoComplete="off" onChange={(e) => setFormState((current) => ({ ...current, website: e.target.value }))} />
+                    </div>
                     <div>
                       <label htmlFor="name" className="block text-sm font-medium mb-2">
                         Name
@@ -226,6 +239,12 @@ export default function ContactPage() {
                       />
                     </div>
 
+                    {error && (
+                      <p role="alert" className="text-sm text-destructive bg-destructive/10 border border-destructive/30 rounded-lg px-3 py-2">
+                        {error}
+                      </p>
+                    )}
+
                     <button
                       type="submit"
                       disabled={isSubmitting}
@@ -252,7 +271,6 @@ export default function ContactPage() {
       </main>
 
       <Footer />
-      <CommandBar />
     </>
   )
 }

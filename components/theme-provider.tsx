@@ -1,6 +1,7 @@
 "use client"
 
 import { createContext, useContext, useEffect, useState, useCallback, type ReactNode } from "react"
+import { MotionConfig } from "framer-motion"
 
 export type Theme = "neon-hacker" | "dark" | "light" | "high-contrast"
 
@@ -119,7 +120,9 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme, cycleTheme, isLowPower, toggleLowPower, mounted }}>
-      <div style={{ visibility: mounted ? "visible" : "hidden" }}>{children}</div>
+      <MotionConfig reducedMotion={isLowPower ? "always" : "user"}>
+        <div style={{ visibility: mounted ? "visible" : "hidden" }}>{children}</div>
+      </MotionConfig>
     </ThemeContext.Provider>
   )
 }

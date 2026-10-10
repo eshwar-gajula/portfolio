@@ -5,10 +5,9 @@ import type React from "react"
 import { useState, useCallback, useMemo } from "react"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
-import { Grid3X3, Network, ExternalLink, Github, Target, Brain, Globe, Code, Wrench } from "lucide-react"
+import { Grid3X3, Network, ExternalLink, Github, Target, Brain, Globe, Code, Shield, Monitor, FlaskConical } from "lucide-react"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
-import { CommandBar } from "@/components/command-bar"
 import { NodeGraph } from "@/components/node-graph"
 import { ProjectPanel } from "@/components/project-panel"
 import { MultiLanguageMatrix } from "@/components/backgrounds"
@@ -20,21 +19,19 @@ import { resumeData } from "@/src/data"
 type ViewMode = "grid" | "graph"
 
 const categoryColors: Record<string, string> = {
-  "AI/ML": "#ff375f", // Pink/Red for AI
-  "Web Development": "#bf5af2", // Purple for Web
-  Security: "#ff453a", // Bright red
-  Tools: "#30d158", // Green
-  Backend: "#ff9f0a", // Orange
-  Mobile: "#5ac8fa", // Cyan
+  "AI Engineering & Security": "#e11d48",
+  "Desktop Development": "#7c3aed",
+  Cybersecurity: "#b91c1c",
+  "Test Automation": "#047857",
+  "Web Development": "#6d28d9",
 }
 
 const categoryIcons: Record<string, React.ElementType> = {
-  "AI/ML": Brain,
+  "AI Engineering & Security": Brain,
+  "Desktop Development": Monitor,
+  Cybersecurity: Shield,
+  "Test Automation": FlaskConical,
   "Web Development": Globe,
-  Security: Wrench,
-  Tools: Code,
-  Backend: Code,
-  Mobile: Code,
 }
 
 export default function ProjectsPage() {
@@ -42,7 +39,7 @@ export default function ProjectsPage() {
   const [selectedProject, setSelectedProject] = useState<string | null>(null)
   const [filter, setFilter] = useState<string>("all")
   const { playSound } = useAudio()
-  const { isLowPower } = useTheme()
+  const { isLowPower, theme } = useTheme()
 
   const categories = useMemo(() => {
     const cats = new Set(resumeData.projects.map((p) => p.category))
@@ -69,8 +66,8 @@ export default function ProjectsPage() {
   return (
     <>
       <Header />
-      <main id="main-content" className="min-h-screen pt-20 sm:pt-24 pb-16 bg-background relative overflow-hidden">
-        <MultiLanguageMatrix opacity={0.35} />
+      <main id="main-content" className="min-h-screen pt-8 sm:pt-12 pb-8 sm:pb-12 bg-background relative overflow-hidden">
+        <MultiLanguageMatrix opacity={0.08} />
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="flex flex-col gap-4 mb-6 sm:mb-8">
@@ -82,7 +79,7 @@ export default function ProjectsPage() {
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-2">
                 <span className="text-neon-primary">&gt;</span> Projects
               </h1>
-              <p className="text-muted-foreground text-sm sm:text-base">Explore my work in development</p>
+              <p className="text-muted-foreground text-sm sm:text-base">Selected work across AI engineering, software development, and security tooling. Open ECHA for the flagship project architecture and current implementation status.</p>
             </div>
 
             {!isLowPower && (
@@ -126,7 +123,13 @@ export default function ProjectsPage() {
           <div className="flex gap-2 mb-6 sm:mb-8 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap">
             {categories.map((cat) => {
               const Icon = cat !== "all" ? categoryIcons[cat] || Code : Target
-              const color = cat !== "all" ? categoryColors[cat] : "#ff2d55"
+              const color = cat !== "all" ? (theme === "light" ? ({
+                "AI Engineering & Security": "#a7192d",
+                "Desktop Development": "#6d28d9",
+                Cybersecurity: "#b91c1c",
+                "Test Automation": "#047857",
+                "Web Development": "#6d28d9",
+              } as Record<string, string>)[cat] || "#a7192d" : categoryColors[cat]) : (theme === "light" ? "#a7192d" : "#ff2d55")
               return (
                 <button
                   key={cat}
@@ -134,8 +137,9 @@ export default function ProjectsPage() {
                     setFilter(cat)
                     playSound("click")
                   }}
+                  aria-pressed={filter === cat}
                   className={cn(
-                    "flex items-center gap-2 px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium rounded-full transition-all whitespace-nowrap flex-shrink-0",
+                    "flex items-center gap-2 px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium rounded-full transition-all whitespace-nowrap flex-shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
                     filter === cat
                       ? "text-white"
                       : "bg-surface border border-border text-muted-foreground hover:text-foreground hover:border-neon-primary/50",
@@ -159,10 +163,12 @@ export default function ProjectsPage() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+                className="grid min-w-0 grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2 xl:grid-cols-3"
               >
                 {filteredProjects.map((project, i) => {
-                  const color = categoryColors[project.category] || "#ff2d55"
+                  const color = theme === "light"
+                    ? ({ "AI Engineering & Security": "#a7192d", "Desktop Development": "#6d28d9", Cybersecurity: "#b91c1c", "Test Automation": "#047857", "Web Development": "#6d28d9" } as Record<string, string>)[project.category] || "#a7192d"
+                    : categoryColors[project.category] || "#ff2d55"
                   const Icon = categoryIcons[project.category] || Code
 
                   return (
@@ -173,9 +179,9 @@ export default function ProjectsPage() {
                       transition={{ delay: i * 0.05 }}
                     >
                       <div
-                        className="group h-full flex flex-col p-6 bg-surface border border-border rounded-lg hover:border-neon-primary/50 transition-all cursor-pointer"
+                        className="group h-full min-w-0 flex flex-col rounded-xl border border-border bg-surface/90 p-5 shadow-sm transition-all hover:border-neon-primary/50 hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:p-6 cursor-pointer"
                         onClick={() => handleProjectSelect(project.id)}
-                        onKeyDown={(e) => e.key === "Enter" && handleProjectSelect(project.id)}
+                        onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); handleProjectSelect(project.id) } }}
                         tabIndex={0}
                         role="button"
                         aria-label={`View ${project.name} details`}
@@ -183,7 +189,7 @@ export default function ProjectsPage() {
                           borderColor: undefined,
                         }}
                       >
-                        <div className="flex items-start justify-between mb-4">
+                        <div className="mb-4 flex flex-wrap items-start justify-between gap-2">
                           <span
                             className="flex items-center gap-1.5 px-2 py-1 text-xs font-mono rounded"
                             style={{
@@ -199,11 +205,12 @@ export default function ProjectsPage() {
                           )}
                         </div>
 
-                        <h3 className="text-xl font-semibold mb-2 group-hover:text-neon-primary transition-colors">
+                        <h3 className="mb-2 break-words text-lg font-semibold group-hover:text-neon-primary transition-colors sm:text-xl">
                           {project.name}
                         </h3>
 
-                        <p className="text-muted-foreground text-sm mb-4 flex-1">{project.description}</p>
+                        <p className="text-muted-foreground text-sm mb-3 flex-1">{project.description}</p>
+                        {project.status && <p className="mb-4 text-xs font-medium text-muted-foreground">Status: <span className="text-neon-primary">{project.status}</span></p>}
 
                         <div className="flex flex-wrap gap-2 mb-4">
                           {project.techStack.slice(0, 4).map((tech) => (
@@ -220,7 +227,7 @@ export default function ProjectsPage() {
                           ))}
                         </div>
 
-                        <div className="flex items-center gap-4 pt-4 border-t border-border">
+                        <div className="flex flex-wrap items-center gap-4 border-t border-border pt-4">
                           {project.demoUrl && (
                             <a
                               href={project.demoUrl}
@@ -265,7 +272,7 @@ export default function ProjectsPage() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="h-[600px] bg-surface border border-border rounded-lg overflow-hidden"
+                className="h-[420px] overflow-hidden rounded-xl border border-border bg-surface sm:h-[600px]"
               >
                 <NodeGraph
                   projects={filteredProjects}
@@ -281,7 +288,6 @@ export default function ProjectsPage() {
       <ProjectPanel project={selectedProjectData} isOpen={!!selectedProject} onClose={() => setSelectedProject(null)} />
 
       <Footer />
-      <CommandBar />
     </>
   )
 }

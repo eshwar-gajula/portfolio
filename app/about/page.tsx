@@ -1,46 +1,44 @@
 "use client"
-import Image from "next/image"
 import { motion } from "framer-motion"
 import {
   MapPin,
+  Code,
+  Terminal,
   Award,
   Heart,
-  Terminal,
   Shield,
   Skull,
   Bug,
-  Code,
+  Linkedin,
   Crosshair,
   Zap,
   Eye,
   Github,
   ExternalLink,
-  Trophy,
 } from "lucide-react"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
-import { CommandBar } from "@/components/command-bar"
 import { MultiLanguageMatrix } from "@/components/backgrounds"
 import { resumeData } from "@/src/data"
 
 export default function AboutPage() {
   const hackerStats = [
-    { label: "Projects Completed", value: "15+", icon: Code },
-    { label: "Technologies", value: "20+", icon: Terminal },
-    { label: "Coffee Consumed", value: "∞", icon: Zap },
-    { label: "Bugs Fixed", value: "999+", icon: Bug },
+    { label: "Projects in Portfolio", value: String(resumeData.projects.length), icon: Code },
+    { label: "Listed Skills", value: String(resumeData.skills.length), icon: Terminal },
+    { label: "Flagship Platform", value: "ECHA", icon: Zap },
+    { label: "Focus Areas", value: "3", icon: Bug },
   ]
 
   const journeySteps = [
-    "Started in front-end development",
+    "Built a foundation in web and software development",
     "Developed interest in hacking, CTFs, and red-team methodology",
-    "Now merging UI engineering with offensive security insights",
+    "Now connecting AI engineering, software systems, and cybersecurity",
   ]
 
   const whatIDo = [
     "Build responsive, modern front-end systems",
-    "Practice attack simulations and security labs",
-    "Experiment with tools that combine UX and security",
+    "Practice security concepts in authorized labs and CTFs",
+    "Develop ECHA: agent workflows, desktop UI, and controlled automation",
   ]
 
   const philosophy = [
@@ -49,79 +47,17 @@ export default function AboutPage() {
   ]
 
   const futureDirection = [
-    "Red-team engineer with strong product/UI awareness",
+    "AI and security engineering with strong product/UI awareness",
     "Building tools that detect and prevent attacks",
     "Publishing security notes and research",
   ]
 
-  const tryhackmeBadges = [
-    {
-      name: "Networking Nerd",
-      description: "Completing the 'Network Fundamentals' module",
-      rarity: "Common: 20%",
-      image: "/assets/badges/networking-nerd.jpg",
-    },
-    {
-      name: "3 Day Streak",
-      description: "Achieving a 3 day hacking streak",
-      rarity: "Common: 35.9%",
-      image: "/assets/badges/3-day-streak.jpg",
-    },
-    {
-      name: "Webbed",
-      description: "Understands how the world wide web works",
-      rarity: "Common: 27.6%",
-      image: "/assets/badges/webbed.jpg",
-    },
-    {
-      name: "World Wide Web",
-      description: "Completing the 'How The Web Works' module",
-      rarity: "Common: 24.1%",
-      image: "/assets/badges/world-wide-web.jpg",
-    },
-    {
-      name: "cat linux.txt",
-      description: "Being competent in Linux",
-      rarity: "Common: 37.7%",
-      image: "/assets/badges/cat-linux.jpg",
-    },
-    {
-      name: "Metasploitable",
-      description: "Contains the knowledge to use Metasploit",
-      rarity: "Common: 11.5%",
-      image: "/assets/badges/metasploitable.jpg",
-    },
-    {
-      name: "Blue",
-      description: "Hacking into Windows via EternalBlue",
-      rarity: "Common: 13.5%",
-      image: "/assets/badges/blue.jpg",
-    },
-    {
-      name: "30 Day Streak",
-      description: "Hacking for 30 days solid",
-      rarity: "Common: 11.2%",
-      image: "/assets/badges/30-day-streak.jpg",
-    },
-    {
-      name: "Sword Apprentice",
-      description: "Completing the SQLMap room",
-      rarity: "Rare: 7.1%",
-      image: "/assets/badges/sword-apprentice.jpg",
-    },
-    {
-      name: "Cyber Ready",
-      description: "Understanding impact of training on teams",
-      rarity: "Rare: 8.4%",
-      image: "/assets/badges/cyber-ready.jpg",
-    },
-  ]
 
   return (
     <>
       <Header />
-      <main id="main-content" className="min-h-screen pt-20 sm:pt-24 pb-16 bg-background relative overflow-hidden">
-        <MultiLanguageMatrix opacity={0.35} />
+      <main id="main-content" className="min-h-screen pt-8 sm:pt-12 pb-8 sm:pb-12 bg-background relative overflow-hidden">
+        <MultiLanguageMatrix opacity={0.08} />
 
         <div className="container mx-auto px-4 relative z-10">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-5xl mx-auto">
@@ -132,7 +68,7 @@ export default function AboutPage() {
                 className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-neon-primary/10 border border-neon-primary/30 rounded-full mb-4 sm:mb-6"
               >
                 <Skull className="w-3 h-3 sm:w-4 sm:h-4 text-neon-primary" />
-                <span className="text-neon-primary font-mono text-xs sm:text-sm">PROFILE_ACCESSED</span>
+                <span className="text-neon-primary font-mono text-xs sm:text-sm">PROFILE_OVERVIEW</span>
               </motion.div>
 
               <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-3 sm:mb-4 font-mono">
@@ -148,7 +84,7 @@ export default function AboutPage() {
                 <span className="text-neon-primary hidden sm:inline">|</span>
                 <div className="flex items-center gap-1 sm:gap-2">
                   <Shield size={14} className="text-neon-secondary sm:w-4 sm:h-4" />
-                  <span>Red-Team Front-End Engineer</span>
+                  <span>AI & Software Engineering · Cybersecurity</span>
                 </div>
               </div>
             </div>
@@ -193,20 +129,18 @@ export default function AboutPage() {
                 <span className="text-sm font-mono text-muted-foreground ml-2">~/about/intro.sh</span>
               </div>
 
-              <div className="p-6 font-mono">
+              <div className="p-4 font-mono sm:p-6">
                 <div className="text-neon-primary mb-2">
                   <span className="text-muted-foreground">$</span> cat intro.txt
                 </div>
-                <p className="text-foreground leading-relaxed mb-6 pl-4 border-l-2 border-neon-primary/30 text-lg">
-                  I'm <span className="text-neon-primary font-bold">Eshwar</span>, a front-end engineer with an
-                  expanding focus on <span className="text-neon-primary">red-teaming</span> and{" "}
-                  <span className="text-neon-primary">adversarial security</span>.
+                <p className="mb-6 border-l-2 border-neon-primary/30 pl-4 text-base leading-7 text-foreground sm:text-lg">
+                  I&apos;m <span className="text-neon-primary font-bold">Eshwar</span> — a software and AI engineering practitioner exploring local LLMs, developer tooling, automation, and practical cybersecurity. I enjoy building useful interfaces and systems that make complex workflows easier to understand and control.
                 </p>
 
                 <div className="text-neon-primary mb-2">
                   <span className="text-muted-foreground">$</span> echo $SUMMARY
                 </div>
-                <p className="text-muted-foreground leading-relaxed pl-4 border-l-2 border-neon-secondary/30">
+                <p className="border-l-2 border-neon-secondary/30 pl-4 leading-7 text-muted-foreground">
                   {resumeData.summary}
                 </p>
               </div>
@@ -274,7 +208,7 @@ export default function AboutPage() {
                 <div className="p-6 space-y-4">
                   {philosophy.map((quote, i) => (
                     <blockquote key={i} className="pl-4 border-l-2 border-neon-primary/50 italic text-foreground">
-                      "{quote}"
+                      &quot;{quote}&quot;
                     </blockquote>
                   ))}
                 </div>
@@ -303,74 +237,114 @@ export default function AboutPage() {
               </motion.div>
             </div>
 
-            {/* TryHackMe Badges */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7 }}
-              className="bg-surface/80 backdrop-blur border border-border rounded-lg overflow-hidden mb-8"
+            {/* Inspiration and the ECHA project */}
+            <motion.section
+              id="inspiration"
+              initial={{ opacity: 0, y: 18 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.45 }}
+              className="mb-8 scroll-mt-24 overflow-hidden rounded-2xl border border-neon-primary/30 bg-surface/90"
+              aria-labelledby="about-inspiration-heading"
             >
-              <div className="flex items-center gap-3 px-6 py-4 bg-surface-elevated border-b border-border">
-                <Trophy className="text-neon-primary" size={20} />
-                <h2 className="text-lg font-bold font-mono">TRYHACKME_BADGES</h2>
-                <span className="ml-auto px-2 py-1 bg-success/20 text-success text-xs font-mono rounded">
-                  {tryhackmeBadges.length} EARNED
-                </span>
+              <div className="border-b border-border bg-surface-elevated px-5 py-4 sm:px-6">
+                <p className="mb-1 font-mono text-xs uppercase tracking-[0.18em] text-neon-primary">Personal inspiration</p>
+                <h2 id="about-inspiration-heading" className="text-xl font-bold leading-tight sm:text-2xl">
+                  From the JARVIS idea to a real engineering challenge
+                </h2>
               </div>
-              <div className="p-6">
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-                  {tryhackmeBadges.map((badge, i) => (
-                    <motion.div
-                      key={badge.name}
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 0.8 + i * 0.05 }}
-                      className="group flex flex-col items-center p-4 bg-background/50 border border-border rounded-lg hover:border-neon-primary/50 hover:bg-surface/50 transition-all cursor-default"
-                    >
-                      <div className="relative w-16 h-16 sm:w-20 sm:h-20 mb-3">
-                        <Image
-                          src={badge.image || "/placeholder.svg"}
-                          alt={badge.name}
-                          fill
-                          className="object-contain group-hover:scale-110 transition-transform"
-                        />
-                        <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-success rounded-full flex items-center justify-center">
-                          <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                            <path
-                              fillRule="evenodd"
-                              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
-                        </div>
-                      </div>
-                      <span className="text-xs sm:text-sm text-center font-semibold text-foreground group-hover:text-neon-primary transition-colors font-mono mb-1">
-                        {badge.name}
-                      </span>
-                      <span className="text-[10px] sm:text-xs text-center text-muted-foreground line-clamp-2">
-                        {badge.description}
-                      </span>
-                      <span
-                        className={`mt-2 text-[10px] px-2 py-0.5 rounded ${badge.rarity.startsWith("Rare") ? "bg-neon-primary/20 text-neon-primary" : "bg-muted/50 text-muted-foreground"}`}
-                      >
-                        {badge.rarity}
-                      </span>
-                    </motion.div>
-                  ))}
+              <div className="grid min-w-0 gap-5 p-4 sm:p-6 md:grid-cols-[0.8fr_1.2fr] md:items-center md:gap-7">
+                <div className="min-w-0 overflow-hidden rounded-xl border border-border bg-background">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src="https://media2.giphy.com/media/YeXKsgwj7HOtuNgKc8/giphy.gif"
+                    alt="Tony Stark from Iron Man, representing the JARVIS-inspired engineering ambition"
+                    loading="lazy"
+                    className="aspect-[4/3] w-full object-cover"
+                  />
                 </div>
-                <div className="mt-6 text-center">
+                <div className="min-w-0">
+                  <blockquote className="border-l-2 border-neon-primary pl-4 text-lg font-semibold italic leading-relaxed text-foreground sm:text-xl">
+                    “Sometimes you gotta run before you can walk.”
+                  </blockquote>
+                  <p className="mt-2 text-sm text-muted-foreground">— Tony Stark, <em>Iron Man</em> (2008)</p>
+                  <p className="mt-4 text-sm leading-7 text-muted-foreground sm:text-base">
+                    JARVIS is fictional, but the engineering questions behind the idea are real: how can software
+                    understand a task, coordinate tools, automate complex work, and remain observable, dependable,
+                    and under human control? That curiosity is one of the inspirations behind my work.
+                  </p>
+                </div>
+              </div>
+              <div className="border-t border-border p-4 sm:p-6">
+                <div className="mb-4 flex flex-wrap items-center gap-2">
+                  <Zap className="text-neon-primary" size={19} />
+                  <h3 className="font-mono text-sm font-bold sm:text-base">ECHA · ECHELON CYBERNETIC HEURISTIC AEGIS</h3>
+                  <span className="rounded-full border border-border px-2.5 py-1 text-xs text-muted-foreground">In active development</span>
+                </div>
+                <p className="max-w-4xl text-sm leading-7 text-muted-foreground sm:text-base">
+                  ECHA is my long-term project connecting a TypeScript-based AI-agent architecture with a desktop
+                  interface built using Tauri, React, TypeScript, and Rust. The direction includes local-LLM
+                  orchestration, controlled tool use, permissions, audit trails, and verification. Planned
+                  capabilities are still being engineered; I aim to make reliability and human oversight part of
+                  the architecture from the start.
+                </p>
+                <blockquote className="mt-5 border-l-2 border-neon-primary pl-4 text-sm font-semibold leading-6 text-foreground sm:text-base">
+                  “Don&apos;t build the machine that follows commands. Build the system that understands the mission.”
+                  <span className="mt-1 block text-xs font-normal text-muted-foreground">My own ECHA design principle—not a Tony Stark quote.</span>
+                </blockquote>
+                <div className="mt-5 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                   <a
-                    href="https://tryhackme.com/p/eshwar"
+                    href="https://github.com/eshwar-gajula/ECHA-shell"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-neon-primary/10 border border-neon-primary/30 rounded-lg text-neon-primary hover:bg-neon-primary/20 transition-colors text-sm font-mono"
+                    className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-neon-primary px-4 py-3 text-center text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90 sm:w-auto"
                   >
-                    View all badges on TryHackMe
-                    <ExternalLink size={14} />
+                    Explore ECHA Shell <ExternalLink size={15} />
+                  </a>
+                  <a
+                    href={resumeData.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-border px-4 py-3 text-center text-sm font-semibold text-foreground transition-colors hover:border-neon-primary/50 sm:w-auto"
+                  >
+                    Explore my GitHub <Github size={15} />
                   </a>
                 </div>
               </div>
-            </motion.div>
+            </motion.section>
+
+            {/* TryHackMe profile: link to the live profile instead of presenting a stale hard-coded badge inventory. */}
+            <motion.section
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7 }}
+              className="mb-8 overflow-hidden rounded-2xl border border-border bg-surface/90 shadow-sm"
+              aria-labelledby="tryhackme-title"
+            >
+              <div className="flex items-center gap-3 border-b border-border bg-surface-elevated px-5 py-4 sm:px-6">
+                <Shield className="text-neon-primary" size={20} />
+                <div className="min-w-0">
+                  <h2 id="tryhackme-title" className="font-mono text-base font-bold sm:text-lg">TRYHACKME_PROFILE</h2>
+                  <p className="mt-1 text-xs text-muted-foreground">Hands-on cybersecurity learning and authorised labs</p>
+                </div>
+              </div>
+              <div className="flex flex-col gap-5 p-5 sm:flex-row sm:items-center sm:justify-between sm:p-6">
+                <div className="max-w-2xl">
+                  <p className="leading-7 text-muted-foreground">
+                    I use structured labs and CTF-style practice to strengthen my understanding of web security, Linux, networking, and defensive concepts. The live profile is the source of truth for current rooms, badges, and progress.
+                  </p>
+                  <p className="mt-2 text-xs leading-5 text-muted-foreground">Badge counts are intentionally not hard-coded here, so the portfolio does not display stale progress.</p>
+                </div>
+                <a
+                  href={resumeData.thm}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex shrink-0 items-center justify-center gap-2 rounded-lg border border-neon-primary/40 bg-neon-primary/10 px-4 py-3 text-sm font-semibold text-neon-primary transition-colors hover:bg-neon-primary/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                >
+                  Open TryHackMe profile <ExternalLink size={16} />
+                </a>
+              </div>
+            </motion.section>
 
             {/* Activity & Learning */}
             <motion.div
@@ -395,7 +369,7 @@ export default function AboutPage() {
                     <span className="text-neon-primary font-mono text-sm">View GitHub</span>
                   </a>
                   <a
-                    href="https://tryhackme.com/p/eshwar"
+                    href={resumeData.thm}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 px-4 py-2 bg-neon-secondary/10 border border-neon-secondary/30 rounded-lg hover:bg-neon-secondary/20 transition-colors"
@@ -404,13 +378,13 @@ export default function AboutPage() {
                     <span className="text-neon-secondary font-mono text-sm">TryHackMe Profile</span>
                   </a>
                   <a
-                    href="https://app.hackthebox.com/profile/eshwar"
+                    href={resumeData.linkedin}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-success/10 border border-success/30 rounded-lg hover:bg-success/20 transition-colors"
+                    className="inline-flex items-center gap-2 rounded-lg border border-border bg-surface-elevated px-4 py-2 transition-colors hover:border-neon-primary/50"
                   >
-                    <Terminal size={18} className="text-success" />
-                    <span className="text-success font-mono text-sm">HackTheBox Profile</span>
+                    <Linkedin size={18} className="text-neon-primary" />
+                    <span className="font-mono text-sm text-foreground">LinkedIn Profile</span>
                   </a>
                 </div>
               </div>
@@ -492,7 +466,7 @@ export default function AboutPage() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 1.1 }}
-              className="mt-12 text-center"
+              className="mt-6 sm:mt-9 text-center"
             >
               <p className="text-muted-foreground font-mono text-sm">
                 <span className="text-neon-primary">&gt;</span> EOF reached. Connection maintained.
@@ -503,7 +477,6 @@ export default function AboutPage() {
       </main>
 
       <Footer />
-      <CommandBar />
     </>
   )
 }

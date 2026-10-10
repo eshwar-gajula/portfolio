@@ -1,25 +1,17 @@
 import type { MetadataRoute } from "next"
 import { resumeData } from "@/src/data"
+import { siteConfig } from "@/src/config/site"
+
+const securityNoteSlugs = ["web-app-recon", "auth-bypass-concepts", "xss-fundamentals", "sql-injection-theory", "privilege-escalation"]
+const staticRoutes = ["", "/about", "/projects", "/case-studies", "/security-notes", "/skills", "/timeline", "/contact", "/resume", "/labs", "/changelog"]
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://eshwar-gajula-portfolio.vercel.app"
-
-  const staticPages = [
-    { url: baseUrl, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 1 },
-    { url: `${baseUrl}/about`, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.8 },
-    { url: `${baseUrl}/projects`, lastModified: new Date(), changeFrequency: "weekly" as const, priority: 0.9 },
-    { url: `${baseUrl}/skills`, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.7 },
-    { url: `${baseUrl}/timeline`, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.6 },
-    { url: `${baseUrl}/contact`, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.7 },
-    { url: `${baseUrl}/resume`, lastModified: new Date(), changeFrequency: "monthly" as const, priority: 0.8 },
-  ]
-
-  const projectPages = resumeData.projects.map((project) => ({
-    url: `${baseUrl}/projects/${project.slug}`,
-    lastModified: new Date(),
-    changeFrequency: "monthly" as const,
-    priority: 0.6,
+  const base = siteConfig.siteUrl
+  const staticPages: MetadataRoute.Sitemap = staticRoutes.map((route) => ({
+    url: `${base}${route}`, lastModified: new Date(), changeFrequency: route === "" ? "weekly" : "monthly", priority: route === "" ? 1 : route === "/projects" || route === "/case-studies" ? 0.9 : 0.6,
   }))
-
-  return [...staticPages, ...projectPages]
+  const projects: MetadataRoute.Sitemap = resumeData.projects.map((project) => ({ url: `${base}/projects/${project.slug}`, lastModified: new Date(), changeFrequency: "monthly", priority: project.slug === "echa" ? 0.9 : 0.7 }))
+  const caseStudies: MetadataRoute.Sitemap = resumeData.projects.map((project) => ({ url: `${base}/case-studies/${project.slug}`, lastModified: new Date(), changeFrequency: "monthly", priority: project.slug === "echa" ? 0.8 : 0.6 }))
+  const notes: MetadataRoute.Sitemap = securityNoteSlugs.map((slug) => ({ url: `${base}/security-notes/${slug}`, lastModified: new Date(), changeFrequency: "monthly", priority: 0.5 }))
+  return [...staticPages, ...projects, ...caseStudies, ...notes]
 }

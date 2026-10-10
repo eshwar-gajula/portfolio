@@ -47,11 +47,12 @@ import {
 } from "lucide-react"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
-import { CommandBar } from "@/components/command-bar"
 import { MultiLanguageMatrix } from "@/components/backgrounds"
 import { useAudio } from "@/components/audio-provider"
 import { cn } from "@/lib/utils"
+import { useTheme } from "@/components/theme-provider"
 import { resumeData } from "@/src/data"
+import type { Skill, Project } from "@/src/types/resume"
 
 type SoundId = "click" | "beep" | "boot" | "nodeSelect" | "success" | "error" | "typing"
 
@@ -95,28 +96,43 @@ const skillIcons: Record<string, React.ElementType> = {
 
 const categoryIcons: Record<string, React.ElementType> = {
   Programming: Binary,
-  Frontend: Globe,
-  Backend: Server,
-  Tools: Wrench,
-  Database: Database,
-  "AI/ML": Brain,
-  Cloud: Cloud,
-  Testing: CheckCircle,
-  DevOps: RefreshCw,
-  Security: Shield,
+  "Web Technologies": Globe,
+  "AI & LLMs": Brain,
+  Cybersecurity: Shield,
+  "Systems & Networking": Wifi,
+  Databases: Database,
+  "Desktop Development": Layers,
+  "Cloud & Platforms": Cloud,
+  "Automation & Engineering": Wrench,
 }
 
-const categoryColors: Record<string, string> = {
-  Programming: "#ff2d55", // Crimson red - primary
-  Frontend: "#bf5af2", // Purple - secondary
-  Backend: "#ff9f0a", // Orange
-  Tools: "#30d158", // Green
-  Database: "#5ac8fa", // Cyan
-  "AI/ML": "#ff375f", // Pink/Red
-  Cloud: "#64d2ff", // Light blue
-  Testing: "#ffd60a", // Yellow
-  DevOps: "#ff6b35", // Orange-red
-  Security: "#ff453a", // Bright red
+const darkCategoryColors: Record<string, string> = {
+  Programming: "#fb7185",
+  "Web Technologies": "#c4b5fd",
+  "AI & LLMs": "#f472b6",
+  Cybersecurity: "#fb7185",
+  "Systems & Networking": "#7dd3fc",
+  Databases: "#67e8f9",
+  "Desktop Development": "#c4b5fd",
+  "Cloud & Platforms": "#7dd3fc",
+  "Automation & Engineering": "#fdba74",
+}
+
+const lightCategoryColors: Record<string, string> = {
+  Programming: "#be123c",
+  "Web Technologies": "#6d28d9",
+  "AI & LLMs": "#9d174d",
+  Cybersecurity: "#b91c1c",
+  "Systems & Networking": "#075985",
+  Databases: "#0e7490",
+  "Desktop Development": "#6d28d9",
+  "Cloud & Platforms": "#075985",
+  "Automation & Engineering": "#9a3412",
+}
+
+function categoryColor(category: string, theme: string) {
+  const palette = theme === "light" ? lightCategoryColors : darkCategoryColors
+  return palette[category] || (theme === "light" ? "#a7192d" : "#fb7185")
 }
 
 function SkillDetailCard({
@@ -125,18 +141,19 @@ function SkillDetailCard({
   onClose,
   playSound,
 }: {
-  skill: any
-  relatedProjects: any[]
+  skill: Skill
+  relatedProjects: Project[]
   onClose: () => void
   playSound: (sound: SoundId) => void
 }) {
-  const getSkillIcon = (s: any) => {
+  const getSkillIcon = (s: Skill) => {
     const iconName = s.icon || "code"
     return skillIcons[iconName] || Code
   }
 
   const Icon = getSkillIcon(skill)
-  const color = categoryColors[skill.category] || "#ff2d55"
+  const { theme } = useTheme()
+  const color = categoryColor(skill.category, theme)
 
   return (
     <motion.div
@@ -169,19 +186,19 @@ function SkillDetailCard({
         </div>
 
         <div className="grid grid-cols-2 gap-3 p-3 bg-surface-elevated rounded-lg mb-4">
-          <div>
-            <span className="text-xs text-muted-foreground block">Experience</span>
-            <span className="font-mono text-lg font-bold">{skill.years}y</span>
+          <div className="min-w-0">
+            <span className="text-xs text-muted-foreground block">Category</span>
+            <span className="font-mono text-sm font-semibold break-words" style={{ color }}>
+              {skill.category}
+            </span>
           </div>
           <div>
-            <span className="text-xs text-muted-foreground block">Proficiency</span>
-            <span className="font-mono text-lg font-bold" style={{ color }}>
-              {skill.proficiency}%
-            </span>
+            <span className="text-xs text-muted-foreground block">Mapped project evidence</span>
+            <span className="font-mono text-lg font-bold">{relatedProjects.length}</span>
           </div>
         </div>
 
-        {relatedProjects.length > 0 && (
+        {relatedProjects.length > 0 ? (
           <div>
             <h4 className="text-xs font-semibold mb-2 flex items-center gap-2">
               <span className="text-neon-primary">&gt;</span> Used in Projects
@@ -200,6 +217,10 @@ function SkillDetailCard({
               ))}
             </div>
           </div>
+        ) : (
+          <p className="rounded-lg border border-border bg-background/50 p-3 text-xs leading-5 text-muted-foreground">
+            No public portfolio project is currently mapped to this skill. See the resume for the complete skills list.
+          </p>
         )}
       </div>
     </motion.div>
@@ -208,8 +229,10 @@ function SkillDetailCard({
 
 export default function SkillsPage() {
   const [filter, setFilter] = useState<string>("all")
+  const [searchQuery, setSearchQuery] = useState("")
   const [selectedSkill, setSelectedSkill] = useState<string | null>(null)
   const { playSound } = useAudio()
+  const { theme } = useTheme()
 
   const categories = useMemo(() => {
     const cats = new Set(resumeData.skills.map((s) => s.category))
@@ -217,17 +240,21 @@ export default function SkillsPage() {
   }, [])
 
   const filteredSkills = useMemo(() => {
-    if (filter === "all") return resumeData.skills
-    return resumeData.skills.filter((s) => s.category === filter)
-  }, [filter])
+    const query = searchQuery.trim().toLowerCase()
+    return resumeData.skills.filter((skill) => {
+      const matchesCategory = filter === "all" || skill.category === filter
+      const matchesQuery = !query || `${skill.name} ${skill.category}`.toLowerCase().includes(query)
+      return matchesCategory && matchesQuery
+    })
+  }, [filter, searchQuery])
 
   const selectedSkillData = useMemo(() => {
     return resumeData.skills.find((s) => s.name === selectedSkill)
   }, [selectedSkill])
 
-  const getRelatedProjects = (skill: any) => {
+  const getRelatedProjects = (skill: Skill) => {
     return resumeData.projects.filter((p) =>
-      (skill as any).projects?.some((sp: string) => p.id === sp || p.slug === sp),
+      skill.projects?.some((sp: string) => p.id === sp || p.slug === sp),
     )
   }
 
@@ -236,23 +263,21 @@ export default function SkillsPage() {
     return getRelatedProjects(selectedSkillData)
   }, [selectedSkillData])
 
-  const getSkillIcon = (skill: any) => {
+  const getSkillIcon = (skill: Skill) => {
     const iconName = skill.icon || "code"
     return skillIcons[iconName] || Code
   }
 
   const handleSkillClick = (skillName: string, isSelected: boolean) => {
     setSelectedSkill(isSelected ? null : skillName)
-    playSound("nodeSelect")
-    setTimeout(() => playSound("beep"), 30)
-    setTimeout(() => playSound("click"), 60)
+    playSound("click")
   }
 
   return (
     <>
       <Header />
-      <main id="main-content" className="min-h-screen pt-20 sm:pt-24 pb-16 bg-background relative overflow-hidden">
-        <MultiLanguageMatrix opacity={0.5} />
+      <main id="main-content" className="min-h-screen pt-8 sm:pt-12 pb-8 sm:pb-12 bg-background relative overflow-hidden">
+        <MultiLanguageMatrix opacity={0.08} />
 
         <div className="container mx-auto px-4 relative z-10">
           {/* Header */}
@@ -264,14 +289,37 @@ export default function SkillsPage() {
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
               <span className="text-neon-primary">&gt;</span> Skills
             </h1>
-            <p className="text-muted-foreground max-w-2xl text-sm sm:text-base">
-              Technical capabilities across programming, web development, and tools. Click on any skill to see related
-              projects and details.
+            <p className="text-muted-foreground max-w-2xl text-sm sm:text-base leading-7">
+              A searchable catalogue based on my current resume and project work. Select a skill to inspect related
+              public project evidence where it is mapped; the page deliberately avoids self-rated proficiency bars.
             </p>
           </div>
 
+          {/* Search skills */}
+          <div className="mb-4 max-w-xl">
+            <label htmlFor="skill-search" className="mb-2 block text-sm font-medium text-foreground">Search skills</label>
+            <input
+              id="skill-search"
+              type="search"
+              value={searchQuery}
+              onChange={(event) => { setSearchQuery(event.target.value); setSelectedSkill(null) }}
+              placeholder="Try Python, Rust, OWASP, Ollama..."
+              className="w-full min-w-0 rounded-lg border border-border bg-surface px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              autoComplete="off"
+            />
+          </div>
+
+          <div className="mb-3 flex flex-wrap items-center justify-between gap-2 text-xs text-muted-foreground" aria-live="polite">
+            <span>{filteredSkills.length} of {resumeData.skills.length} skills shown</span>
+            {(searchQuery || filter !== "all") && (
+              <button type="button" onClick={() => { setSearchQuery(""); setFilter("all"); setSelectedSkill(null) }} className="rounded-md border border-border bg-surface px-3 py-1.5 font-medium text-foreground transition-colors hover:border-neon-primary/60 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                Clear filters
+              </button>
+            )}
+          </div>
+
           {/* Category filters */}
-          <div className="flex gap-2 sm:gap-3 mb-8 sm:mb-12 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap">
+          <div className="mb-8 flex max-w-full gap-2 overflow-x-auto px-4 pb-3 -mx-4 sm:mx-0 sm:px-0 sm:flex-wrap sm:gap-3 sm:mb-12" role="group" aria-label="Filter skills by category">
             {categories.map((cat) => {
               const Icon = cat !== "all" ? categoryIcons[cat] : Command
               return (
@@ -279,13 +327,15 @@ export default function SkillsPage() {
                   key={cat}
                   onClick={() => {
                     setFilter(cat)
+                    setSelectedSkill(null)
                     playSound("click")
                   }}
+                  aria-pressed={filter === cat}
                   className={cn(
-                    "flex items-center gap-2 px-3 sm:px-4 py-2 text-xs sm:text-sm font-medium rounded-full transition-all whitespace-nowrap flex-shrink-0",
+                    "flex shrink-0 items-center gap-2 rounded-full border px-3 py-2 text-xs font-medium whitespace-nowrap transition-colors sm:px-4 sm:text-sm",
                     filter === cat
-                      ? "bg-neon-primary text-primary-foreground"
-                      : "bg-surface border border-border text-muted-foreground hover:text-foreground hover:border-neon-primary/50",
+                      ? "border-neon-primary bg-neon-primary text-primary-foreground"
+                      : "border-border bg-surface text-muted-foreground hover:border-neon-primary/50 hover:text-foreground",
                   )}
                 >
                   {Icon && <Icon size={14} className="sm:w-4 sm:h-4" />}
@@ -298,9 +348,21 @@ export default function SkillsPage() {
           <div className="grid lg:grid-cols-3 gap-6 sm:gap-8">
             {/* Skills grid - Now shows inline details on mobile */}
             <div className="lg:col-span-2">
+              {filteredSkills.length === 0 ? (
+                <div className="rounded-xl border border-border bg-surface p-6 text-center sm:col-span-2">
+                  <Info size={28} className="mx-auto mb-3 text-muted-foreground" />
+                  <p className="font-semibold">No matching skills</p>
+                  <p className="mt-1 text-sm text-muted-foreground">Try another term or reset the category filter.</p>
+                  <button
+                    type="button"
+                    onClick={() => { setSearchQuery(""); setFilter("all"); setSelectedSkill(null) }}
+                    className="mt-4 rounded-lg border border-border px-4 py-2 text-sm font-medium hover:border-neon-primary/50"
+                  >Reset filters</button>
+                </div>
+              ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 {filteredSkills.map((skill, i) => {
-                  const color = categoryColors[skill.category] || "#ff2d55"
+                  const color = categoryColor(skill.category, theme)
                   const isSelected = selectedSkill === skill.name
                   const SkillIcon = getSkillIcon(skill)
 
@@ -311,9 +373,10 @@ export default function SkillsPage() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: i * 0.03 }}
                         onClick={() => handleSkillClick(skill.name, isSelected)}
+                        aria-pressed={isSelected}
                         className={cn(
-                          "relative w-full p-3 sm:p-4 text-left bg-surface border rounded-lg transition-all group focus:outline-none focus:ring-2 focus:ring-ring",
-                          isSelected ? "border-neon-primary shadow-lg" : "border-border hover:border-neon-primary/50",
+                          "relative w-full min-w-0 p-3 sm:p-4 text-left bg-surface border rounded-xl transition-all duration-200 group focus:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+                          isSelected ? "border-neon-primary shadow-lg bg-surface-elevated" : "border-border hover:border-neon-primary/60 hover:-translate-y-0.5 hover:shadow-md",
                         )}
                         style={{
                           boxShadow: isSelected ? `0 0 20px ${color}30` : undefined,
@@ -327,29 +390,19 @@ export default function SkillsPage() {
                             <SkillIcon size={20} style={{ color }} className="sm:w-6 sm:h-6" />
                           </div>
                           <div className="flex-1 min-w-0">
-                            <h3 className="font-semibold text-sm sm:text-base group-hover:text-neon-primary transition-colors truncate">
+                            <h3 className="break-words font-semibold text-sm sm:text-base group-hover:text-neon-primary transition-colors">
                               {skill.name}
                             </h3>
-                            <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                              <span className="px-1.5 py-0.5 rounded bg-surface-elevated">{skill.category}</span>
-                              <span>{skill.years}y</span>
+                            <div className="mt-1.5 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+                              <span className="inline-flex max-w-full items-center rounded-md border border-border bg-surface-elevated px-2 py-1 leading-tight">{skill.category}</span>
+                              <span className="inline-flex items-center gap-1"><Layers size={12} aria-hidden="true" />{getRelatedProjects(skill).length} mapped projects</span>
                             </div>
                           </div>
                         </div>
 
-                        {/* Proficiency meter */}
-                        <div className="h-1.5 sm:h-2 bg-surface-elevated rounded-full overflow-hidden">
-                          <motion.div
-                            initial={{ width: 0 }}
-                            animate={{ width: `${skill.proficiency}%` }}
-                            transition={{ delay: i * 0.03 + 0.2, duration: 0.5 }}
-                            className="h-full rounded-full"
-                            style={{ backgroundColor: color }}
-                          />
-                        </div>
-                        <div className="flex justify-between mt-1 text-[10px] sm:text-xs text-muted-foreground">
-                          <span>Proficiency</span>
-                          <span className="font-mono">{skill.proficiency}%</span>
+                        <div className="mt-3 flex items-center justify-between gap-2 border-t border-border pt-2.5 text-xs text-muted-foreground">
+                          <span>{isSelected ? "Details expanded" : "Inspect project evidence"}</span>
+                          <span aria-hidden="true" className="font-mono text-neon-primary">{isSelected ? "−" : "+"}</span>
                         </div>
                       </motion.button>
 
@@ -369,6 +422,7 @@ export default function SkillsPage() {
                   )
                 })}
               </div>
+              )}
             </div>
 
             {/* Skill detail panel - Hidden on mobile, shown on desktop */}
@@ -384,11 +438,11 @@ export default function SkillsPage() {
                     <div className="flex items-center gap-3 mb-4">
                       <div
                         className="w-14 h-14 rounded-lg flex items-center justify-center border border-border"
-                        style={{ backgroundColor: `${categoryColors[selectedSkillData.category]}15` }}
+                        style={{ backgroundColor: `${categoryColor(selectedSkillData.category, theme)}15` }}
                       >
                         {(() => {
                           const Icon = getSkillIcon(selectedSkillData)
-                          return <Icon size={28} style={{ color: categoryColors[selectedSkillData.category] }} />
+                          return <Icon size={28} style={{ color: categoryColor(selectedSkillData.category, theme) }} />
                         })()}
                       </div>
                       <div>
@@ -400,21 +454,21 @@ export default function SkillsPage() {
                     <div className="space-y-4">
                       <div className="grid grid-cols-2 gap-3 p-3 bg-surface-elevated rounded-lg">
                         <div>
-                          <span className="text-xs text-muted-foreground block">Experience</span>
-                          <span className="font-mono text-lg font-bold">{selectedSkillData.years}y</span>
+                          <span className="text-xs text-muted-foreground block">Mapped evidence</span>
+                          <span className="font-mono text-lg font-bold">{relatedProjects.length}</span>
                         </div>
                         <div>
-                          <span className="text-xs text-muted-foreground block">Proficiency</span>
+                          <span className="text-xs text-muted-foreground block">Technical area</span>
                           <span
-                            className="font-mono text-lg font-bold"
-                            style={{ color: categoryColors[selectedSkillData.category] }}
+                            className="font-mono text-sm font-semibold"
+                            style={{ color: categoryColor(selectedSkillData.category, theme) || "#ff2d55" }}
                           >
-                            {selectedSkillData.proficiency}%
+                            {selectedSkillData.category}
                           </span>
                         </div>
                       </div>
 
-                      {relatedProjects.length > 0 && (
+                      {relatedProjects.length > 0 ? (
                         <div>
                           <h4 className="text-sm font-semibold mb-2 flex items-center gap-2">
                             <span className="text-neon-primary">&gt;</span> Used in Projects
@@ -433,6 +487,8 @@ export default function SkillsPage() {
                             ))}
                           </div>
                         </div>
+                      ) : (
+                        <p className="rounded-lg border border-border bg-background/50 p-3 text-xs leading-5 text-muted-foreground">No public project is mapped to this skill yet. This is not a proficiency rating; see the resume for the complete skills list.</p>
                       )}
                     </div>
                   </motion.div>
@@ -449,7 +505,6 @@ export default function SkillsPage() {
       </main>
 
       <Footer />
-      <CommandBar />
     </>
   )
 }

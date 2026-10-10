@@ -7,7 +7,7 @@ export default function NotFound() {
   return (
     <>
       <Header />
-      <main id="main-content" className="min-h-screen pt-24 pb-16 bg-background flex items-center justify-center">
+      <main id="main-content" className="min-h-screen pt-12 sm:pt-16 pb-8 sm:pb-12 bg-background flex items-center justify-center">
         <div className="text-center px-4">
           <div className="inline-flex items-center justify-center w-20 h-20 mb-6 rounded-full bg-surface border border-border">
             <Terminal size={32} className="text-neon-primary" />

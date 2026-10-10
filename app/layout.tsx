@@ -7,6 +7,8 @@ import { AudioProvider } from "@/components/audio-provider"
 import { AppProvider } from "@/components/app-provider"
 import { CommandButton } from "@/components/command-button"
 import { CommandBar } from "@/components/command-bar"
+import { PageTransition } from "@/components/page-transition"
+import { siteConfig } from "@/src/config/site"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -25,33 +27,29 @@ const orbitron = Orbitron({
 })
 
 export const metadata: Metadata = {
-  title: "Eshwar Gajula | Frontend Developer",
-  description:
-    "Portfolio of Eshwar Gajula - Frontend Developer specializing in React.js, Next.js, and modern web development. Building user-friendly, responsive web applications.",
-  keywords: ["frontend developer", "react developer", "web developer", "javascript", "next.js", "html css"],
-  authors: [{ name: "Eshwar Gajula" }],
-  creator: "Eshwar Gajula",
+  metadataBase: new URL(siteConfig.siteUrl),
+  title: siteConfig.title,
+  description: siteConfig.description,
+  keywords: ["AI engineer", "software engineer", "cybersecurity", "Python", "TypeScript", "AI agents", "security automation"],
+  authors: [{ name: siteConfig.name }],
+  creator: siteConfig.name,
   openGraph: {
     type: "website",
+    images: [{ url: "/opengraph-image.png", width: 1200, height: 630, alt: "Eshwar Gajula — AI Engineering, Software Engineering, Cybersecurity" }],
     locale: "en_US",
-    url: "https://eshwar-gajula-portfolio.vercel.app",
-    siteName: "Eshwar Gajula Portfolio",
-    title: "Eshwar Gajula | Frontend Developer",
-    description: "Portfolio of Eshwar Gajula - Frontend Developer specializing in React.js and Next.js",
+    url: siteConfig.siteUrl,
+    siteName: `${siteConfig.name} Portfolio`,
+    title: siteConfig.title,
+    description: siteConfig.description,
   },
   twitter: {
     card: "summary_large_image",
-    title: "Eshwar Gajula | Frontend Developer",
-    description: "Portfolio of Eshwar Gajula - Frontend Developer",
+    title: siteConfig.title,
+    description: siteConfig.description,
+    images: ["/opengraph-image.png"],
   },
-  robots: {
-    index: true,
-    follow: true,
-  },
-  icons: {
-    icon: "/icon.svg",
-    apple: "/icon.svg",
-  },
+  robots: { index: true, follow: true },
+  icons: { icon: "/icon.svg", apple: "/icon.svg" },
 }
 
 export const viewport: Viewport = {
@@ -76,6 +74,21 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/icon.svg" />
       </head>
       <body className={`${inter.variable} ${jetbrainsMono.variable} ${orbitron.variable} font-sans antialiased`}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              name: siteConfig.name,
+              url: siteConfig.siteUrl,
+              jobTitle: "AI Engineer · Software Engineer · Cybersecurity",
+              email: siteConfig.email,
+              sameAs: Object.values(siteConfig.social),
+              knowsAbout: ["AI engineering", "Python", "TypeScript", "software engineering", "cybersecurity", "security automation"],
+            }).replace(/</g, "\\u003c"),
+          }}
+        />
         <ThemeProvider>
           <AudioProvider>
             <AppProvider>
@@ -85,7 +98,7 @@ export default function RootLayout({
               >
                 Skip to main content
               </a>
-              {children}
+              <PageTransition>{children}</PageTransition>
               <CommandButton />
               <CommandBar />
             </AppProvider>

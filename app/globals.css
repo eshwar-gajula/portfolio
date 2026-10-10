@@ -3,6 +3,46 @@
 
 @custom-variant dark (&:is(.dark *));
 
+/* Tailwind CSS v4 theme tokens. Keep the existing design-system variables
+ * as the source of truth while exposing them as Tailwind utilities. */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-neon-primary: var(--neon-primary);
+  --color-neon-secondary: var(--neon-secondary);
+  --color-accent: var(--accent);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+  --font-family-sans: var(--font-sans);
+  --font-family-mono: var(--font-mono);
+  --font-family-display: var(--font-display);
+}
+
 /* Red team/offensive hacker theme - crimson/blood colors */
 :root {
   --background: #0a0a0c;
@@ -13,7 +53,7 @@
   --neon-secondary: #bf5af2;
   --accent: #ff9500;
   --muted: #8e8e93;
-  --muted-foreground: #636366;
+  --muted-foreground: #a1a1aa;
   --border: #2c2c2e;
   --input: #2c2c2e;
   --ring: #ff2d55;
@@ -59,7 +99,7 @@
   --neon-secondary: #9333ea;
   --accent: #f97316;
   --muted: #a1a1aa;
-  --muted-foreground: #71717a;
+  --muted-foreground: #a1a1aa;
   --border: #27272a;
   --input: #27272a;
   --ring: #dc2626;
@@ -75,35 +115,7 @@
   --glow-secondary: 0 0 20px rgba(147, 51, 234, 0.3);
 }
 
-/* Completely redesigned light theme for better readability */
-.theme-light {
-  --background: #faf9f7;
-  --foreground: #1a1a1a;
-  --surface: #ffffff;
-  --surface-elevated: #f5f4f2;
-  --neon-primary: #b91c1c;
-  --neon-secondary: #7c3aed;
-  --accent: #c2410c;
-  --muted: #57534e;
-  --muted-foreground: #78716c;
-  --border: #e7e5e4;
-  --input: #e7e5e4;
-  --ring: #b91c1c;
-  --card: #ffffff;
-  --card-foreground: #1a1a1a;
-  --popover: #ffffff;
-  --popover-foreground: #1a1a1a;
-  --primary: #b91c1c;
-  --primary-foreground: #ffffff;
-  --secondary: #f5f5f4;
-  --secondary-foreground: #1a1a1a;
-  --destructive: #dc2626;
-  --destructive-foreground: #ffffff;
-  --success: #16a34a;
-  --warning: #d97706;
-  --glow-primary: 0 2px 12px rgba(185, 28, 28, 0.15);
-  --glow-secondary: 0 2px 12px rgba(124, 58, 237, 0.12);
-}
+
 
 .theme-high-contrast {
   --background: #000000;
@@ -114,7 +126,7 @@
   --neon-secondary: #ff00ff;
   --accent: #ff6600;
   --muted: #cccccc;
-  --muted-foreground: #999999;
+  --muted-foreground: #c7c7c7;
   --border: #ffffff;
   --input: #333333;
   --ring: #ff0033;
@@ -135,10 +147,25 @@
   --glow-secondary: none;
 }
 
-.low-power * {
+.low-power *:not(.matrix-background) {
   animation-duration: 0.01ms !important;
   animation-iteration-count: 1 !important;
   transition-duration: 0.01ms !important;
+}
+
+/* Shared layout safeguards: prevent fixed-width children from causing mobile overflow. */
+html { scroll-padding-top: 1rem; }
+body { min-width: 320px; overflow-x: clip; }
+main { min-width: 0; }
+main h1, main h2, main h3, main p, main li { overflow-wrap: anywhere; }
+button, a { -webkit-tap-highlight-color: transparent; }
+:focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; }
+
+@media (max-width: 639px) {
+  main[id="main-content"] { padding-bottom: 3rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; }
 }
 
 @theme inline {
@@ -334,12 +361,346 @@ body {
 }
 
 @media print {
-  .no-print {
+  header, footer, .matrix-background, .no-print {
     display: none !important;
   }
 
   body {
     background: white !important;
     color: black !important;
+    font-size: 10pt !important;
   }
+  main { padding: 0 !important; background: white !important; overflow: visible !important; }
+  a { color: black !important; text-decoration: none !important; }
+  .text-muted-foreground, .text-neon-primary, .text-neon-secondary { color: #333 !important; }
+  .bg-surface, .bg-surface-elevated, .bg-background { background: white !important; }
+  .border-border { border-color: #ddd !important; }
+  .break-inside-avoid { break-inside: avoid; }
+}
+
+
+/* Accessibility and responsiveness: keep motion effects off for users who request it. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Avoid expensive blur/filter effects on smaller and lower-power devices. */
+@media (max-width: 640px), (prefers-reduced-motion: reduce) {
+  .backdrop-blur, .backdrop-blur-sm, .backdrop-blur-md, .backdrop-blur-lg, .backdrop-blur-xl {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+}
+
+
+/* Recruiter mode: prioritize readable content and remove decorative movement. */
+html.recruiter-mode canvas,
+html.recruiter-mode .scanline,
+html.recruiter-mode .matrix-background,
+html.recruiter-mode [data-decorative-animation="true"] {
+  display: none !important;
+}
+html.recruiter-mode [style*="transform"],
+html.recruiter-mode [style*="opacity"] {
+  transform: none !important;
+  opacity: 1 !important;
+}
+html.recruiter-mode *,
+html.recruiter-mode *::before,
+html.recruiter-mode *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  scroll-behavior: auto !important;
+  transition-duration: 0.01ms !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+  [style*="transform"],
+  [style*="opacity"] {
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+
+
+/* Baseline readability and responsive safeguards */
+body { line-height: 1.55; text-rendering: optimizeLegibility; }
+::selection { background: color-mix(in srgb, var(--neon-primary) 30%, transparent); color: var(--foreground); }
+img, video, canvas { max-width: 100%; }
+
+
+/* Light-mode polish: stronger surface separation, calmer whites, readable text,
+   and visible but restrained Matrix Rain. Keep these overrides last so they win
+   over component-level utility combinations. */
+.theme-light {
+  color-scheme: light;
+  /* Warm, lower-luminance surfaces reduce glare and make panels distinguishable. */
+  --background: #dedbd4;
+  --foreground: #211f1c;
+  --surface: #e9e6df;
+  --surface-elevated: #d3cfc6;
+  --card: #e9e6df;
+  --card-foreground: #211f1c;
+  --popover: #f0ede6;
+  --popover-foreground: #211f1c;
+  --border: #aaa49a;
+  --input: #a9a399;
+  --muted: #46413b;
+  --muted-foreground: #4e4942;
+  --secondary: #d2cec5;
+  --secondary-foreground: #28241f;
+  --neon-primary: #991b2b;
+  --neon-secondary: #5b21b6;
+  --accent: #8a3410;
+  --ring: #991b2b;
+  --glow-primary: 0 4px 16px rgba(45, 35, 25, 0.12);
+  --glow-secondary: 0 4px 16px rgba(45, 35, 25, 0.08);
+}
+
+.theme-light body {
+  background-image: radial-gradient(ellipse at 50% 0%, rgba(153, 27, 43, 0.055), transparent 62%);
+}
+
+.theme-light * {
+  border-color: var(--border);
+}
+
+.theme-light :is(input, textarea, select) {
+  background-color: #f0ede6;
+  color: var(--foreground);
+  border-color: #918a80;
+}
+
+.theme-light :is(input, textarea, select)::placeholder {
+  color: #575149;
+  opacity: 1;
+}
+
+.theme-light :is(button, a):focus-visible,
+.theme-light :is(input, textarea, select):focus-visible {
+  outline-color: var(--ring);
+  box-shadow: 0 0 0 3px rgba(167, 25, 45, 0.15);
+}
+
+/* Cards and panels should read as surfaces rather than disappearing into the page. */
+.theme-light :is(
+  .bg-surface, .bg-surface\/70, .bg-surface\/80, .bg-surface\/90, .bg-surface\/95,
+  .bg-surface-elevated, .bg-background\/40, .bg-background\/50, .bg-background\/60,
+  .bg-background\/70, .bg-background\/80, .bg-card, .bg-popover
+) {
+  box-shadow: 0 4px 14px rgba(35, 28, 23, 0.075);
+}
+
+.theme-light :is(.bg-surface-elevated, .bg-background\/40, .bg-background\/50, .bg-background\/60, .bg-background\/70) {
+  border-color: #aaa49a;
+}
+
+.theme-light :is(.border-border, .border) {
+  border-color: #aaa49a;
+}
+
+.theme-light .matrix-background {
+  opacity: 0.23 !important;
+  mix-blend-mode: multiply;
+}
+
+.theme-light.low-power .matrix-background,
+.low-power.theme-light .matrix-background {
+  opacity: 0.16 !important;
+}
+
+.theme-light .text-muted-foreground {
+  color: #4e4942;
+}
+
+.theme-light .shadow-xl,
+.theme-light .shadow-2xl {
+  --tw-shadow-color: rgba(35, 28, 23, 0.16);
+}
+
+/* Cross-route responsive finishing pass. */
+html { scroll-padding-top: 5.5rem; }
+body { overflow-wrap: break-word; }
+:where(main, section, article, aside, nav, form, fieldset, header, footer) { min-width: 0; }
+:where(.prose, pre, code) { overflow-wrap: anywhere; }
+:where(button, [role="button"], input, textarea, select) { touch-action: manipulation; }
+:where(a, button, input, textarea, select) { -webkit-tap-highlight-color: transparent; }
+@media (max-width: 640px) {
+  .theme-light .bg-surface, .theme-light .bg-surface\/80, .theme-light .bg-surface\/90 {
+    box-shadow: 0 3px 12px rgba(35, 28, 23, 0.045);
+  }
+  .theme-light .matrix-background { opacity: 0.13 !important; }
+  .theme-light.low-power .matrix-background,
+  .low-power.theme-light .matrix-background { opacity: 0.09 !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html:focus-within { scroll-behavior: auto; }
+  * { scroll-behavior: auto !important; }
+}
+
+
+/* Final light-theme contrast guardrails: no paper-white glare, clear surfaces,
+   and readable body copy even in translucent utility combinations. */
+.theme-light body {
+  background-color: var(--background);
+  color: var(--foreground);
+}
+.theme-light :is(.bg-white, .bg-white\/5, .bg-white\/10, .bg-white\/20) {
+  background-color: var(--surface) !important;
+}
+.theme-light :is(.bg-surface\/70, .bg-surface\/80, .bg-surface\/90, .bg-surface\/95) {
+  background-color: color-mix(in srgb, var(--surface) 94%, var(--background)) !important;
+}
+.theme-light :is(.bg-background\/40, .bg-background\/50, .bg-background\/60, .bg-background\/70, .bg-background\/80) {
+  background-color: color-mix(in srgb, var(--surface-elevated) 88%, var(--background)) !important;
+}
+.theme-light :is(.text-gray-400, .text-gray-500, .text-zinc-400, .text-zinc-500, .text-neutral-400, .text-neutral-500) {
+  color: #514b44 !important;
+}
+.theme-light :is(.text-white, .text-gray-100, .text-gray-200, .text-zinc-100, .text-zinc-200, .text-neutral-100, .text-neutral-200) {
+  color: var(--foreground);
+}
+/* Keep white foregrounds on filled primary/destructive controls where contrast needs it. */
+.theme-light :is(.bg-neon-primary, .bg-primary, .bg-destructive, .bg-red-600, .bg-rose-600) :is(.text-white, .text-primary-foreground),
+.theme-light :is(button.bg-neon-primary, button.bg-primary, button.bg-destructive, a.bg-neon-primary, a.bg-primary) {
+  color: #fff;
+}
+.theme-light :is(.border-white\/10, .border-white\/20, .border-white\/30) {
+  border-color: var(--border) !important;
+}
+.theme-light .matrix-background {
+  mix-blend-mode: multiply;
+}
+@media (max-width: 640px) {
+  .theme-light .matrix-background { opacity: 0.18 !important; }
+  .theme-light.low-power .matrix-background,
+  .low-power.theme-light .matrix-background { opacity: 0.13 !important; }
+}
+
+
+/* Final component polish: timeline, skills catalogue, and command palette. */
+.theme-light :is(.bg-surface, .bg-surface-elevated, [role="dialog"]) {
+  color: var(--foreground);
+}
+.theme-light .bg-surface\/95 { background-color: #e7e3da; }
+.theme-light .bg-surface-elevated { background-color: #d6d1c7; }
+.theme-light :is(.group:hover, .group:focus-visible) { --tw-ring-offset-color: var(--background); }
+.theme-light kbd { color: var(--foreground); border: 1px solid var(--border); }
+.theme-light code { overflow-wrap: anywhere; }
+@media (max-width: 640px) {
+  #main-content { scroll-margin-top: 4.75rem; }
+  .theme-light .bg-surface { box-shadow: 0 2px 8px rgba(35, 28, 23, 0.06); }
+}
+
+
+/* Mobile QA refinements: keep layouts within the viewport and interactive targets usable. */
+html, body { max-width: 100%; }
+body { overflow-x: clip; }
+main, main > *, main .container { min-width: 0; max-width: 100%; }
+@media (max-width: 639px) {
+  main .container { padding-left: max(1rem, env(safe-area-inset-left)); padding-right: max(1rem, env(safe-area-inset-right)); }
+  main :is(.grid, [class*="grid-cols-"]) { min-width: 0; }
+  main pre { max-width: 100%; overflow-x: auto; }
+  main img, main video, main canvas { height: auto; }
+  header nav a, header nav button { min-height: 44px; }
+  .matrix-background { max-width: 100vw; }
+}
+@media (max-width: 360px) {
+  header .container { padding-left: 0.625rem; padding-right: 0.625rem; }
+  header button { min-width: 40px; }
+}
+
+
+/* Responsive baseline across every route and shared component. */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { width: 100%; max-width: 100%; }
+body { overflow-x: clip; }
+img, picture, video, canvas, iframe { max-width: 100%; }
+svg { max-width: 100%; }
+main, main > *, main .container,
+main :is(.grid, .flex, article, section, aside) > * {
+  min-width: 0;
+}
+main :is(h1, h2, h3, h4, p, li, a, button, label, dt, dd) {
+  overflow-wrap: anywhere;
+}
+main pre, main table, [role="dialog"], [data-radix-popper-content-wrapper] {
+  max-width: 100%;
+}
+main pre, main table {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+main pre { white-space: pre; }
+main :is(input, textarea, select) { max-width: 100%; }
+main :is(button, a[role="button"], input[type="submit"]) { touch-action: manipulation; }
+
+@media (max-width: 639px) {
+  main :is(.rounded-lg, .rounded-xl, .rounded-2xl) { min-width: 0; }
+  main :is(.p-6, .px-6) { overflow-wrap: anywhere; }
+  main :is(pre, code, kbd) { font-size: max(0.75rem, 0.92em); }
+  main table { display: block; width: 100%; }
+  [role="dialog"] { width: calc(100vw - 1rem); max-width: calc(100vw - 1rem); }
+  .fixed.bottom-6.right-6 {
+    right: max(1rem, env(safe-area-inset-right));
+    bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+}
+@media (max-width: 380px) {
+  main .container { padding-left: 0.75rem; padding-right: 0.75rem; }
+  main :is(.text-3xl, .text-4xl, .text-5xl, .text-6xl) { overflow-wrap: anywhere; }
+  header .container { padding-left: 0.625rem; padding-right: 0.625rem; }
+}
+
+
+/* Final responsive layout and spacing corrections. */
+header, footer { min-width: 0; max-width: 100%; }
+header .container, footer .container { min-width: 0; }
+footer a, footer p, footer h3, footer h4 { overflow-wrap: anywhere; }
+header nav { min-width: 0; }
+@media (min-width: 1280px) and (max-width: 1535px) {
+  header nav a { padding-left: 0.45rem; padding-right: 0.45rem; }
+}
+@media (max-width: 1279px) {
+  header nav[aria-label="Main navigation"] { display: none; }
+}
+@media (max-width: 639px) {
+  footer .container { padding-top: 1.25rem; padding-bottom: 1.25rem; }
+  footer .grid { row-gap: 1.25rem; }
+  footer nav { gap: 0.4rem; }
+}
+@media (max-height: 620px) and (min-width: 640px) {
+  main section.min-h-screen { min-height: auto; }
+}
+
+
+/* Keep section rhythm compact on phones without changing desktop content order. */
+@media (max-width: 639px) {
+  main > section { scroll-margin-top: 4.5rem; }
+  main section + section { margin-top: 0; }
+  main :is(.py-10, .py-12, .py-14, .py-16, .py-20, .py-24) {
+    scroll-margin-top: 4.5rem;
+  }
+}
+
+
+/* Compact page rhythm: remove oversized blank bands while retaining readable section separation. */
+@media (max-width: 639px) {
+  main section { scroll-margin-top: 4.25rem; }
+  main section > .container { min-width: 0; }
+  main section :is(h1, h2, h3) { text-wrap: balance; }
+}
+@media (min-width: 640px) {
+  main section { scroll-margin-top: 5rem; }
 }

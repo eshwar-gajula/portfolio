@@ -1,8 +1,8 @@
 export interface Skill {
   name: string
   category: string
-  proficiency: number
-  years: number
+  proficiency?: number
+  years?: number
   icon: string
   projects: string[]
 }
@@ -42,7 +42,9 @@ export interface Project {
   category: string
   featured: boolean
   demoUrl: string | null
-  githubUrl: string
+  githubUrl: string | null
+  extraLinks?: { label: string; url: string }[]
+  status?: string
   image: string
   highlights: string[]
 }
@@ -72,7 +74,6 @@ export interface ResumeData {
   education: Education[]
   certifications: Certification[]
   projects: Project[]
-  labsPassphrase: string
 }
 
 export interface NodeProject {

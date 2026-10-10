@@ -6,7 +6,6 @@ import Link from "next/link"
 import { ArrowLeft, ExternalLink, Github, Target, Lightbulb, Wrench, AlertTriangle, CheckCircle } from "lucide-react"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
-import { CommandBar } from "@/components/command-bar"
 import { MultiLanguageMatrix } from "@/components/backgrounds"
 import { useAudio } from "@/components/audio-provider"
 import { resumeData } from "@/src/data"
@@ -22,7 +21,7 @@ export default function CaseStudyDetailPage() {
     return (
       <>
         <Header />
-        <main className="min-h-screen pt-24 pb-16 bg-background">
+        <main className="min-h-screen pt-12 sm:pt-16 pb-8 sm:pb-12 bg-background">
           <div className="container mx-auto px-4 text-center">
             <h1 className="text-4xl font-bold mb-4">Case Study Not Found</h1>
             <Link href="/case-studies" className="text-neon-primary hover:underline">
@@ -38,8 +37,8 @@ export default function CaseStudyDetailPage() {
   return (
     <>
       <Header />
-      <main id="main-content" className="min-h-screen pt-20 sm:pt-24 pb-16 bg-background relative overflow-hidden">
-        <MultiLanguageMatrix opacity={0.35} />
+      <main id="main-content" className="min-h-screen pt-8 sm:pt-12 pb-8 sm:pb-12 bg-background relative overflow-hidden">
+        <MultiLanguageMatrix opacity={0.08} />
 
         <div className="container mx-auto px-4 relative z-10">
           <Link
@@ -87,9 +86,11 @@ export default function CaseStudyDetailPage() {
                 <h2 className="text-xl font-bold font-mono">PROBLEM</h2>
               </div>
               <p className="text-muted-foreground leading-relaxed">
-                {project.category === "AI/ML"
-                  ? "Building AI models often requires expensive cloud resources and complex infrastructure. The challenge was to create a solution that works within free-tier constraints while still delivering meaningful results."
-                  : "Modern web applications need to be fast, responsive, and user-friendly. The challenge was to build a scalable solution that improves user experience while maintaining clean architecture."}
+                {project.slug === "echa"
+                  ? "Agentic engineering tools can become difficult to trust when model-generated actions lack clear permission boundaries, auditability, and verification. ECHA explores how to separate the user interface from controlled tool execution while keeping the project modular and inspectable."
+                  : project.category === "AI/ML"
+                    ? "Building AI models often requires expensive cloud resources and complex infrastructure. The challenge was to create a solution that works within free-tier constraints while still delivering meaningful results."
+                    : "Modern web applications need to be fast, responsive, and user-friendly. The challenge was to build a scalable solution that improves user experience while maintaining clean architecture."}
               </p>
             </motion.div>
 
@@ -113,6 +114,40 @@ export default function CaseStudyDetailPage() {
                 ))}
               </ul>
             </motion.div>
+
+            {project.slug === "echa" && (
+              <section className="bg-surface/90 border border-neon-primary/40 rounded-lg p-6 mb-6" aria-labelledby="echa-architecture-title">
+                <div className="flex items-center gap-2 mb-4">
+                  <Target className="w-5 h-5 text-neon-primary" aria-hidden="true" />
+                  <h2 id="echa-architecture-title" className="text-xl font-bold font-mono">ECHA_ARCHITECTURE</h2>
+                </div>
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <article className="rounded-lg border border-border p-4">
+                    <h3 className="font-semibold mb-2">ECHA Agent</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      Planned orchestration layer for local-LLM-assisted planning, controlled tool selection, filesystem and terminal workflows, permissions, memory, audit trails, and verification.
+                    </p>
+                  </article>
+                  <article className="rounded-lg border border-border p-4">
+                    <h3 className="font-semibold mb-2">ECHA Shell</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed">
+                      Desktop interface built with Tauri, Rust, React, and TypeScript, intended to provide a unified operator UI for the agent and related engineering tools.
+                    </p>
+                  </article>
+                </div>
+                <div className="mt-4">
+                  <h3 className="font-semibold mb-2">Engineering decisions</h3>
+                  <ul className="list-disc pl-5 space-y-2 text-sm text-muted-foreground">
+                    <li>Keep tool execution behind an explicit registry instead of allowing unrestricted model-generated commands.</li>
+                    <li>Separate the desktop interface from agent orchestration so components can be tested and evolved independently.</li>
+                    <li>Design permission checks, logging, and verification as first-class workflows rather than post-processing.</li>
+                  </ul>
+                </div>
+                <p className="mt-4 text-xs text-warning">
+                  Status: in active development. Planned capabilities are identified as design goals and are not represented as completed production features.
+                </p>
+              </section>
+            )}
 
             {/* Tools & Tech Stack */}
             <motion.div
@@ -194,7 +229,6 @@ export default function CaseStudyDetailPage() {
         </div>
       </main>
       <Footer />
-      <CommandBar />
     </>
   )
 }

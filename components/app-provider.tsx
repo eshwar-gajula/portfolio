@@ -10,34 +10,27 @@ interface AppContextType {
   setOverlayVisible: (visible: boolean) => void
   isCommandBarOpen: boolean
   setCommandBarOpen: (open: boolean) => void
-  isLabsUnlocked: boolean
-  unlockLabs: (passphrase?: string) => boolean
 }
 
 const AppContext = createContext<AppContextType | undefined>(undefined)
 
 const RECRUITER_MODE_KEY = "blackroom-recruiter-mode"
-const LABS_UNLOCKED_KEY = "blackroom-labs-unlocked"
-const LABS_PASSPHRASE = "eshwar2024"
 
 export function AppProvider({ children }: { children: ReactNode }) {
   const [isRecruiterMode, setRecruiterModeState] = useState(false)
-  const [isOverlayVisible, setOverlayVisible] = useState(true)
+  const [isOverlayVisible, setOverlayVisible] = useState(false)
   const [isCommandBarOpen, setCommandBarOpen] = useState(false)
-  const [isLabsUnlocked, setLabsUnlocked] = useState(false)
 
-  // Load persisted state on client
+  // Load persisted preferences on the client and expose recruiter mode to global styles.
   useEffect(() => {
     const savedRecruiterMode = localStorage.getItem(RECRUITER_MODE_KEY)
-    const savedLabsUnlocked = localStorage.getItem(LABS_UNLOCKED_KEY)
-
-    if (savedRecruiterMode === "true") {
-      setRecruiterModeState(true)
-    }
-    if (savedLabsUnlocked === "true") {
-      setLabsUnlocked(true)
-    }
+    if (savedRecruiterMode === "true") setRecruiterModeState(true)
   }, [])
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("recruiter-mode", isRecruiterMode)
+    return () => document.documentElement.classList.remove("recruiter-mode")
+  }, [isRecruiterMode])
 
   const toggleRecruiterMode = useCallback(() => {
     setRecruiterModeState((current) => {
@@ -52,21 +45,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     localStorage.setItem(RECRUITER_MODE_KEY, String(value))
   }, [])
 
-  const unlockLabs = useCallback((passphrase?: string) => {
-    // If no passphrase provided, just unlock directly
-    if (!passphrase) {
-      setLabsUnlocked(true)
-      localStorage.setItem(LABS_UNLOCKED_KEY, "true")
-      return true
-    }
-    // Check passphrase
-    if (passphrase.toLowerCase() === LABS_PASSPHRASE) {
-      setLabsUnlocked(true)
-      localStorage.setItem(LABS_UNLOCKED_KEY, "true")
-      return true
-    }
-    return false
-  }, [])
+
 
   return (
     <AppContext.Provider
@@ -78,8 +57,6 @@ export function AppProvider({ children }: { children: ReactNode }) {
         setOverlayVisible,
         isCommandBarOpen,
         setCommandBarOpen,
-        isLabsUnlocked,
-        unlockLabs,
       }}
     >
       {children}

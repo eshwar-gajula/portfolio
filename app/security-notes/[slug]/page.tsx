@@ -6,7 +6,6 @@ import Link from "next/link"
 import { ArrowLeft, Target, Search, AlertTriangle, Shield, CheckCircle, BookOpen } from "lucide-react"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
-import { CommandBar } from "@/components/command-bar"
 import { MultiLanguageMatrix } from "@/components/backgrounds"
 import { useAudio } from "@/components/audio-provider"
 
@@ -162,7 +161,7 @@ export default function SecurityNoteDetailPage() {
     return (
       <>
         <Header />
-        <main className="min-h-screen pt-24 pb-16 bg-background">
+        <main className="min-h-screen pt-12 sm:pt-16 pb-8 sm:pb-12 bg-background">
           <div className="container mx-auto px-4 text-center">
             <h1 className="text-4xl font-bold mb-4">Note Not Found</h1>
             <Link href="/security-notes" className="text-neon-primary hover:underline">
@@ -178,8 +177,8 @@ export default function SecurityNoteDetailPage() {
   return (
     <>
       <Header />
-      <main id="main-content" className="min-h-screen pt-20 sm:pt-24 pb-16 bg-background relative overflow-hidden">
-        <MultiLanguageMatrix opacity={0.35} />
+      <main id="main-content" className="min-h-screen pt-8 sm:pt-12 pb-8 sm:pb-12 bg-background relative overflow-hidden">
+        <MultiLanguageMatrix opacity={0.08} />
 
         <div className="container mx-auto px-4 relative z-10">
           <Link
@@ -297,7 +296,6 @@ export default function SecurityNoteDetailPage() {
         </div>
       </main>
       <Footer />
-      <CommandBar />
     </>
   )
 }

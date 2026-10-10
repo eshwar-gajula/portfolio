@@ -4,9 +4,7 @@ import { motion } from "framer-motion"
 import { Briefcase, GraduationCap, Award, Calendar, Crosshair } from "lucide-react"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
-import { CommandBar } from "@/components/command-bar"
 import { MultiLanguageMatrix } from "@/components/backgrounds"
-import { useAudio } from "@/components/audio-provider"
 import { resumeData } from "@/src/data"
 
 interface TimelineItem {
@@ -20,8 +18,6 @@ interface TimelineItem {
 }
 
 export default function TimelinePage() {
-  const { playSound } = useAudio()
-
   // Combine all timeline items
   const timelineItems: TimelineItem[] = [
     ...resumeData.experience.map((exp) => ({
@@ -49,12 +45,12 @@ export default function TimelinePage() {
       date: cert.date,
     })),
   ].sort((a, b) => {
-    const getYear = (d: string) => {
-      if (d === "Present") return 9999
-      const match = d.match(/\d{4}/)
-      return match ? Number.parseInt(match[0]) : 0
+    const getSortYear = (date: string) => {
+      if (/present/i.test(date)) return 9999
+      const years = date.match(/\d{4}/g)?.map(Number) ?? []
+      return years.length ? Math.max(...years) : 0
     }
-    return getYear(b.date) - getYear(a.date)
+    return getSortYear(b.date) - getSortYear(a.date)
   })
 
   const getIcon = (type: string) => {
@@ -86,8 +82,8 @@ export default function TimelinePage() {
   return (
     <>
       <Header />
-      <main id="main-content" className="min-h-screen pt-20 sm:pt-24 pb-16 bg-background relative overflow-hidden">
-        <MultiLanguageMatrix opacity={0.5} />
+      <main id="main-content" className="min-h-screen pt-8 sm:pt-12 pb-8 sm:pb-12 bg-background relative overflow-hidden">
+        <MultiLanguageMatrix opacity={0.07} />
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="mb-8 sm:mb-12">
@@ -104,7 +100,7 @@ export default function TimelinePage() {
           </div>
 
           {/* Legend */}
-          <div className="flex flex-wrap gap-6 mb-12">
+          <div className="mb-8 sm:mb-12 flex flex-wrap gap-3 sm:gap-6" aria-label="Timeline categories">
             {["experience", "education", "certification"].map((type) => {
               const Icon = getIcon(type)
               return (
@@ -122,9 +118,9 @@ export default function TimelinePage() {
           </div>
 
           {/* Timeline */}
-          <div className="relative max-w-3xl mx-auto">
+          <div className="relative mx-auto max-w-4xl">
             {/* Vertical line */}
-            <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-border md:-translate-x-1/2" />
+            <div className="absolute left-[1rem] top-2 bottom-2 w-px bg-gradient-to-b from-neon-primary/70 via-border to-neon-secondary/50 md:left-1/2 md:-translate-x-1/2" aria-hidden="true" />
 
             {timelineItems.map((item, i) => {
               const Icon = getIcon(item.type)
@@ -138,11 +134,11 @@ export default function TimelinePage() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1 }}
-                  className={`relative mb-8 pl-12 md:pl-0 md:w-1/2 ${isLeft ? "md:pr-8 md:text-right" : "md:pl-8 md:ml-auto"}`}
+                  className={`relative mb-6 sm:mb-8 pl-12 md:pl-0 md:w-1/2 ${isLeft ? "md:pr-9 md:text-right" : "md:pl-9 md:ml-auto"}`}
                 >
                   {/* Node */}
                   <div
-                    className="absolute left-0 md:left-1/2 w-8 h-8 rounded-full border-4 border-background flex items-center justify-center md:-translate-x-1/2"
+                    className="absolute left-0 top-1 md:left-1/2 z-10 h-8 w-8 rounded-xl border-2 border-background bg-surface flex items-center justify-center shadow-md md:-translate-x-1/2"
                     style={{ backgroundColor: `${color}20`, boxShadow: `0 0 10px ${color}40` }}
                   >
                     <Icon size={14} style={{ color }} />
@@ -150,24 +146,26 @@ export default function TimelinePage() {
 
                   {/* Card */}
                   <div
-                    className="p-5 bg-surface border border-border rounded-lg hover:border-neon-primary/30 transition-colors cursor-pointer"
-                    onClick={() => playSound("click")}
+                    className="group min-w-0 rounded-xl border border-border bg-surface/95 p-4 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-neon-primary/50 hover:shadow-lg sm:p-5"
+
                   >
-                    <div className={`flex items-center gap-2 mb-2 ${isLeft ? "md:flex-row-reverse" : ""}`}>
-                      <span className="text-xs font-mono text-muted-foreground">{item.date}</span>
+                    <div className={`mb-3 flex items-center gap-2 ${isLeft ? "md:flex-row-reverse" : ""}`}>
+                      <span className="inline-flex max-w-full items-center gap-1.5 rounded-md border border-border bg-surface-elevated px-2.5 py-1 text-[11px] font-mono font-medium text-foreground sm:text-xs">
+                        <Calendar size={12} className="shrink-0 text-neon-primary" aria-hidden="true" />{item.date}
+                      </span>
                     </div>
 
-                    <h3 className="font-semibold text-lg mb-1">{item.title}</h3>
-                    <p className="text-muted-foreground text-sm mb-3">{item.subtitle}</p>
+                    <h3 className="mb-1 break-words text-base font-semibold leading-snug text-foreground transition-colors group-hover:text-neon-primary sm:text-lg">{item.title}</h3>
+                    <p className="mb-3 break-words text-sm font-medium text-muted-foreground">{item.subtitle}</p>
 
                     {item.description && <p className="text-sm text-muted-foreground mb-3">{item.description}</p>}
 
                     {item.highlights && item.highlights.length > 0 && (
-                      <ul className={`space-y-1 ${isLeft ? "md:text-left" : ""}`}>
+                      <ul className={`space-y-2 ${isLeft ? "md:text-left" : ""}`}>
                         {item.highlights.map((h, j) => (
-                          <li key={j} className="flex items-start gap-2 text-xs text-muted-foreground">
-                            <span className="text-neon-primary mt-0.5">•</span>
-                            {h}
+                          <li key={j} className="flex min-w-0 items-start gap-2 text-xs leading-5 text-muted-foreground sm:text-sm">
+                            <span className="mt-0.5 shrink-0 text-neon-primary" aria-hidden="true">›</span>
+                            <span>{h}</span>
                           </li>
                         ))}
                       </ul>
@@ -181,7 +179,6 @@ export default function TimelinePage() {
       </main>
 
       <Footer />
-      <CommandBar />
     </>
   )
 }
