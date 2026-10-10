@@ -1,13 +1,7 @@
-"use client"
-
-import { motion } from "framer-motion"
 import Link from "next/link"
 import { Shield, ArrowRight, Lock, AlertTriangle } from "lucide-react"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
-import { CommandBar } from "@/components/command-bar"
-import { MultiLanguageMatrix } from "@/components/backgrounds"
-import { useAudio } from "@/components/audio-provider"
 
 const securityNotes = [
   {
@@ -43,14 +37,10 @@ const securityNotes = [
 ]
 
 export default function SecurityNotesPage() {
-  const { playSound } = useAudio()
-
   return (
     <>
       <Header />
-      <main id="main-content" className="min-h-screen pt-20 sm:pt-24 pb-16 bg-background relative overflow-hidden">
-        <MultiLanguageMatrix opacity={0.35} />
-
+      <main id="main-content" className="min-h-screen pt-8 sm:pt-12 pb-8 sm:pb-12 bg-background relative overflow-hidden">
         <div className="container mx-auto px-4 relative z-10">
           <div className="mb-8 sm:mb-12">
             <div className="inline-flex items-center gap-2 px-3 py-1 bg-neon-primary/10 border border-neon-primary/30 rounded-full mb-3 sm:mb-4">
@@ -74,17 +64,11 @@ export default function SecurityNotesPage() {
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {securityNotes.map((note, i) => (
-              <motion.div
-                key={note.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.1 }}
-              >
+            {securityNotes.map((note) => (
+              <div key={note.id}>
                 <Link
                   href={`/security-notes/${note.id}`}
-                  onClick={() => playSound("click")}
-                  className="block group h-full bg-surface/90 backdrop-blur border border-border rounded-lg overflow-hidden hover:border-neon-primary/50 transition-all"
+                    className="block group h-full bg-surface/90 backdrop-blur border border-border rounded-lg overflow-hidden hover:border-neon-primary/50 transition-all"
                 >
                   <div className="p-6">
                     <div className="flex items-center gap-2 mb-4">
@@ -105,13 +89,12 @@ export default function SecurityNotesPage() {
                     </div>
                   </div>
                 </Link>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>
       </main>
       <Footer />
-      <CommandBar />
     </>
   )
 }

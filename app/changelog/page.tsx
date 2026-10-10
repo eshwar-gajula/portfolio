@@ -4,14 +4,24 @@ import { motion } from "framer-motion"
 import { History, Tag, Calendar } from "lucide-react"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
-import { CommandBar } from "@/components/command-bar"
 import { MultiLanguageMatrix } from "@/components/backgrounds"
 
 const changelog = [
   {
-    version: "v1.0",
-    date: "Dec 2025",
-    changes: ["Initial portfolio launch", "Basic project showcase", "Contact form", "Resume download"],
+    version: "v3.2",
+    date: "Oct 2026",
+    changes: [
+      "Separated the ECHA project page from the personal About page and added a dedicated Agent + Shell overview",
+      "Moved the site header into the page layout to prevent content overlap and improved responsive navigation",
+      "Kept Matrix Rain active in low-power mode with a slower cadence, fewer columns, and lower opacity",
+      "Refined resume content, added selected projects, and made Save as PDF use the browser print dialog",
+      "Improved responsive spacing, focus visibility, reduced-motion behavior, and print styling",
+    ],
+  },
+  {
+    version: "v3.1",
+    date: "Sep 2026",
+    changes: ["Refocused portfolio positioning around AI engineering, software engineering, and cybersecurity", "Added ECHA as the flagship in-progress engineering project", "Improved metadata, accessibility, and project case-study structure"],
   },
 ]
 
@@ -19,8 +29,8 @@ export default function ChangelogPage() {
   return (
     <>
       <Header />
-      <main id="main-content" className="min-h-screen pt-20 sm:pt-24 pb-16 bg-background relative overflow-hidden">
-        <MultiLanguageMatrix opacity={0.35} />
+      <main id="main-content" className="min-h-screen pt-8 sm:pt-12 pb-8 sm:pb-12 bg-background relative overflow-hidden">
+        <MultiLanguageMatrix opacity={0.08} />
 
         <div className="container mx-auto px-4 relative z-10">
           <div className="mb-8 sm:mb-12">
@@ -32,7 +42,7 @@ export default function ChangelogPage() {
               <span className="text-neon-primary">&gt;</span> Changelog
             </h1>
             <p className="text-muted-foreground max-w-2xl text-sm sm:text-base">
-              A history of updates and improvements to the blackroom-portfolio.
+              A transparent record of portfolio improvements, project updates, accessibility changes, and interface refinements.
             </p>
           </div>
 
@@ -72,7 +82,6 @@ export default function ChangelogPage() {
         </div>
       </main>
       <Footer />
-      <CommandBar />
     </>
   )
 }

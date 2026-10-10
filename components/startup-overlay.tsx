@@ -4,18 +4,24 @@ import { useEffect, useState, useRef, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { useAudio } from "./audio-provider"
 import { useApp } from "./app-provider"
-import { useTheme } from "./theme-provider"
 import { resumeData } from "@/src/data"
 
 export function StartupOverlay() {
   const { playBootSound, playTypingSound, stopTypingSound } = useAudio()
   const { isOverlayVisible, setOverlayVisible } = useApp()
-  const { theme } = useTheme()
   const [progress, setProgress] = useState(0)
   const [isExiting, setIsExiting] = useState(false)
   const [showContinue, setShowContinue] = useState(false)
   const overlayRef = useRef<HTMLDivElement>(null)
   const continueButtonRef = useRef<HTMLButtonElement>(null)
+
+  const handleContinue = useCallback(() => {
+    playBootSound()
+    setIsExiting(true)
+    setTimeout(() => {
+      setOverlayVisible(false)
+    }, 500)
+  }, [playBootSound, setOverlayVisible])
 
   useEffect(() => {
     if (isOverlayVisible && progress < 100) {
@@ -65,7 +71,7 @@ export function StartupOverlay() {
     document.addEventListener("keydown", handleKeyDown)
 
     return () => document.removeEventListener("keydown", handleKeyDown)
-  }, [isOverlayVisible])
+  }, [isOverlayVisible, handleContinue])
 
   // Focus continue button when shown
   useEffect(() => {
@@ -91,14 +97,6 @@ export function StartupOverlay() {
 
     return () => clearInterval(interval)
   }, [isOverlayVisible])
-
-  const handleContinue = useCallback(() => {
-    playBootSound()
-    setIsExiting(true)
-    setTimeout(() => {
-      setOverlayVisible(false)
-    }, 500)
-  }, [playBootSound, setOverlayVisible])
 
   if (!isOverlayVisible) return null
 

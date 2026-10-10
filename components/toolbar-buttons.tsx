@@ -9,13 +9,16 @@ import { useApp } from "./app-provider"
 import { cn } from "@/lib/utils"
 
 export function ToolbarButtons() {
-  const { theme, setTheme, cycleTheme, isLowPower, toggleLowPower } = useTheme()
-  const { isMuted, toggleMute, volume, setVolume, playSound, hasConsent } = useAudio()
+  const { theme, setTheme, isLowPower, toggleLowPower } = useTheme()
+  const { isMuted, toggleMute, volume, setVolume, playSound: rawPlaySound, hasConsent } = useAudio()
   const { isRecruiterMode, toggleRecruiterMode } = useApp()
+  const playSound = (sound: Parameters<typeof rawPlaySound>[0]) => {
+    if (!isRecruiterMode) rawPlaySound(sound)
+  }
 
   const [showAudioPrefs, setShowAudioPrefs] = useState(false)
   const [showThemeMenu, setShowThemeMenu] = useState(false)
-  const [longPressTimer, setLongPressTimer] = useState<NodeJS.Timeout | null>(null)
+  const [longPressTimer, setLongPressTimer] = useState<ReturnType<typeof setTimeout> | null>(null)
 
   const audioPrefsRef = useRef<HTMLDivElement>(null)
   const themeMenuRef = useRef<HTMLDivElement>(null)
@@ -69,6 +72,18 @@ export function ToolbarButtons() {
   ]
 
   const isDarkTheme = theme === "neon-hacker" || theme === "dark" || theme === "high-contrast"
+
+  if (isRecruiterMode) {
+    return (
+      <button
+        onClick={() => toggleRecruiterMode()}
+        className="px-3 py-2 text-xs font-semibold rounded border border-border bg-surface hover:border-neon-primary focus:outline-none focus:ring-2 focus:ring-ring"
+        aria-pressed="true"
+      >
+        Exit recruiter mode
+      </button>
+    )
+  }
 
   return (
     <div className="flex items-center gap-1">

@@ -1,509 +1,107 @@
-"use client"
-import Image from "next/image"
-import { motion } from "framer-motion"
-import {
-  MapPin,
-  Award,
-  Heart,
-  Terminal,
-  Shield,
-  Skull,
-  Bug,
-  Code,
-  Crosshair,
-  Zap,
-  Eye,
-  Github,
-  ExternalLink,
-  Trophy,
-} from "lucide-react"
+import Link from "next/link"
+import { ArrowLeft, ArrowUpRight, CheckCircle2, Code2, Github, Layers3, ShieldCheck, Workflow } from "lucide-react"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
-import { CommandBar } from "@/components/command-bar"
 import { MultiLanguageMatrix } from "@/components/backgrounds"
 import { resumeData } from "@/src/data"
 
-export default function AboutPage() {
-  const hackerStats = [
-    { label: "Projects Completed", value: "15+", icon: Code },
-    { label: "Technologies", value: "20+", icon: Terminal },
-    { label: "Coffee Consumed", value: "∞", icon: Zap },
-    { label: "Bugs Fixed", value: "999+", icon: Bug },
-  ]
+export default async function ProjectDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
+  const project = resumeData.projects.find((item) => item.slug === slug)
 
-  const journeySteps = [
-    "Started in front-end development",
-    "Developed interest in hacking, CTFs, and red-team methodology",
-    "Now merging UI engineering with offensive security insights",
-  ]
+  if (!project) {
+    return (
+      <>
+        <Header />
+        <main id="main-content" className="min-h-[70vh] px-4 py-10 sm:py-14">
+          <div className="mx-auto max-w-3xl rounded-2xl border border-border bg-surface p-8 text-center sm:p-12">
+            <p className="mb-3 font-mono text-sm text-neon-primary">PROJECT_NOT_FOUND</p>
+            <h1 className="mb-4 text-3xl font-bold">That project isn&apos;t listed.</h1>
+            <p className="mb-7 text-muted-foreground">Browse the project index to explore the work that is available.</p>
+            <Link href="/projects" className="inline-flex items-center gap-2 rounded-lg bg-neon-primary px-5 py-3 font-semibold text-primary-foreground">Browse projects</Link>
+          </div>
+        </main>
+        <Footer />
+      </>
+    )
+  }
 
-  const whatIDo = [
-    "Build responsive, modern front-end systems",
-    "Practice attack simulations and security labs",
-    "Experiment with tools that combine UX and security",
-  ]
-
-  const philosophy = [
-    "Secure-by-design beats patching later.",
-    "Interfaces should remain stable even under adversarial pressure.",
-  ]
-
-  const futureDirection = [
-    "Red-team engineer with strong product/UI awareness",
-    "Building tools that detect and prevent attacks",
-    "Publishing security notes and research",
-  ]
-
-  const tryhackmeBadges = [
-    {
-      name: "Networking Nerd",
-      description: "Completing the 'Network Fundamentals' module",
-      rarity: "Common: 20%",
-      image: "/assets/badges/networking-nerd.jpg",
-    },
-    {
-      name: "3 Day Streak",
-      description: "Achieving a 3 day hacking streak",
-      rarity: "Common: 35.9%",
-      image: "/assets/badges/3-day-streak.jpg",
-    },
-    {
-      name: "Webbed",
-      description: "Understands how the world wide web works",
-      rarity: "Common: 27.6%",
-      image: "/assets/badges/webbed.jpg",
-    },
-    {
-      name: "World Wide Web",
-      description: "Completing the 'How The Web Works' module",
-      rarity: "Common: 24.1%",
-      image: "/assets/badges/world-wide-web.jpg",
-    },
-    {
-      name: "cat linux.txt",
-      description: "Being competent in Linux",
-      rarity: "Common: 37.7%",
-      image: "/assets/badges/cat-linux.jpg",
-    },
-    {
-      name: "Metasploitable",
-      description: "Contains the knowledge to use Metasploit",
-      rarity: "Common: 11.5%",
-      image: "/assets/badges/metasploitable.jpg",
-    },
-    {
-      name: "Blue",
-      description: "Hacking into Windows via EternalBlue",
-      rarity: "Common: 13.5%",
-      image: "/assets/badges/blue.jpg",
-    },
-    {
-      name: "30 Day Streak",
-      description: "Hacking for 30 days solid",
-      rarity: "Common: 11.2%",
-      image: "/assets/badges/30-day-streak.jpg",
-    },
-    {
-      name: "Sword Apprentice",
-      description: "Completing the SQLMap room",
-      rarity: "Rare: 7.1%",
-      image: "/assets/badges/sword-apprentice.jpg",
-    },
-    {
-      name: "Cyber Ready",
-      description: "Understanding impact of training on teams",
-      rarity: "Rare: 8.4%",
-      image: "/assets/badges/cyber-ready.jpg",
-    },
-  ]
-
+  const isEcha = project.slug === "echa"
   return (
     <>
       <Header />
-      <main id="main-content" className="min-h-screen pt-20 sm:pt-24 pb-16 bg-background relative overflow-hidden">
-        <MultiLanguageMatrix opacity={0.35} />
+      <main id="main-content" className="relative min-h-screen overflow-hidden bg-background pb-8 sm:pb-12">
+        <MultiLanguageMatrix opacity={0.07} />
+        <div className="container relative z-10 mx-auto max-w-6xl px-4 py-10 sm:py-14 lg:py-16">
+          <Link href="/projects" className="mb-8 inline-flex items-center gap-2 rounded-md text-sm text-muted-foreground transition-colors hover:text-neon-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+            <ArrowLeft size={16} /> All projects
+          </Link>
 
-        <div className="container mx-auto px-4 relative z-10">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-5xl mx-auto">
-            <div className="text-center mb-10 sm:mb-16">
-              <motion.div
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 bg-neon-primary/10 border border-neon-primary/30 rounded-full mb-4 sm:mb-6"
-              >
-                <Skull className="w-3 h-3 sm:w-4 sm:h-4 text-neon-primary" />
-                <span className="text-neon-primary font-mono text-xs sm:text-sm">PROFILE_ACCESSED</span>
-              </motion.div>
-
-              <h1 className="text-3xl sm:text-4xl md:text-6xl font-bold mb-3 sm:mb-4 font-mono">
-                <span className="text-muted-foreground">&gt;</span> <span className="text-foreground">whoami</span>{" "}
-                <span className="neon-glow text-neon-primary">Eshwar</span>
-              </h1>
-
-              <div className="flex items-center justify-center gap-2 sm:gap-4 text-muted-foreground font-mono flex-wrap text-xs sm:text-sm">
-                <div className="flex items-center gap-1 sm:gap-2">
-                  <MapPin size={14} className="text-neon-primary sm:w-4 sm:h-4" />
-                  <span>{resumeData.location}</span>
+          <section className="relative overflow-hidden rounded-3xl border border-neon-primary/30 bg-gradient-to-br from-surface via-surface to-neon-primary/10 p-5 shadow-2xl shadow-black/10 sm:p-8 lg:p-12">
+            <div aria-hidden="true" className="pointer-events-none absolute -right-16 -top-20 h-64 w-64 rounded-full bg-neon-primary/10 blur-3xl" />
+            <div className="relative grid gap-8 lg:grid-cols-[1.4fr_0.6fr] lg:items-center">
+              <div>
+                <div className="mb-5 flex flex-wrap items-center gap-2">
+                  <span className="rounded-full border border-neon-primary/30 bg-neon-primary/10 px-3 py-1 font-mono text-xs text-neon-primary">{project.category}</span>
+                  {project.featured && <span className="rounded-full border border-border bg-background/70 px-3 py-1 text-xs text-muted-foreground">Featured project</span>}
+                  {isEcha && <span className="rounded-full border border-warning/30 bg-warning/10 px-3 py-1 text-xs text-warning">In active development</span>}
                 </div>
-                <span className="text-neon-primary hidden sm:inline">|</span>
-                <div className="flex items-center gap-1 sm:gap-2">
-                  <Shield size={14} className="text-neon-secondary sm:w-4 sm:h-4" />
-                  <span>Red-Team Front-End Engineer</span>
+                <p className="mb-3 font-mono text-xs uppercase tracking-[0.24em] text-neon-primary">Engineering project / {project.id}</p>
+                <h1 className="mb-5 text-4xl font-bold leading-tight tracking-tight sm:text-5xl lg:text-6xl">{project.name}</h1>
+                <p className="max-w-3xl text-base leading-7 text-muted-foreground sm:text-lg">{project.longDescription || project.description}</p>
+                <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                  {project.githubUrl && <a href={project.githubUrl} target="_blank" rel="noreferrer noopener" className="inline-flex items-center justify-center gap-2 rounded-lg bg-neon-primary px-5 py-3 font-semibold text-primary-foreground transition-transform hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
+                    <Github size={18} /> View source <ArrowUpRight size={16} />
+                  </a>}
+                  {project.extraLinks?.map((link) => <a key={link.url} href={link.url} target="_blank" rel="noreferrer noopener" className="inline-flex items-center justify-center gap-2 rounded-lg border border-border bg-background/70 px-5 py-3 font-semibold transition-colors hover:border-neon-primary/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">{link.label} <ArrowUpRight size={16} /></a>)}
+                  {project.demoUrl && <a href={project.demoUrl} target={project.demoUrl.startsWith("/") ? undefined : "_blank"} rel="noreferrer noopener" className="inline-flex items-center justify-center gap-2 rounded-lg border border-border bg-background/70 px-5 py-3 font-semibold transition-colors hover:border-neon-primary/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">Live demo <ArrowUpRight size={16} /></a>}
                 </div>
+              </div>
+              <div className="rounded-2xl border border-border bg-background/75 p-5 backdrop-blur sm:p-6">
+                <div className="mb-5 flex items-center gap-3"><div className="rounded-xl bg-neon-primary/10 p-3 text-neon-primary"><Layers3 size={24} /></div><div><p className="font-mono text-xs uppercase tracking-wider text-muted-foreground">Project snapshot</p><p className="font-semibold">{isEcha ? "Agent + Desktop Shell" : project.category}</p></div></div>
+                <dl className="space-y-4 text-sm">
+                  <div className="flex items-start justify-between gap-4 border-b border-border pb-3"><dt className="text-muted-foreground">Status</dt><dd className="text-right font-medium">{project.status || (isEcha ? "Building / iterating" : "Project work")}</dd></div>
+                  <div className="flex items-start justify-between gap-4 border-b border-border pb-3"><dt className="text-muted-foreground">Primary focus</dt><dd className="max-w-[65%] text-right font-medium">{isEcha ? "Controlled automation" : project.category}</dd></div>
+                  <div><dt className="mb-2 text-muted-foreground">Technology</dt><dd className="flex flex-wrap gap-2">{project.techStack.map((tech) => <span key={tech} className="rounded-md border border-border bg-surface px-2 py-1 text-xs">{tech}</span>)}</dd></div>
+                </dl>
               </div>
             </div>
+          </section>
 
-            {/* Stats Grid */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-8 sm:mb-12"
-            >
-              {hackerStats.map((stat, i) => (
-                <motion.div
-                  key={stat.label}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.2 + i * 0.1 }}
-                  className="bg-surface/90 backdrop-blur border border-border rounded-lg p-3 sm:p-4 text-center group hover:border-neon-primary/50 transition-all"
-                >
-                  <stat.icon className="w-5 h-5 sm:w-6 sm:h-6 text-neon-primary mx-auto mb-1.5 sm:mb-2 group-hover:scale-110 transition-transform" />
-                  <div className="text-xl sm:text-2xl font-bold text-neon-primary font-mono">{stat.value}</div>
-                  <div className="text-[10px] sm:text-xs text-muted-foreground uppercase tracking-wider">
-                    {stat.label}
-                  </div>
-                </motion.div>
-              ))}
-            </motion.div>
+          {isEcha ? (
+            <>
+              <section className="mt-8 grid gap-4 md:grid-cols-2">
+                <article className="rounded-2xl border border-border bg-surface/90 p-5 sm:p-7">
+                  <div className="mb-4 flex items-center gap-3"><div className="rounded-lg bg-neon-primary/10 p-2 text-neon-primary"><Workflow size={22} /></div><h2 className="text-xl font-bold">ECHA Agent</h2></div>
+                  <p className="mb-4 leading-7 text-muted-foreground">The automation layer: a TypeScript-based agent that coordinates model responses, tool selection, execution boundaries, and verification. The design uses a local model route through Ollama/OmniRoute and is being developed incrementally.</p>
+                  <ul className="space-y-2 text-sm text-muted-foreground">{["Tool registry for filesystem, terminal, Git, and search workflows", "Permission checks before sensitive tool execution", "Audit trail, memory, and verification-oriented task flow", "Local LLM experiments with Qwen Coder models"].map((item) => <li key={item} className="flex items-start gap-2"><CheckCircle2 size={16} className="mt-0.5 shrink-0 text-neon-primary" />{item}</li>)}</ul>
+                </article>
+                <article className="rounded-2xl border border-border bg-surface/90 p-5 sm:p-7">
+                  <div className="mb-4 flex items-center gap-3"><div className="rounded-lg bg-neon-secondary/10 p-2 text-neon-secondary"><Code2 size={22} /></div><h2 className="text-xl font-bold">ECHA Shell</h2></div>
+                  <p className="mb-4 leading-7 text-muted-foreground">The desktop interface: a modular shell built with Tauri, Rust, React, and TypeScript. It is intended to be the human-facing workspace for agent activity and future security utilities.</p>
+                  <ul className="space-y-2 text-sm text-muted-foreground">{["Tauri v2 and Rust backend", "React + TypeScript interface", "System visibility and modular utility panels", "Performance, accessibility, and low-power behavior as design priorities"].map((item) => <li key={item} className="flex items-start gap-2"><CheckCircle2 size={16} className="mt-0.5 shrink-0 text-neon-secondary" />{item}</li>)}</ul>
+                </article>
+              </section>
+              <section className="mt-8 rounded-2xl border border-border bg-surface/90 p-5 sm:p-8">
+                <div className="mb-5 flex items-center gap-3"><ShieldCheck className="text-neon-primary" size={24} /><h2 className="text-2xl font-bold">Engineering principles</h2></div>
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">{[{ title: "Permissioned tools", text: "Tools should have explicit capabilities and bounded access." }, { title: "Human oversight", text: "Sensitive actions should be visible and require clear authorization." }, { title: "Auditability", text: "Record decisions and tool outcomes for review and debugging." }, { title: "Verification", text: "Check outputs and changes instead of assuming success." }].map((item) => <div key={item.title} className="rounded-xl border border-border bg-background/70 p-4"><h3 className="mb-2 font-semibold text-neon-primary">{item.title}</h3><p className="text-sm leading-6 text-muted-foreground">{item.text}</p></div>)}</div>
+                <p className="mt-6 rounded-lg border border-warning/20 bg-warning/5 p-4 text-sm leading-6 text-muted-foreground"><strong className="text-warning">Current status:</strong> ECHA is an active personal engineering project, not a finished commercial product. The architecture and feature list describe the intended design; individual capabilities are being implemented and tested in stages.</p>
+              </section>
+            </>
+          ) : (
+            <section className="mt-8 rounded-2xl border border-border bg-surface/90 p-5 sm:p-8">
+              <h2 className="mb-5 text-2xl font-bold">Implementation highlights</h2>
+              <ul className="grid gap-3 sm:grid-cols-2">{project.highlights.map((item) => <li key={item} className="flex items-start gap-3 rounded-xl border border-border bg-background/70 p-4"><CheckCircle2 size={18} className="mt-0.5 shrink-0 text-neon-primary" /><span className="leading-6 text-muted-foreground">{item}</span></li>)}</ul>
+            </section>
+          )}
 
-            {/* Intro Terminal */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="bg-surface/80 backdrop-blur border border-border rounded-lg overflow-hidden mb-8"
-            >
-              <div className="flex items-center gap-2 px-4 py-3 bg-surface-elevated border-b border-border">
-                <div className="flex gap-1.5">
-                  <div className="w-3 h-3 rounded-full bg-destructive" />
-                  <div className="w-3 h-3 rounded-full bg-warning" />
-                  <div className="w-3 h-3 rounded-full bg-success" />
-                </div>
-                <span className="text-sm font-mono text-muted-foreground ml-2">~/about/intro.sh</span>
-              </div>
-
-              <div className="p-6 font-mono">
-                <div className="text-neon-primary mb-2">
-                  <span className="text-muted-foreground">$</span> cat intro.txt
-                </div>
-                <p className="text-foreground leading-relaxed mb-6 pl-4 border-l-2 border-neon-primary/30 text-lg">
-                  I'm <span className="text-neon-primary font-bold">Eshwar</span>, a front-end engineer with an
-                  expanding focus on <span className="text-neon-primary">red-teaming</span> and{" "}
-                  <span className="text-neon-primary">adversarial security</span>.
-                </p>
-
-                <div className="text-neon-primary mb-2">
-                  <span className="text-muted-foreground">$</span> echo $SUMMARY
-                </div>
-                <p className="text-muted-foreground leading-relaxed pl-4 border-l-2 border-neon-secondary/30">
-                  {resumeData.summary}
-                </p>
-              </div>
-            </motion.div>
-
-            {/* Journey & What I Do Grid */}
-            <div className="grid md:grid-cols-2 gap-6 mb-8">
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.3 }}
-                className="bg-surface/80 backdrop-blur border border-border rounded-lg overflow-hidden"
-              >
-                <div className="flex items-center gap-3 px-6 py-4 bg-surface-elevated border-b border-border">
-                  <Terminal className="text-neon-primary" size={20} />
-                  <h2 className="text-lg font-bold font-mono">MY_JOURNEY</h2>
-                </div>
-                <div className="p-6">
-                  <ul className="space-y-3">
-                    {journeySteps.map((step, i) => (
-                      <li key={i} className="flex items-start gap-3">
-                        <span className="text-neon-primary font-mono text-sm mt-0.5">{`0${i + 1}`}</span>
-                        <span className="text-muted-foreground">{step}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.4 }}
-                className="bg-surface/80 backdrop-blur border border-border rounded-lg overflow-hidden"
-              >
-                <div className="flex items-center gap-3 px-6 py-4 bg-surface-elevated border-b border-border">
-                  <Code className="text-neon-primary" size={20} />
-                  <h2 className="text-lg font-bold font-mono">WHAT_I_DO</h2>
-                </div>
-                <div className="p-6">
-                  <ul className="space-y-3">
-                    {whatIDo.map((item, i) => (
-                      <li key={i} className="flex items-start gap-3">
-                        <Shield className="text-neon-primary flex-shrink-0 mt-0.5" size={16} />
-                        <span className="text-muted-foreground">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </motion.div>
-            </div>
-
-            {/* Philosophy & Future Direction Grid */}
-            <div className="grid md:grid-cols-2 gap-6 mb-8">
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.5 }}
-                className="bg-surface/80 backdrop-blur border border-border rounded-lg overflow-hidden"
-              >
-                <div className="flex items-center gap-3 px-6 py-4 bg-surface-elevated border-b border-border">
-                  <Eye className="text-neon-primary" size={20} />
-                  <h2 className="text-lg font-bold font-mono">ENGINEERING_PHILOSOPHY</h2>
-                </div>
-                <div className="p-6 space-y-4">
-                  {philosophy.map((quote, i) => (
-                    <blockquote key={i} className="pl-4 border-l-2 border-neon-primary/50 italic text-foreground">
-                      "{quote}"
-                    </blockquote>
-                  ))}
-                </div>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.6 }}
-                className="bg-surface/80 backdrop-blur border border-border rounded-lg overflow-hidden"
-              >
-                <div className="flex items-center gap-3 px-6 py-4 bg-surface-elevated border-b border-border">
-                  <Crosshair className="text-neon-primary" size={20} />
-                  <h2 className="text-lg font-bold font-mono">FUTURE_DIRECTION</h2>
-                </div>
-                <div className="p-6">
-                  <ul className="space-y-3">
-                    {futureDirection.map((item, i) => (
-                      <li key={i} className="flex items-start gap-3">
-                        <span className="text-neon-primary">→</span>
-                        <span className="text-muted-foreground">{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </motion.div>
-            </div>
-
-            {/* TryHackMe Badges */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.7 }}
-              className="bg-surface/80 backdrop-blur border border-border rounded-lg overflow-hidden mb-8"
-            >
-              <div className="flex items-center gap-3 px-6 py-4 bg-surface-elevated border-b border-border">
-                <Trophy className="text-neon-primary" size={20} />
-                <h2 className="text-lg font-bold font-mono">TRYHACKME_BADGES</h2>
-                <span className="ml-auto px-2 py-1 bg-success/20 text-success text-xs font-mono rounded">
-                  {tryhackmeBadges.length} EARNED
-                </span>
-              </div>
-              <div className="p-6">
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-                  {tryhackmeBadges.map((badge, i) => (
-                    <motion.div
-                      key={badge.name}
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 0.8 + i * 0.05 }}
-                      className="group flex flex-col items-center p-4 bg-background/50 border border-border rounded-lg hover:border-neon-primary/50 hover:bg-surface/50 transition-all cursor-default"
-                    >
-                      <div className="relative w-16 h-16 sm:w-20 sm:h-20 mb-3">
-                        <Image
-                          src={badge.image || "/placeholder.svg"}
-                          alt={badge.name}
-                          fill
-                          className="object-contain group-hover:scale-110 transition-transform"
-                        />
-                        <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-success rounded-full flex items-center justify-center">
-                          <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                            <path
-                              fillRule="evenodd"
-                              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                              clipRule="evenodd"
-                            />
-                          </svg>
-                        </div>
-                      </div>
-                      <span className="text-xs sm:text-sm text-center font-semibold text-foreground group-hover:text-neon-primary transition-colors font-mono mb-1">
-                        {badge.name}
-                      </span>
-                      <span className="text-[10px] sm:text-xs text-center text-muted-foreground line-clamp-2">
-                        {badge.description}
-                      </span>
-                      <span
-                        className={`mt-2 text-[10px] px-2 py-0.5 rounded ${badge.rarity.startsWith("Rare") ? "bg-neon-primary/20 text-neon-primary" : "bg-muted/50 text-muted-foreground"}`}
-                      >
-                        {badge.rarity}
-                      </span>
-                    </motion.div>
-                  ))}
-                </div>
-                <div className="mt-6 text-center">
-                  <a
-                    href="https://tryhackme.com/p/eshwar"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-neon-primary/10 border border-neon-primary/30 rounded-lg text-neon-primary hover:bg-neon-primary/20 transition-colors text-sm font-mono"
-                  >
-                    View all badges on TryHackMe
-                    <ExternalLink size={14} />
-                  </a>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Activity & Learning */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.75 }}
-              className="bg-surface/80 backdrop-blur border border-border rounded-lg overflow-hidden mb-8"
-            >
-              <div className="flex items-center gap-3 px-6 py-4 bg-surface-elevated border-b border-border">
-                <ExternalLink className="text-neon-primary" size={20} />
-                <h2 className="text-lg font-bold font-mono">ACTIVITY_&_LEARNING</h2>
-              </div>
-              <div className="p-6">
-                <div className="flex flex-wrap gap-4">
-                  <a
-                    href={resumeData.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-neon-primary/10 border border-neon-primary/30 rounded-lg hover:bg-neon-primary/20 transition-colors"
-                  >
-                    <Github size={18} className="text-neon-primary" />
-                    <span className="text-neon-primary font-mono text-sm">View GitHub</span>
-                  </a>
-                  <a
-                    href="https://tryhackme.com/p/eshwar"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-neon-secondary/10 border border-neon-secondary/30 rounded-lg hover:bg-neon-secondary/20 transition-colors"
-                  >
-                    <Shield size={18} className="text-neon-secondary" />
-                    <span className="text-neon-secondary font-mono text-sm">TryHackMe Profile</span>
-                  </a>
-                  <a
-                    href="https://app.hackthebox.com/profile/eshwar"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-4 py-2 bg-success/10 border border-success/30 rounded-lg hover:bg-success/20 transition-colors"
-                  >
-                    <Terminal size={18} className="text-success" />
-                    <span className="text-success font-mono text-sm">HackTheBox Profile</span>
-                  </a>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Interests */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8 }}
-              className="bg-surface/80 backdrop-blur border border-border rounded-lg overflow-hidden mb-8"
-            >
-              <div className="flex items-center gap-3 px-6 py-4 bg-surface-elevated border-b border-border">
-                <Heart className="text-neon-primary" size={20} />
-                <h2 className="text-lg font-bold font-mono">INTERESTS[]</h2>
-              </div>
-              <div className="p-6">
-                <div className="flex flex-wrap gap-2">
-                  {resumeData.about.interests.map((interest, i) => (
-                    <motion.span
-                      key={interest}
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{ delay: 0.9 + i * 0.05 }}
-                      className="px-3 py-1.5 bg-neon-primary/10 text-neon-primary rounded border border-neon-primary/30 font-mono text-sm hover:bg-neon-primary/20 transition-colors cursor-default"
-                    >
-                      #{interest.toLowerCase().replace(/\s/g, "_")}
-                    </motion.span>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Certifications */}
-            {resumeData.certifications.length > 0 && (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.9 }}
-                className="bg-surface/80 backdrop-blur border border-border rounded-lg overflow-hidden"
-              >
-                <div className="flex items-center gap-3 px-6 py-4 bg-surface-elevated border-b border-border">
-                  <Award className="text-neon-primary" size={20} />
-                  <h2 className="text-lg font-bold font-mono">ACHIEVEMENTS_UNLOCKED</h2>
-                  <span className="ml-auto px-2 py-1 bg-neon-primary/20 text-neon-primary text-xs font-mono rounded">
-                    {resumeData.certifications.length} CERTS
-                  </span>
-                </div>
-                <div className="p-6">
-                  <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {resumeData.certifications.map((cert, i) => (
-                      <motion.div
-                        key={cert.name}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 1 + i * 0.1 }}
-                        className="group p-4 bg-background/50 border border-border rounded-lg hover:border-neon-primary/50 transition-all"
-                      >
-                        <div className="flex items-start gap-3">
-                          <div className="p-2 bg-neon-primary/10 rounded group-hover:bg-neon-primary/20 transition-colors">
-                            <Shield className="w-5 h-5 text-neon-primary" />
-                          </div>
-                          <div className="flex-1 min-w-0">
-                            <div className="font-bold text-neon-primary font-mono text-sm">{cert.name}</div>
-                            <div className="text-xs text-muted-foreground mt-1 font-mono">
-                              {cert.issuer} :: {cert.date}
-                            </div>
-                          </div>
-                        </div>
-                      </motion.div>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-            )}
-
-            {/* Footer Message */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1.1 }}
-              className="mt-12 text-center"
-            >
-              <p className="text-muted-foreground font-mono text-sm">
-                <span className="text-neon-primary">&gt;</span> EOF reached. Connection maintained.
-              </p>
-            </motion.div>
-          </motion.div>
+          <section className="mt-8 rounded-2xl border border-border bg-surface/70 p-5 sm:p-7">
+            <h2 className="mb-4 text-xl font-bold">Explore more</h2>
+            <div className="flex flex-wrap gap-3"><Link href="/about" className="rounded-lg border border-border px-4 py-2 text-sm transition-colors hover:border-neon-primary/50">About me</Link><Link href="/resume" className="rounded-lg border border-border px-4 py-2 text-sm transition-colors hover:border-neon-primary/50">View resume</Link><Link href="/contact" className="rounded-lg border border-border px-4 py-2 text-sm transition-colors hover:border-neon-primary/50">Contact</Link></div>
+          </section>
         </div>
       </main>
-
       <Footer />
-      <CommandBar />
     </>
   )
 }

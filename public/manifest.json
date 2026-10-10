@@ -1,7 +1,7 @@
 {
-  "name": "Eshwar Gajula Portfolio",
-  "short_name": "Eshwar",
-  "description": "Portfolio of Eshwar Gajula - Frontend Developer",
+  "name": "Eshwar Gajula \u2014 Engineering Portfolio",
+  "short_name": "Eshwar Portfolio",
+  "description": "AI engineering, software engineering, cybersecurity, and autonomous systems.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#0a0a0c",
@@ -15,5 +15,9 @@
       "purpose": "any"
     }
   ],
-  "categories": ["portfolio", "frontend", "development"]
+  "categories": [
+    "portfolio",
+    "frontend",
+    "development"
+  ]
 }

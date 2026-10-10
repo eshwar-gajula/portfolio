@@ -3,12 +3,8 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: false,
   },
-  eslint: {
-    ignoreDuringBuilds: false,
-  },
-  images: {
-    unoptimized: true,
-  },
+  allowedDevOrigins: ['192.168.10.11'],
+  
 }
 
 export default nextConfig

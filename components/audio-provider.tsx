@@ -38,7 +38,7 @@ export function AudioProvider({ children }: { children: ReactNode }) {
   const [volume, setVolumeState] = useState(0.6) // Increased default volume
   const [isReady, setIsReady] = useState(false)
   const audioContextRef = useRef<AudioContext | null>(null)
-  const typingIntervalRef = useRef<NodeJS.Timeout | null>(null)
+  const typingIntervalRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   // Load persisted state
   useEffect(() => {
@@ -59,9 +59,9 @@ export function AudioProvider({ children }: { children: ReactNode }) {
     }
 
     try {
-      audioContextRef.current = new (window.AudioContext || (window as any).webkitAudioContext)()
+      audioContextRef.current = new (window.AudioContext || (window as Window & typeof globalThis & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext)()
       setIsReady(true)
-    } catch (e) {
+    } catch {
       console.warn("Web Audio API not supported")
     }
 
@@ -90,7 +90,11 @@ export function AudioProvider({ children }: { children: ReactNode }) {
 
   const playSynthSound = useCallback(
     (freq: number, duration: number, type: OscillatorType, soundVolume?: number) => {
-      if (!audioContextRef.current || isMuted) return
+      if (
+        !audioContextRef.current ||
+        isMuted ||
+        (typeof document !== "undefined" && document.documentElement.classList.contains("recruiter-mode"))
+      ) return
 
       try {
         const ctx = audioContextRef.current
@@ -116,7 +120,7 @@ export function AudioProvider({ children }: { children: ReactNode }) {
 
         oscillator.start(ctx.currentTime)
         oscillator.stop(ctx.currentTime + duration)
-      } catch (e) {
+      } catch {
         // Silently fail
       }
     },

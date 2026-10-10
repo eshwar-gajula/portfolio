@@ -1,195 +1,444 @@
 {
   "name": "Eshwar Gajula",
-  "title": "Software Engineer",
-  "greeting": "> handshake initiated — hello, I'm Eshwar.",
-  "summary": "Software Engineer with strong skills in software testing, automation, and system optimization. Proficient in Python, scripting, and cross-platform environments (Linux/Windows). Experienced in designing and deploying scalable applications, building automation pipelines, and validating model performance. Adept at collaborating with cross-functional teams in Agile environments. Passionate about test automation, continuous improvement, and creating efficient, reliable systems.",
-  "email": "eshwargajula31@gmail.com",
+  "title": "AI Engineering · Software Engineering · Cybersecurity",
+  "greeting": "> building useful systems with AI, automation, and security in mind.",
+  "summary": "Computer Science graduate focused on AI engineering, Python and TypeScript development, cybersecurity, and intelligent automation. Currently developing the ECHA ecosystem: an AI-agent runtime exploring local-LLM planning and controlled tool execution, alongside a Tauri/Rust and React desktop shell. Interested in clear permission boundaries, auditability, verification, practical security research, and dependable user-facing software.",
   "phone": "+91-8639470630",
   "location": "Hyderabad, India",
-  "thm": "https://tryhackme.com/p/eshwargajula31",
-  "instagram": "https://www.instagram.com/_eshwar_0531/",
-  "website": "https://eshwar-portfolio.vercel.app",
-  "linkedin": "https://linkedin.com/in/gajula-eshwar",
-  "github": "https://github.com/eshwargajula31",
   "about": {
-    "bio": "I architect my own security ecosystems — transforming everyday devices into controlled environments for analysis and system re-engineering. My work spans from rooting and firmware alteration to adversarial simulation and defensive observation, bridging both offensive and blue-team mindsets.\n\nI approach cybersecurity as an applied science: exploring system behavior through modification, exploitation, and reinforcement. My objective is to cultivate a deep, operational understanding of how digital infrastructures resist, adapt, and recover under pressure.\n\nAs a Software Engineer, I combine full-stack development expertise with automation and testing skills. I build scalable applications while ensuring they are reliable and efficient.",
+    "bio": "I am a Computer Science graduate interested in AI engineering, software development, cybersecurity, and automation. My current focus is ECHA: an in-progress ecosystem combining ECHA Agent experiments in local-LLM planning and controlled tool execution with ECHA Shell, a Tauri, Rust, React, and TypeScript desktop interface. I value clear permission boundaries, auditability, performance, accessibility, and verification. I also develop security tooling and practise in authorised lab environments.",
     "interests": [
-      "Test Automation",
-      "AI/ML Development",
-      "Web Development",
-      "System Optimization",
-      "Cloud Platforms",
-      "Continuous Improvement"
+      "AI engineering and local LLM workflows",
+      "Python, TypeScript, and software engineering",
+      "Agent tooling, automation, and verification",
+      "Application security and authorised testing",
+      "Desktop interfaces and operating-system integration",
+      "Responsive UI, accessibility, and performance"
     ],
-    "currentFocus": "Building scalable applications and automation pipelines with focus on AI/ML integration"
+    "currentFocus": "ECHA Agent and ECHA Shell: controlled AI-assisted workflows, desktop engineering, and security-minded automation"
   },
   "skills": [
     {
       "name": "Python",
       "category": "Programming",
-      "proficiency": 90,
-      "years": 4,
       "icon": "code",
-      "projects": ["colabmind-coder", "digit-recognition"]
+      "projects": [
+        "network-scanner",
+        "web-recon"
+      ]
+    },
+    {
+      "name": "TypeScript",
+      "category": "Programming",
+      "icon": "file-type",
+      "projects": [
+        "echa",
+        "echa-shell",
+        "portfolio",
+        "orangehrm-playwright-e2e"
+      ]
     },
     {
       "name": "JavaScript",
       "category": "Programming",
-      "proficiency": 85,
-      "years": 3,
       "icon": "file-code",
-      "projects": ["eventpro", "nationin"]
-    },
-    {
-      "name": "Shell Scripting",
-      "category": "Programming",
-      "proficiency": 80,
-      "years": 3,
-      "icon": "terminal",
-      "projects": ["automation"]
+      "projects": [
+        "portfolio"
+      ]
     },
     {
       "name": "C#",
       "category": "Programming",
-      "proficiency": 70,
-      "years": 2,
       "icon": "hash",
-      "projects": ["desktop-apps"]
+      "projects": []
     },
     {
-      "name": "Next.js",
-      "category": "Frontend",
-      "proficiency": 85,
-      "years": 2,
-      "icon": "layers",
-      "projects": ["eventpro", "portfolio"]
+      "name": "Rust",
+      "category": "Programming",
+      "icon": "terminal",
+      "projects": [
+        "echa-shell"
+      ]
     },
     {
-      "name": "TypeScript",
-      "category": "Frontend",
-      "proficiency": 82,
-      "years": 2,
-      "icon": "file-type",
-      "projects": ["eventpro", "portfolio"]
+      "name": "Java",
+      "category": "Programming",
+      "icon": "coffee",
+      "projects": []
     },
     {
-      "name": "Tailwind CSS",
-      "category": "Frontend",
-      "proficiency": 88,
-      "years": 2,
+      "name": "Bash / Shell",
+      "category": "Programming",
+      "icon": "terminal",
+      "projects": [
+        "network-scanner",
+        "web-recon"
+      ]
+    },
+    {
+      "name": "HTML5",
+      "category": "Web Technologies",
+      "icon": "code",
+      "projects": [
+        "portfolio"
+      ]
+    },
+    {
+      "name": "CSS3",
+      "category": "Web Technologies",
       "icon": "palette",
-      "projects": ["eventpro", "portfolio"]
+      "projects": [
+        "portfolio"
+      ]
+    },
+    {
+      "name": "React",
+      "category": "Web Technologies",
+      "icon": "atom",
+      "projects": [
+        "echa-shell",
+        "portfolio"
+      ]
+    },
+    {
+      "name": "Vite",
+      "category": "Web Technologies",
+      "icon": "flame",
+      "projects": [
+        "echa-shell"
+      ]
     },
     {
       "name": "Flask",
-      "category": "Backend",
-      "proficiency": 85,
-      "years": 3,
+      "category": "Web Technologies",
       "icon": "server",
-      "projects": ["digit-recognition", "automation"]
+      "projects": []
     },
     {
-      "name": "Hugging Face",
-      "category": "AI/ML",
-      "proficiency": 85,
-      "years": 2,
+      "name": "REST APIs",
+      "category": "Web Technologies",
+      "icon": "server",
+      "projects": [
+        "web-recon",
+        "network-scanner"
+      ]
+    },
+    {
+      "name": "JSON",
+      "category": "Web Technologies",
+      "icon": "file-code",
+      "projects": [
+        "web-recon",
+        "network-scanner"
+      ]
+    },
+    {
+      "name": "Hugging Face Transformers",
+      "category": "AI & LLMs",
       "icon": "brain",
-      "projects": ["colabmind-coder"]
+      "projects": []
+    },
+    {
+      "name": "PEFT",
+      "category": "AI & LLMs",
+      "icon": "brain",
+      "projects": []
+    },
+    {
+      "name": "BitsAndBytes",
+      "category": "AI & LLMs",
+      "icon": "cpu",
+      "projects": []
+    },
+    {
+      "name": "Accelerate",
+      "category": "AI & LLMs",
+      "icon": "cpu",
+      "projects": []
     },
     {
       "name": "TensorFlow",
-      "category": "AI/ML",
-      "proficiency": 80,
-      "years": 2,
+      "category": "AI & LLMs",
       "icon": "cpu",
-      "projects": ["digit-recognition"]
+      "projects": []
+    },
+    {
+      "name": "Pandas",
+      "category": "AI & LLMs",
+      "icon": "bar-chart",
+      "projects": []
+    },
+    {
+      "name": "NumPy",
+      "category": "AI & LLMs",
+      "icon": "bar-chart",
+      "projects": []
     },
     {
       "name": "Gradio",
-      "category": "AI/ML",
-      "proficiency": 82,
-      "years": 2,
+      "category": "AI & LLMs",
       "icon": "layout",
-      "projects": ["colabmind-coder"]
+      "projects": []
+    },
+    {
+      "name": "Ollama",
+      "category": "AI & LLMs",
+      "icon": "cpu",
+      "projects": [
+        "echa"
+      ]
+    },
+    {
+      "name": "Qwen 2.5 Coder 7B",
+      "category": "AI & LLMs",
+      "icon": "brain",
+      "projects": [
+        "echa"
+      ]
+    },
+    {
+      "name": "OpenAI SDK",
+      "category": "AI & LLMs",
+      "icon": "brain",
+      "projects": [
+        "echa"
+      ]
+    },
+    {
+      "name": "OmniRoute",
+      "category": "AI & LLMs",
+      "icon": "layers",
+      "projects": [
+        "echa"
+      ]
+    },
+    {
+      "name": "Prompt Engineering",
+      "category": "AI & LLMs",
+      "icon": "brain",
+      "projects": [
+        "echa"
+      ]
+    },
+    {
+      "name": "Tool Calling",
+      "category": "AI & LLMs",
+      "icon": "wrench",
+      "projects": [
+        "echa"
+      ]
+    },
+    {
+      "name": "OWASP Top 10 Awareness",
+      "category": "Cybersecurity",
+      "icon": "shield",
+      "projects": [
+        "network-scanner",
+        "web-recon"
+      ]
+    },
+    {
+      "name": "Secure Code Review",
+      "category": "Cybersecurity",
+      "icon": "eye",
+      "projects": []
+    },
+    {
+      "name": "Vulnerability Assessment",
+      "category": "Cybersecurity",
+      "icon": "crosshair",
+      "projects": [
+        "network-scanner"
+      ]
+    },
+    {
+      "name": "SAST / DAST Concepts",
+      "category": "Cybersecurity",
+      "icon": "bug",
+      "projects": []
+    },
+    {
+      "name": "Nmap",
+      "category": "Cybersecurity",
+      "icon": "wifi",
+      "projects": [
+        "network-scanner"
+      ]
+    },
+    {
+      "name": "Network Scanning",
+      "category": "Cybersecurity",
+      "icon": "radio",
+      "projects": [
+        "network-scanner"
+      ]
+    },
+    {
+      "name": "Linux / Unix",
+      "category": "Systems & Networking",
+      "icon": "terminal",
+      "projects": [
+        "network-scanner",
+        "web-recon"
+      ]
+    },
+    {
+      "name": "TCP/IP",
+      "category": "Systems & Networking",
+      "icon": "radio",
+      "projects": [
+        "network-scanner"
+      ]
+    },
+    {
+      "name": "HTTP / HTTPS",
+      "category": "Systems & Networking",
+      "icon": "globe",
+      "projects": [
+        "web-recon",
+        "orangehrm-playwright-e2e"
+      ]
+    },
+    {
+      "name": "DNS",
+      "category": "Systems & Networking",
+      "icon": "radio",
+      "projects": [
+        "web-recon"
+      ]
+    },
+    {
+      "name": "Virtual Machines",
+      "category": "Systems & Networking",
+      "icon": "server",
+      "projects": []
+    },
+    {
+      "name": "Server Configuration",
+      "category": "Systems & Networking",
+      "icon": "wrench",
+      "projects": []
     },
     {
       "name": "MySQL",
-      "category": "Database",
-      "proficiency": 80,
-      "years": 3,
+      "category": "Databases",
       "icon": "database",
-      "projects": ["backend-projects"]
+      "projects": []
     },
     {
-      "name": "MongoDB",
-      "category": "Database",
-      "proficiency": 65,
-      "years": 1,
+      "name": "SQLite",
+      "category": "Databases",
       "icon": "database",
-      "projects": ["backend-projects"]
+      "projects": []
     },
     {
-      "name": "Git",
-      "category": "Tools",
-      "proficiency": 88,
-      "years": 4,
-      "icon": "git-branch",
-      "projects": ["all"]
-    },
-    {
-      "name": "Linux",
-      "category": "Tools",
-      "proficiency": 85,
-      "years": 4,
-      "icon": "terminal",
-      "projects": ["all"]
-    },
-    {
-      "name": "Google Colab",
-      "category": "Cloud",
-      "proficiency": 88,
-      "years": 2,
-      "icon": "cloud",
-      "projects": ["colabmind-coder"]
-    },
-    {
-      "name": "Firebase",
-      "category": "Cloud",
-      "proficiency": 75,
-      "years": 2,
-      "icon": "flame",
-      "projects": ["web-apps"]
+      "name": "Tauri",
+      "category": "Desktop Development",
+      "icon": "layers",
+      "projects": [
+        "echa-shell"
+      ]
     },
     {
       "name": "Vercel",
-      "category": "Cloud",
-      "proficiency": 85,
-      "years": 2,
+      "category": "Cloud & Platforms",
       "icon": "triangle",
-      "projects": ["eventpro", "portfolio"]
+      "projects": [
+        "portfolio"
+      ]
     },
     {
-      "name": "Test Automation",
-      "category": "Testing",
-      "proficiency": 85,
-      "years": 3,
+      "name": "Google Colab",
+      "category": "Cloud & Platforms",
+      "icon": "cloud",
+      "projects": []
+    },
+    {
+      "name": "Git",
+      "category": "Cloud & Platforms",
+      "icon": "git-branch",
+      "projects": [
+        "echa",
+        "echa-shell",
+        "portfolio",
+        "orangehrm-playwright-e2e"
+      ]
+    },
+    {
+      "name": "GitHub",
+      "category": "Cloud & Platforms",
+      "icon": "git-branch",
+      "projects": [
+        "echa",
+        "echa-shell",
+        "portfolio",
+        "orangehrm-playwright-e2e"
+      ]
+    },
+    {
+      "name": "Playwright",
+      "category": "Automation & Engineering",
       "icon": "check-circle",
-      "projects": ["automation"]
+      "projects": [
+        "orangehrm-playwright-e2e"
+      ]
     },
     {
       "name": "CI/CD",
-      "category": "DevOps",
-      "proficiency": 70,
-      "years": 2,
+      "category": "Automation & Engineering",
       "icon": "refresh-cw",
-      "projects": ["deployment"]
+      "projects": [
+        "orangehrm-playwright-e2e"
+      ]
+    },
+    {
+      "name": "Tool Registry Architecture",
+      "category": "Automation & Engineering",
+      "icon": "wrench",
+      "projects": [
+        "echa"
+      ]
+    },
+    {
+      "name": "Agent–Tool Orchestration",
+      "category": "Automation & Engineering",
+      "icon": "layers",
+      "projects": [
+        "echa"
+      ]
+    },
+    {
+      "name": "Filesystem Automation",
+      "category": "Automation & Engineering",
+      "icon": "wrench",
+      "projects": [
+        "echa"
+      ]
+    },
+    {
+      "name": "Terminal Automation",
+      "category": "Automation & Engineering",
+      "icon": "terminal",
+      "projects": [
+        "echa",
+        "echa-shell"
+      ]
+    },
+    {
+      "name": "Audit & Verification",
+      "category": "Automation & Engineering",
+      "icon": "check-circle",
+      "projects": [
+        "echa",
+        "orangehrm-playwright-e2e"
+      ]
     }
   ],
   "experience": [
     {
       "id": "exp-1",
       "company": "Nation Innovation",
-      "role": "Web Designer",
+      "role": "Web Designer Intern",
       "startDate": "2025-02",
       "endDate": "2025-10",
       "description": "Developed and designed the official website for NationIn using Wix Studio, optimizing UX and site navigation. Worked on implementing interactive features and e-commerce functionality.",
@@ -209,89 +458,193 @@
       "location": "Warangal",
       "startDate": "2020",
       "endDate": "2024",
-      "highlights": ["Computer Science & Engineering", "Focus on Software Development and AI/ML"]
+      "highlights": [
+        "Computer Science & Engineering",
+        "Focus on Software Development and AI/ML"
+      ]
     }
   ],
-  "certifications": [],
+  "certifications": [
+    {
+      "name": "Advent of Cyber 2025 — Certificate of Completion",
+      "issuer": "TryHackMe",
+      "date": "Jan 2026"
+    },
+    {
+      "name": "Python",
+      "issuer": "freeCodeCamp",
+      "date": "Dec 2023"
+    },
+    {
+      "name": "C# with Microsoft",
+      "issuer": "freeCodeCamp",
+      "date": "Dec 2023"
+    }
+  ],
   "projects": [
     {
-      "id": "colabmind-coder",
-      "name": "ColabMind Coder",
-      "slug": "colabmind-coder",
-      "description": "Fine-Tuned AI Code Generator optimized for Google Colab free-tier with resource-efficient training pipeline.",
-      "longDescription": "Built a resource-efficient fine-tuned LLM for code generation, optimized for Google Colab free-tier (8GB VRAM, 12GB RAM, 60GB storage). Designed and implemented the end-to-end training pipeline: dataset preparation, streaming, fine-tuning (QLoRA), evaluation, and deployment.",
-      "techStack": ["Python", "Hugging Face Transformers", "PEFT", "BitsAndBytes", "Accelerate", "Datasets", "Gradio"],
-      "category": "AI/ML",
-      "featured": true,
-      "demoUrl": "https://huggingface.co/spaces/eshwar/colabmind-coder",
-      "githubUrl": "https://github.com/eshwargajula31/colabmind-coder",
-      "image": "/assets/projects/colabmind-coder.webp",
-      "highlights": [
-        "Built resource-efficient fine-tuned LLM for code generation",
-        "Designed end-to-end training pipeline with QLoRA fine-tuning",
-        "Developed interactive Gradio app for real-time testing",
-        "Reduced GPU memory usage by 40% via quantization and gradient checkpointing",
-        "Improved code accuracy by 20-25% vs base model",
-        "Delivered lightweight LoRA adapter (~1GB vs 40GB)"
-      ]
-    },
-    {
-      "id": "digit-recognition",
-      "name": "Handwritten Digit Recognition",
-      "slug": "digit-recognition",
-      "description": "Handwritten Digit Recognition using LeNet-5 Architecture on MNIST dataset with Flask web interface.",
-      "longDescription": "Implemented Handwritten Digit Recognition using LeNet-5 Architecture on the MNIST dataset. Achieved 98% test accuracy after training for 10 epochs. Developed a Flask-based web interface allowing real-time predictions.",
-      "techStack": ["Python", "LeNet-5", "Flask", "HTML", "CSS", "JavaScript"],
-      "category": "AI/ML",
+      "id": "echa",
+      "name": "ECHA — Echelon Cybernetic Heuristic Aegis",
+      "slug": "echa",
+      "description": "An in-progress AI engineering and security ecosystem exploring controlled agent workflows and verifiable automation.",
+      "longDescription": "ECHA is an in-progress personal engineering project. ECHA Agent is being developed around local-LLM planning, tool orchestration, a controlled Tool Registry, permissions, memory, auditing, and verification. ECHA Shell is the desktop-facing application built with Tauri, Rust, React, and TypeScript. The ecosystem is under active development; features are being implemented incrementally.",
+      "techStack": [
+        "TypeScript",
+        "OpenAI SDK",
+        "OmniRoute",
+        "Ollama",
+        "Qwen 2.5 Coder 7B",
+        "Tool Registry",
+        "Security Automation"
+      ],
+      "category": "AI Engineering & Security",
       "featured": true,
       "demoUrl": null,
-      "githubUrl": "https://github.com/eshwargajula31/digit-recognition",
-      "image": "/assets/projects/digit-recognition.webp",
+      "githubUrl": "https://github.com/eshwar-gajula/ECHA",
+      "extraLinks": [
+        {
+          "label": "ECHA Shell repository",
+          "url": "https://github.com/eshwar-gajula/ECHA-shell"
+        }
+      ],
+      "status": "In active development",
+      "image": "/assets/projects/project-placeholder.svg",
       "highlights": [
-        "Implemented LeNet-5 Architecture on MNIST dataset",
-        "Achieved 98% test accuracy after 10 epochs training",
-        "Developed Flask-based web interface for real-time predictions",
-        "Deployed model to cloud server for accessibility"
+        "Explores local-LLM-assisted planning and task execution",
+        "Designs controlled tool selection, permissions, memory, and auditing workflows",
+        "Connects agent-side automation with a dedicated desktop shell",
+        "Prioritises verification and explicit permission boundaries over unrestricted execution"
       ]
     },
     {
-      "id": "eventpro",
-      "name": "Event Pro",
-      "slug": "eventpro",
-      "description": "Scalable event management system with modern responsive UI, reducing registration time by 50%.",
-      "longDescription": "Developed a scalable event management system using Next.js and TypeScript, reducing event registration time by 50% and increasing user engagement by 40%. Designed a modern, responsive UI with Tailwind CSS to ensure smooth navigation.",
-      "techStack": ["Next.js", "TypeScript", "Tailwind CSS", "Vercel"],
-      "category": "Web Development",
+      "id": "echa-shell",
+      "name": "ECHA Shell — Cybernetic Desktop Environment",
+      "slug": "echa-shell",
+      "description": "A Tauri v2 and Rust desktop shell with a React and TypeScript interface for system tools and automation workflows.",
+      "longDescription": "ECHA Shell is the desktop interface for the ECHA ecosystem. Its public project description outlines a Windows desktop workspace built around system telemetry, hardware controls, terminal interaction, an application library, and file inspection. The interface and native integrations are being developed iteratively.",
+      "techStack": [
+        "Tauri v2",
+        "Rust",
+        "React",
+        "TypeScript",
+        "Vite",
+        "Windows APIs"
+      ],
+      "category": "Desktop Development",
       "featured": true,
-      "demoUrl": "https://eventpro-demo.vercel.app",
-      "githubUrl": "https://github.com/eshwargajula31/eventpro",
-      "image": "/assets/projects/eventpro.webp",
+      "demoUrl": null,
+      "githubUrl": "https://github.com/eshwar-gajula/ECHA-shell",
+      "status": "In active development",
+      "image": "/assets/projects/project-placeholder.svg",
       "highlights": [
-        "Reduced event registration time by 50%",
-        "Increased user engagement by 40%",
-        "Implemented interactive features like event listing and real-time search",
-        "Optimized performance and deployment using Vercel"
+        "Desktop shell built with Tauri v2 and Rust",
+        "React and TypeScript frontend",
+        "Designed for system utilities, application access, and terminal workflows",
+        "Planned integration point for ECHA Agent"
+      ]
+    },
+    {
+      "id": "network-scanner",
+      "name": "Automated Network Vulnerability Scanner",
+      "slug": "network-scanner",
+      "description": "A Python-based security assessment tool for host discovery, port scanning, service enumeration, and vulnerability analysis in authorised environments.",
+      "longDescription": "A security tooling project described in the resume as an automated network assessment workflow using Python, socket programming, Nmap, Requests, and Linux. The goal is to streamline host discovery, port scanning, service enumeration, and vulnerability analysis for authorised target environments. A dedicated public source repository was not identified during this review.",
+      "techStack": [
+        "Python",
+        "Socket Programming",
+        "Nmap",
+        "Requests",
+        "Linux"
+      ],
+      "category": "Cybersecurity",
+      "featured": true,
+      "demoUrl": null,
+      "githubUrl": null,
+      "status": "Project work",
+      "image": "/assets/projects/project-placeholder.svg",
+      "highlights": [
+        "Host discovery and port scanning",
+        "Service enumeration and vulnerability analysis",
+        "Automates reconnaissance workflows in authorised target environments",
+        "Designed for future integration with ECHA Agent reporting workflows"
+      ]
+    },
+    {
+      "id": "web-recon",
+      "name": "Web Security Reconnaissance Tool",
+      "slug": "web-recon",
+      "description": "A Python reconnaissance workflow for DNS, HTTP/HTTPS, technology, and endpoint information.",
+      "longDescription": "A modular web reconnaissance project described in the resume. It uses Python, Requests, DNS and HTTP/HTTPS concepts on Linux, and structures collected reconnaissance information as JSON for further security analysis. A dedicated public source repository was not identified during this review.",
+      "techStack": [
+        "Python",
+        "Requests",
+        "DNS",
+        "HTTP/HTTPS",
+        "Linux",
+        "JSON"
+      ],
+      "category": "Cybersecurity",
+      "featured": true,
+      "demoUrl": null,
+      "githubUrl": null,
+      "status": "Project work",
+      "image": "/assets/projects/project-placeholder.svg",
+      "highlights": [
+        "Collects DNS and HTTP/HTTPS observations",
+        "Gathers technology and endpoint information",
+        "Structures reconnaissance output as JSON",
+        "Designed as an extensible base for security automation"
+      ]
+    },
+    {
+      "id": "orangehrm-playwright-e2e",
+      "name": "OrangeHRM Playwright E2E Automation",
+      "slug": "orangehrm-playwright-e2e",
+      "description": "A Playwright and TypeScript end-to-end test suite for the OrangeHRM user-management lifecycle.",
+      "longDescription": "The public repository documents end-to-end tests for creating, searching, editing, and deleting a user in the OrangeHRM Open Source demo. It emphasises deterministic synchronisation, identity-based row targeting, a Page Object Model, and explicit state verification to reduce flaky tests.",
+      "techStack": [
+        "Playwright",
+        "TypeScript",
+        "Node.js",
+        "Page Object Model",
+        "Git"
+      ],
+      "category": "Test Automation",
+      "featured": true,
+      "demoUrl": "https://opensource-demo.orangehrmlive.com/",
+      "githubUrl": "https://github.com/eshwar-gajula/orangehrm-playwright-e2e",
+      "image": "/assets/projects/project-placeholder.svg",
+      "highlights": [
+        "Covers user create, search, update, delete, and post-deletion validation",
+        "Uses deterministic waits and explicit UI-state checks",
+        "Uses identity-based row selection and a Page Object Model",
+        "Targets the publicly hosted OrangeHRM demo environment"
       ]
     },
     {
       "id": "portfolio",
-      "name": "Hacker Portfolio",
+      "name": "Personal Portfolio",
       "slug": "portfolio",
-      "description": "This portfolio website - a hacker-themed, accessible, and performant personal portfolio.",
-      "longDescription": "A unique portfolio website with a red team console aesthetic. Built with Next.js, featuring interactive matrix backgrounds, multiple themes, audio feedback, and full accessibility support.",
-      "techStack": ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
+      "description": "This responsive portfolio presenting AI engineering, software development, ECHA, and cybersecurity project work.",
+      "longDescription": "A Next.js App Router portfolio built with TypeScript, Tailwind CSS, and Framer Motion. It includes themed interfaces, a Matrix background, a command palette, project and case-study pages, a skills catalogue, resume view, and responsive navigation.",
+      "techStack": [
+        "Next.js",
+        "TypeScript",
+        "Tailwind CSS",
+        "Framer Motion",
+        "Vercel"
+      ],
       "category": "Web Development",
-      "featured": false,
-      "demoUrl": "https://eshwar-portfolio.vercel.app",
-      "githubUrl": "https://github.com/eshwargajula31/portfolio",
-      "image": "/assets/projects/portfolio.webp",
+      "featured": true,
+      "demoUrl": "https://eshwar.xyz",
+      "githubUrl": "https://github.com/eshwar-gajula/portfolio",
+      "image": "/assets/projects/project-placeholder.svg",
       "highlights": [
-        "Hacker themed design with matrix rain backgrounds",
-        "Audio feedback system with typing sounds",
-        "Multiple theme support (dark/light)",
-        "WCAG accessible and fully responsive"
+        "Responsive multi-page portfolio with dark, light, and high-contrast themes",
+        "Command palette for navigation and page discovery",
+        "Project, case-study, skills, timeline, and resume routes",
+        "Matrix background with reduced-motion and low-power behavior"
       ]
     }
-  ],
-  "labsPassphrase": "eshwar2024"
+  ]
 }

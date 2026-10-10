@@ -4,6 +4,7 @@ import type React from "react"
 
 import { useEffect, useRef, useState, useCallback } from "react"
 import { motion } from "framer-motion"
+import { useTheme } from "@/components/theme-provider"
 
 interface Project {
   id: string
@@ -29,6 +30,8 @@ interface Node {
 }
 
 export function NodeGraph({ projects, onSelectProject, selectedProject }: NodeGraphProps) {
+  const { theme } = useTheme()
+  const isLight = theme === "light"
   const containerRef = useRef<HTMLDivElement>(null)
   const [nodes, setNodes] = useState<Node[]>([])
   const [dimensions, setDimensions] = useState({ width: 800, height: 600 })
@@ -181,14 +184,18 @@ export function NodeGraph({ projects, onSelectProject, selectedProject }: NodeGr
 
   const getCategoryColor = (category: string) => {
     switch (category) {
-      case "Security":
-        return "#ff4757"
-      case "Backend":
-        return "#6ee7ff"
-      case "Frontend":
-        return "#00f5a0"
+      case "Cybersecurity":
+        return isLight ? "#b91c1c" : "#fb7185"
+      case "AI Engineering & Security":
+        return isLight ? "#a7192d" : "#fb7185"
+      case "Desktop Development":
+        return isLight ? "#6d28d9" : "#a78bfa"
+      case "Test Automation":
+        return isLight ? "#047857" : "#34d399"
+      case "Web Development":
+        return isLight ? "#6d28d9" : "#60a5fa"
       default:
-        return "#ff8c42"
+        return isLight ? "#a16207" : "#f59e0b"
     }
   }
 
@@ -273,7 +280,7 @@ export function NodeGraph({ projects, onSelectProject, selectedProject }: NodeGr
               style={{ backgroundColor: getCategoryColor(node.category) }}
             />
 
-            <div className="text-xs sm:text-sm font-semibold whitespace-nowrap max-w-[120px] sm:max-w-none truncate">
+            <div className="max-w-[96px] truncate text-[11px] font-semibold sm:max-w-[160px] sm:text-sm">
               {node.name}
             </div>
             <div className="text-[10px] sm:text-xs text-muted-foreground">{node.category}</div>
@@ -283,7 +290,7 @@ export function NodeGraph({ projects, onSelectProject, selectedProject }: NodeGr
 
       {/* Legend */}
       <div className="absolute bottom-2 sm:bottom-4 left-2 sm:left-4 flex flex-wrap gap-2 sm:gap-4 text-[10px] sm:text-xs bg-surface/80 backdrop-blur p-2 sm:p-3 rounded-lg border border-border">
-        {["Security", "Backend", "Frontend"].map((cat) => (
+        {Array.from(new Set(projects.map((project) => project.category))).map((cat) => (
           <div key={cat} className="flex items-center gap-1 sm:gap-2">
             <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full" style={{ backgroundColor: getCategoryColor(cat) }} />
             <span className="text-muted-foreground">{cat}</span>
@@ -292,7 +299,7 @@ export function NodeGraph({ projects, onSelectProject, selectedProject }: NodeGr
       </div>
 
       {/* Instructions - Updated for mobile */}
-      <div className="absolute top-2 sm:top-4 right-2 sm:right-4 text-[10px] sm:text-xs text-muted-foreground bg-surface/80 backdrop-blur p-2 rounded border border-border max-w-[150px] sm:max-w-none">
+      <div className="absolute right-2 top-2 max-w-[42%] rounded border border-border bg-surface/90 p-2 text-[10px] text-muted-foreground backdrop-blur sm:right-4 sm:top-4 sm:max-w-none sm:text-xs">
         <span className="hidden sm:inline">Drag nodes or use arrow keys + Enter</span>
         <span className="sm:hidden">Drag nodes to move</span>
       </div>

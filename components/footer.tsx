@@ -8,13 +8,13 @@ export function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="relative z-20 border-t border-border bg-surface mt-auto">
-      <div className="container mx-auto px-4 py-8">
-        <div className="grid gap-8 md:grid-cols-4">
+    <footer className="relative z-20 mt-auto border-t border-border bg-surface print:hidden">
+      <div className="container mx-auto px-4 py-6 sm:py-8">
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4 lg:gap-5 xl:gap-7">
           {/* Brand */}
           <div>
             <h3 className="font-mono font-bold text-lg text-foreground mb-2">{resumeData.name}</h3>
-            <p className="text-sm text-muted-foreground">Red-Team Oriented Front-End Engineer</p>
+            <p className="text-sm text-muted-foreground">AI Engineering · Software Engineering · Cybersecurity</p>
           </div>
 
           {/* Main Navigation */}
@@ -30,6 +30,7 @@ export function Footer() {
               >
                 Projects
               </Link>
+              <Link href="/projects/echa" className="text-sm text-muted-foreground hover:text-neon-primary transition-colors">ECHA</Link>
               <Link href="/skills" className="text-sm text-muted-foreground hover:text-neon-primary transition-colors">
                 Skills
               </Link>
@@ -129,8 +130,8 @@ export function Footer() {
         </div>
 
         {/* Ethics disclaimer */}
-        <div className="mt-8 pt-6 border-t border-border">
-          <div className="flex items-start gap-2 text-xs text-muted-foreground mb-4">
+        <div className="mt-6 pt-4 sm:mt-8 sm:pt-6 border-t border-border">
+          <div className="flex items-start gap-2 text-xs leading-5 text-muted-foreground mb-3 sm:mb-4">
             <Shield size={14} className="mt-0.5 flex-shrink-0" />
             <p>
               This portfolio is a professional showcase and educational resource only. No instructions, scripts, or
@@ -138,8 +139,8 @@ export function Footer() {
               follows responsible disclosure practices.
             </p>
           </div>
-          <p className="text-xs text-muted-foreground text-center">
-            blackroom-portfolio v3.1 — Last updated Jan 2026 | &copy; {currentYear} {resumeData.name}. Built with
+          <p className="text-xs leading-5 text-muted-foreground text-center break-words">
+            portfolio v3.2 — Last updated Oct 2026 | &copy; {currentYear} {resumeData.name}. Built with
             Next.js & deployed on Vercel.
           </p>
         </div>

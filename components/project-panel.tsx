@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
-import { X, ExternalLink, Github, Download, Code2 } from "lucide-react"
+import { X, ExternalLink, Github, Code2 } from "lucide-react"
 import { useAudio } from "./audio-provider"
 
 interface Project {
@@ -18,6 +18,8 @@ interface Project {
   githubUrl?: string | null
   image?: string
   highlights?: string[]
+  extraLinks?: { label: string; url: string }[]
+  status?: string
 }
 
 interface ProjectPanelProps {
@@ -70,7 +72,7 @@ export function ProjectPanel({ project, isOpen, onClose }: ProjectPanelProps) {
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-            className="fixed right-0 top-0 bottom-0 w-full sm:w-[90%] sm:max-w-lg bg-surface border-l border-border z-50 overflow-y-auto"
+            className="fixed right-0 top-0 bottom-0 w-full min-w-0 sm:w-[90%] sm:max-w-lg bg-surface border-l border-border z-50 overflow-x-hidden overflow-y-auto"
             role="dialog"
             aria-modal="true"
             aria-labelledby="panel-title"
@@ -97,13 +99,13 @@ export function ProjectPanel({ project, isOpen, onClose }: ProjectPanelProps) {
             </div>
 
             {/* Content */}
-            <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
+            <div className="min-w-0 p-4 sm:p-6 space-y-4 sm:space-y-6">
               {/* Project header */}
               <div>
                 <span className="inline-block px-2 py-1 text-xs font-mono bg-neon-primary/10 text-neon-primary rounded mb-2 sm:mb-3">
                   {project.category}
                 </span>
-                <h2 id="panel-title" className="text-xl sm:text-2xl font-bold mb-2">
+                <h2 id="panel-title" className="break-words text-xl sm:text-2xl font-bold mb-2">
                   {project.name}
                 </h2>
                 <p className="text-sm sm:text-base text-muted-foreground">
@@ -145,29 +147,11 @@ export function ProjectPanel({ project, isOpen, onClose }: ProjectPanelProps) {
                 </div>
               )}
 
-              {/* Code excerpt */}
-              <div>
-                <h3 className="text-xs sm:text-sm font-semibold mb-2 sm:mb-3 flex items-center gap-2">
-                  <span className="text-neon-primary">&gt;</span> Code Preview
-                </h3>
-                <div className="bg-background rounded-lg p-3 sm:p-4 font-mono text-xs overflow-x-auto border border-border">
-                  <pre className="text-muted-foreground">
-                    <code>
-                      {`// ${project.name} - Code Sample
-
-import { security } from '@core';
-
-export async function analyze(t: string) {
-  const sanitized = validate(t);
-  const results = await security.scan(
-    sanitized, { mode: 'passive' }
-  );
-  return results.report();
-}`}
-                    </code>
-                  </pre>
-                </div>
-              </div>
+              {project.status && (
+                <p className="rounded-lg border border-border bg-background/50 px-3 py-2 text-xs text-muted-foreground">
+                  <span className="font-semibold text-foreground">Status:</span> {project.status}. This project may still be under active development.
+                </p>
+              )}
 
               {/* Actions - Stack on mobile */}
               <div className="flex flex-col sm:flex-row flex-wrap gap-2 sm:gap-3 pt-3 sm:pt-4 border-t border-border">
@@ -195,6 +179,19 @@ export async function analyze(t: string) {
                     View Code
                   </a>
                 )}
+                {project.extraLinks?.map((link) => (
+                  <a
+                    key={link.url}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={() => playSound("click")}
+                    className="flex items-center justify-center gap-2 px-4 py-2.5 border border-border rounded font-medium hover:bg-surface-elevated transition-colors text-sm"
+                  >
+                    <ExternalLink size={16} />
+                    {link.label}
+                  </a>
+                ))}
                 <Link
                   href={`/projects/${project.slug}`}
                   onClick={() => playSound("click")}
@@ -204,22 +201,6 @@ export async function analyze(t: string) {
                 </Link>
               </div>
 
-              {/* Download artifact */}
-              <div className="p-3 sm:p-4 bg-surface-elevated rounded-lg border border-border">
-                <div className="flex items-center justify-between gap-3">
-                  <div className="min-w-0">
-                    <h4 className="font-medium text-xs sm:text-sm">Project Documentation</h4>
-                    <p className="text-xs text-muted-foreground truncate">Download detailed analysis (PDF)</p>
-                  </div>
-                  <button
-                    onClick={() => playSound("success")}
-                    className="flex items-center gap-2 px-3 py-2 bg-surface border border-border rounded hover:border-neon-primary/50 transition-colors shrink-0"
-                  >
-                    <Download size={14} />
-                    <span className="text-xs sm:text-sm">PDF</span>
-                  </button>
-                </div>
-              </div>
             </div>
           </motion.div>
         </>
