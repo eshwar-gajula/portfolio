@@ -1,0 +1,67 @@
+[
+  {
+    "id": "echa",
+    "name": "ECHA",
+    "slug": "echa",
+    "description": "In-progress AI engineering and security ecosystem",
+    "category": "AI Engineering & Security",
+    "connections": [
+      "echa-shell",
+      "network-scanner",
+      "web-recon"
+    ]
+  },
+  {
+    "id": "echa-shell",
+    "name": "ECHA Shell",
+    "slug": "echa-shell",
+    "description": "Tauri, Rust, React, and TypeScript desktop shell",
+    "category": "Desktop Development",
+    "connections": [
+      "echa"
+    ]
+  },
+  {
+    "id": "network-scanner",
+    "name": "Automated Network Vulnerability Scanner",
+    "slug": "network-scanner",
+    "description": "Python-based host discovery and network security assessment",
+    "category": "Cybersecurity",
+    "connections": [
+      "echa",
+      "web-recon"
+    ]
+  },
+  {
+    "id": "web-recon",
+    "name": "Web Security Reconnaissance Tool",
+    "slug": "web-recon",
+    "description": "Structured DNS, HTTP, technology, and endpoint reconnaissance",
+    "category": "Cybersecurity",
+    "connections": [
+      "echa",
+      "network-scanner"
+    ]
+  },
+  {
+    "id": "orangehrm-playwright-e2e",
+    "name": "OrangeHRM Playwright E2E Automation",
+    "slug": "orangehrm-playwright-e2e",
+    "description": "Playwright and TypeScript user-management lifecycle tests",
+    "category": "Test Automation",
+    "connections": [
+      "portfolio"
+    ]
+  },
+  {
+    "id": "portfolio",
+    "name": "Personal Portfolio",
+    "slug": "portfolio",
+    "description": "Multi-page portfolio, themes, Matrix background, and command palette",
+    "category": "Web Development",
+    "connections": [
+      "echa",
+      "orangehrm-playwright-e2e"
+    ]
+  }
+]
